@@ -34,13 +34,24 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function LogInDialogButton() {
+interface LogInDialogProps
+{
+  setUserRegister: (isUserRegister : boolean) => void;
+}
+
+export default function LogInDialogButton(props: LogInDialogProps) {
   const [open, setOpen] = React.useState(false);
   const [userInfo, setUserInfo] = React.useState<State>({nickname:"", password:"", showPassword: false,});
+
+  const userInfoIsCorrect = ()=> {return userInfo.nickname==="Robout Gulman" && userInfo.password==="12345"};
 
   const handleChange =
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setUserInfo({ ...userInfo, [prop]: event.target.value });
+        if(userInfoIsCorrect())
+        {
+          props.setUserRegister(true);
+        }
     };
 
   const handleClickShowPassword = () => {
@@ -56,6 +67,14 @@ export default function LogInDialogButton() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleLogIn = () => {
+    if(userInfoIsCorrect())
+        {
+          setOpen(false);
+          props.setUserRegister(true);
+        }
   };
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -110,7 +129,7 @@ export default function LogInDialogButton() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Back</Button>
-          <Button onClick={handleClose}>Log In</Button>
+          <Button onClick={handleLogIn}>Log In</Button>
         </DialogActions>
       </Dialog>
     </div>
