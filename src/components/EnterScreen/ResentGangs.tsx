@@ -1,14 +1,6 @@
-import {
-  Box,
-  Divider,
-  Grid,
-  List,
-  ListItem,
-  Paper,
-  styled,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, Grid, List, ListItem, Typography } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import background from "../../backgrounds/dark_texture_bg.jpg";
 
 type Props = {};
 
@@ -26,24 +18,24 @@ const Roster: RosterView[] = [
     faction: "Ash Waste Nomads",
     rating: 0,
     creatorNickname: "serrath",
-    time: "2seconds",
+    time: "2 seconds",
   },
   {
     name: "Belowed of the 4-armed Emperor",
     faction: "Genestealer Cult",
     rating: 145,
     creatorNickname: "Antihero",
-    time: "3minutes",
+    time: "3 minutes",
   },
   {
     name: "HPED-v2",
     faction: "Enforcers",
     rating: 710,
     creatorNickname: "Omenos",
-    time: "6minutes",
+    time: "6 minutes",
   },
 ];
-
+//backgroundImage: `url('${background}')`,
 function ResentGangs({}: Props) {
   return (
     <Box
@@ -51,10 +43,10 @@ function ResentGangs({}: Props) {
         border: "solid",
         width: "100%",
         maxWidth: 500,
-        bgcolor: "background.transparent",
+        background: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))",
       }}
     >
-      <List>
+      <List sx={{ padding: 0 }}>
         {Roster.map((item: RosterView, index: number) => (
           <Box key={index}>
             <ListItem>
@@ -64,46 +56,36 @@ function ResentGangs({}: Props) {
                     {item.name}
                   </Typography>
                 </Grid>
-                <Grid item xs={4}>
-                  <List
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      padding: 0,
-                    }}
-                  >
-                    <ListItem>
-                      <AccountBoxIcon color="secondary" />
-                    </ListItem>
-                    <ListItem>
-                      <Typography variant="subtitle1" color="secondary">
-                        {item.creatorNickname}
-                      </Typography>
-                    </ListItem>
-                  </List>
+                <Grid item xs={1}>
+                  <AccountBoxIcon color="secondary" />
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="subtitle1" color="secondary">
+                    {item.creatorNickname}
+                  </Typography>
                 </Grid>
               </Grid>
             </ListItem>
             <ListItem>
               <Grid container sx={{ flexGrow: 1 }}>
                 <Grid item xs={5}>
-                  <Typography variant="subtitle1" color="#D1C1BE">
+                  <Typography variant="subtitle1" color="white">
                     {item.faction}
                   </Typography>
                 </Grid>
                 <Grid item xs={3}>
-                  <Typography variant="subtitle1" color="#D1C1BE">
+                  <Typography variant="subtitle1" color="white">
                     Rating {item.rating}
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
-                  <Typography variant="subtitle1" color="#D1C1BE">
+                  <Typography variant="subtitle1" color="#645A59">
                     {item.time}
                   </Typography>
                 </Grid>
               </Grid>
             </ListItem>
-            <Divider color = "primary" />
+            <Divider color="black" />
           </Box>
         ))}
       </List>
