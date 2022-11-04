@@ -1,16 +1,18 @@
-import { Typography } from "@mui/material";
+import { Container, Link, Typography } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 type Props = {};
 function RosterPage({}: Props) {
   return (
-    <>
-      <Typography variant="subtitle1" color="secondary">
+    <Container maxWidth="sm">
+      <Typography variant="h6" color="secondary">
         Roster page
       </Typography>
-      <Link to="/"> Return to home</Link>
-    </>
+      <Link color="secondary" variant="h6" component={RouterLink} to="/">
+        Return to home
+      </Link>
+    </Container>
   );
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { amber, grey } from "@mui/material/colors";
 import { createTheme, Paper, ThemeProvider } from "@mui/material";
 import AppBarEnterScreen from "./AppBar/AppBar";
@@ -22,12 +22,16 @@ const outerTheme = createTheme({
 });
 
 function Layout(props: Props) {
+  const background = useMemo(() => {
+    return getRandomBackground();
+  }, []);
+
   return (
     <ThemeProvider theme={outerTheme}>
       <Paper
         sx={{
           height: "100vh",
-          backgroundImage: `url('${getRandomBackground()}')`,
+          backgroundImage: `url('${background}')`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
         }}
