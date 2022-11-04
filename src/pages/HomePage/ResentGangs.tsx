@@ -1,6 +1,5 @@
 import { Box, Divider, Grid, List, ListItem, Typography } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import background from "../../backgrounds/dark_texture_bg.jpg";
 
 type Props = {};
 
@@ -35,7 +34,6 @@ const Roster: RosterView[] = [
     time: "6 minutes",
   },
 ];
-//backgroundImage: `url('${background}')`,
 function ResentGangs({}: Props) {
   return (
     <Box
@@ -92,14 +90,4 @@ function ResentGangs({}: Props) {
     </Box>
   );
 }
-/*<Typography
-              variant="h6"
-              color = "secondary"
-              sx={{
-                flexGrow: 1,
-              }}
-            >
-              {item.creatorNickname}
-            </Typography>*/
-//<ListItemText color="secondary">{item.creatorNickname}</ListItemText>
 export default ResentGangs;

@@ -112,7 +112,7 @@ export default function LogInDialogButton(props: LogInDialogProps) {
               value={userInfo.nickname}
               onChange={handleChange("nickname")}
               id="filled-basic"
-              label="nickname"
+              label="Nickname"
               variant="filled"
             />
             <FormControl
