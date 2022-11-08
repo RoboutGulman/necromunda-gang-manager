@@ -20,8 +20,7 @@ function AppBarEnterScreen(props: AppBarProps) {
     <Box
       sx={{
         flexGrow: 1,
-      }}
-    >
+      }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -31,16 +30,14 @@ function AppBarEnterScreen(props: AppBarProps) {
             aria-label="menu"
             sx={{
               mr: 2,
-            }}
-          >
+            }}>
             <MenuIcon />
           </IconButton>
           <Typography
             variant="h6"
             sx={{
               flexGrow: 1,
-            }}
-          >
+            }}>
             Necromunda Gang Manager
           </Typography>
           {props.isUserAuthorized ? (

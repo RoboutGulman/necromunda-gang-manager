@@ -102,8 +102,7 @@ export default function LogInDialogButton(props: LogInDialogProps) {
         open={open}
         TransitionComponent={Transition}
         onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
+        aria-describedby="alert-dialog-slide-description">
         <DialogTitle>{"Log in your account"}</DialogTitle>
         <DialogContent>
           <Stack spacing={2}>
@@ -120,8 +119,7 @@ export default function LogInDialogButton(props: LogInDialogProps) {
               sx={{
                 m: 1,
               }}
-              variant="filled"
-            >
+              variant="filled">
               <InputLabel htmlFor="filled-adornment-password">
                 Password
               </InputLabel>
@@ -136,8 +134,7 @@ export default function LogInDialogButton(props: LogInDialogProps) {
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
+                      edge="end">
                       {userInfo.showPassword ? (
                         <VisibilityOff />
                       ) : (

@@ -15,8 +15,7 @@ function App() {
             isUserAuthorized={isUserAuthorized}
             setUserAuthorized={setUserAuthorized}
           />
-        }
-      >
+        }>
         <Route
           index
           element={<HomePage isUserAuthorized={isUserAuthorized} />}

@@ -34,8 +34,7 @@ function Layout(props: Props) {
           backgroundImage: `url('${background}')`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-        }}
-      >
+        }}>
         <AppBarEnterScreen
           setUserAuthorized={props.setUserAuthorized}
           isUserAuthorized={props.isUserAuthorized}
