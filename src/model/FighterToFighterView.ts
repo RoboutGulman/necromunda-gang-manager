@@ -12,6 +12,7 @@ function GetTotalCharacteristics(base : Characteristics, modificators : Characte
 export function FighterToFighterView(fighter : Fighter): FighterView {
   let totalModificators = fighter.advances.map((value) => value.characteristicsMods).concat(fighter.injuries.map((value) => value.characteristicsMods));
   return {
+    id: fighter.id,
     name: fighter.name,
     rang: fighter.rang,
     totalCharacteristics: GetTotalCharacteristics(fighter.characteristics, totalModificators),
@@ -19,6 +20,7 @@ export function FighterToFighterView(fighter : Fighter): FighterView {
     equipment: fighter.equipment,
     skills: fighter.skills,
     status: fighter.status,
-    totalCost: fighter.totalCost
+    totalCost: fighter.totalCost,
+    xp: fighter.xp
   };
 }

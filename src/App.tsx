@@ -2,7 +2,8 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import Layout from "./components/Layout";
-import RosterPage from "./pages/RosterPage/RosterPage";
+import TeamPage from "./pages/TeamPage/TeamPage";
+import { TeamExample } from "./model/FakeData";
 
 function App() {
   const [isUserAuthorized, setUserAuthorized] = React.useState(false);
@@ -20,7 +21,7 @@ function App() {
           index
           element={<HomePage isUserAuthorized={isUserAuthorized} />}
         />
-        <Route path="roster" element={<RosterPage />} />
+        <Route path="roster" element={<TeamPage teamView={TeamExample} />} />
       </Route>
     </Routes>
   );

@@ -1,7 +1,8 @@
 import {timeStamp} from "console";
-import { Characteristics } from "./Characteristics";
+import {Characteristics} from "./Characteristics";
 
 export type TeamPreview = {
+  id: string;
   name: string;
   faction: string;
   rating: number;
@@ -10,14 +11,22 @@ export type TeamPreview = {
 };
 
 export type Trait = {
+  id: string;
   name: string;
 };
 
 export type Upgrade = {
+  id: string;
   name: string;
 };
 
+export enum WeaponType {
+  MELEE,
+  RANGED
+}
+
 export type Weapon = {
+  id: string;
   name: string;
   sr: number | null;
   lr: number | null;
@@ -35,12 +44,14 @@ export type Weapon = {
 };
 
 export type Equipment = {
+  id: string;
   name: string;
   rarity: number | null;
   cost: number;
 };
 
 type Skill = {
+  id: string;
   name: string;
 };
 
@@ -50,28 +61,20 @@ export enum Status {
   ON_RECOVERY
 }
 
-export type FighterView = {
-  name: string;
-  rang: string;
-  totalCharacteristics: Characteristics;
-  weapons: Weapon[];
-  equipment: Equipment[];
-  skills: Skill[];
-  status: Status;
-  totalCost: number;
-};
-
 export type Injury = {
+  id: string;
   name: string;
   characteristicsMods: Characteristics;
 };
 
 export type Advance = {
+  id: string;
   name: string;
   characteristicsMods: Characteristics;
 };
 
 export type Fighter = {
+  id: string;
   name: string;
   rang: string;
   description: string;
@@ -84,16 +87,31 @@ export type Fighter = {
   status: Status;
   xp: number;
   lvl: number;
-  totalCost: number
+  totalCost: number;
+};
+
+export type FighterView = {
+  id: string;
+  name: string;
+  rang: string;
+  totalCharacteristics: Characteristics;
+  weapons: Weapon[];
+  equipment: Equipment[];
+  skills: Skill[];
+  status: Status;
+  totalCost: number;
+  xp: number;
 };
 
 export type User = {
+  id: string;
   name: string;
 };
 
-export type Team = {
+export type TeamView = {
+  id: string;
   name: string;
-  fighters: Fighter[];
+  fighters: FighterView[];
   faction: string;
   creator: User;
 };
