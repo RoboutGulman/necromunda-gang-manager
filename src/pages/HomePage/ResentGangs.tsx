@@ -8,40 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import { Variant } from "@mui/material/styles/createTypography";
 import { Link } from "react-router-dom";
-
-type RosterView = {
-  name: string;
-  faction: string;
-  rating: number;
-  creatorNickname: string;
-  time: string;
-};
-
-const Roster: RosterView[] = [
-  {
-    name: "Windraiders",
-    faction: "Ash Waste Nomads",
-    rating: 0,
-    creatorNickname: "serrath",
-    time: "2 seconds",
-  },
-  {
-    name: "Belowed of the 4-armed Emperor",
-    faction: "Genestealer Cult",
-    rating: 145,
-    creatorNickname: "Antihero",
-    time: "3 minutes",
-  },
-  {
-    name: "HPED-v2",
-    faction: "Enforcers",
-    rating: 710,
-    creatorNickname: "Omenos",
-    time: "6 minutes",
-  },
-];
+import { TeamPreview } from "../../model/Types";
+import { TeamPreviewExamples } from "../../model/FakeData";
 
 interface GridItemWithTypographyProps {
   xs: number;
@@ -80,7 +49,7 @@ function ResentGangs() {
         background: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))",
       }}>
       <List sx={{ padding: 0 }}>
-        {Roster.map((item: RosterView, index: number) => (
+        {TeamPreviewExamples.map((item: TeamPreview, index: number) => (
           <Box key={index}>
             <ListItem>
               <Grid container sx={{ flexGrow: 1 }}>
