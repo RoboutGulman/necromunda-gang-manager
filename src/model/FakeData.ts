@@ -45,18 +45,29 @@ const RapidFire: Trait = {
   name: "Rapid Fire"
 };
 
+const Backstab: Trait = {
+  id: "",
+  name: "Backstab"
+};
+
 const Autogun: Weapon = {
   id: "",
   name: "Autogun",
-  sr: 8,
-  lr: 24,
-  sm: 1,
-  lm: null,
-  s: 3,
-  ap: null,
-  d: 1,
-  am: 4,
-  traits: [RapidFire],
+  profiles: [
+    {
+      name: null,
+      isMelee: false,
+      sr: 8,
+      lr: 24,
+      sm: 1,
+      lm: null,
+      s: 3,
+      ap: null,
+      d: 1,
+      am: 4,
+      traits: [RapidFire]
+    }
+  ],
   upgrades: [],
   cost: 25,
   rarity: null,
@@ -66,15 +77,21 @@ const Autogun: Weapon = {
 const FightingKnife: Weapon = {
   id: "",
   name: "Fighting Knife",
-  sr: null,
-  lr: null,
-  sm: null,
-  lm: null,
-  s: 3,
-  ap: null,
-  d: 1,
-  am: 4,
-  traits: [RapidFire],
+  profiles: [
+    {
+      name: null,
+      isMelee: true,
+      sr: null,
+      lr: null,
+      sm: null,
+      lm: null,
+      s: null,
+      ap: -1,
+      d: 1,
+      am: null,
+      traits: [Backstab]
+    }
+  ],
   upgrades: [],
   cost: 25,
   rarity: null,
@@ -96,7 +113,9 @@ export const Bob: Fighter = {
   characteristics: DefaultGangerCharacteristics,
   injuries: [],
   advances: [],
-  weapons: [Autogun],
+  weapons: [
+    Autogun, FightingKnife
+  ],
   equipment: [FlackArmour],
   skills: [],
   status: Status.ACTIVE,
@@ -113,7 +132,9 @@ const Vasia: User = {
 export const TeamExample: TeamView = {
   id: "",
   name: "Raiders",
-  fighters: [FighterToFighterView(Bob), FighterToFighterView(Bob)],
+  fighters: [
+    FighterToFighterView(Bob), FighterToFighterView(Bob)
+  ],
   faction: "Ash Waste Nomads",
   creator: Vasia
 };

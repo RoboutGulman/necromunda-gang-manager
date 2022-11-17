@@ -144,6 +144,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+function GetCorrectStatView(
+  stat: number | null,
+  symbol: string = "",
+  isModificator: boolean = false
+): string {
+  return stat ? (isModificator && stat > 0 ? "+" + stat : stat + symbol) : "-";
+}
+
 function WeaponsInfo({ weapons }: WeaponsInfoProps) {
   return (
     <ListItem disablePadding>
@@ -152,24 +160,50 @@ function WeaponsInfo({ weapons }: WeaponsInfoProps) {
           <TableHead>
             <TableRow>
               <CellWithNoBorder colSpan={1} />
-              <CellWithNoBorder align="center" colSpan={2}>
+              <CellWithNoBorder
+                sx={{ fontWeight: "600" }}
+                align="center"
+                colSpan={2}>
                 Range
               </CellWithNoBorder>
-              <CellWithNoBorder align="center" colSpan={2}>
+              <CellWithNoBorder
+                sx={{ fontWeight: "600" }}
+                align="center"
+                colSpan={2}>
                 Acc
               </CellWithNoBorder>
             </TableRow>
             <TableRow>
-              <CellWithRightBorder>Weapon</CellWithRightBorder>
-              <CellWithNoBorder align="center">S</CellWithNoBorder>
-              <CellWithRightBorder align="center">L</CellWithRightBorder>
-              <CellWithNoBorder align="center">S</CellWithNoBorder>
-              <CellWithRightBorder align="center">L</CellWithRightBorder>
-              <CellWithRightBorder align="center">Str</CellWithRightBorder>
-              <CellWithRightBorder align="center">D</CellWithRightBorder>
-              <CellWithRightBorder align="center">Ap</CellWithRightBorder>
-              <CellWithRightBorder align="center">Am</CellWithRightBorder>
-              <CellWithNoBorder>Traits</CellWithNoBorder>
+              <CellWithRightBorder sx={{ fontWeight: "600" }}>
+                Weapon
+              </CellWithRightBorder>
+              <CellWithNoBorder sx={{ fontWeight: "600" }} align="center">
+                S
+              </CellWithNoBorder>
+              <CellWithRightBorder sx={{ fontWeight: "600" }} align="center">
+                L
+              </CellWithRightBorder>
+              <CellWithNoBorder sx={{ fontWeight: "600" }} align="center">
+                S
+              </CellWithNoBorder>
+              <CellWithRightBorder sx={{ fontWeight: "600" }} align="center">
+                L
+              </CellWithRightBorder>
+              <CellWithRightBorder sx={{ fontWeight: "600" }} align="center">
+                Str
+              </CellWithRightBorder>
+              <CellWithRightBorder sx={{ fontWeight: "600" }} align="center">
+                D
+              </CellWithRightBorder>
+              <CellWithRightBorder sx={{ fontWeight: "600" }} align="center">
+                Ap
+              </CellWithRightBorder>
+              <CellWithRightBorder sx={{ fontWeight: "600" }} align="center">
+                Am
+              </CellWithRightBorder>
+              <CellWithNoBorder sx={{ fontWeight: "600" }}>
+                Traits
+              </CellWithNoBorder>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -179,31 +213,31 @@ function WeaponsInfo({ weapons }: WeaponsInfoProps) {
                   {weapon.name}
                 </CellWithRightBorder>
                 <CellWithNoBorder align="center">
-                  {weapon.sr ?? "-"}"
+                  {GetCorrectStatView(weapon.profiles[0].sr, '"')}
                 </CellWithNoBorder>
                 <CellWithRightBorder align="center">
-                  {weapon.lr}"
+                  {GetCorrectStatView(weapon.profiles[0].lr, '"')}
                 </CellWithRightBorder>
                 <CellWithNoBorder align="center">
-                  {weapon.sm ?? "-"}
+                  {GetCorrectStatView(weapon.profiles[0].sm, "", true)}
                 </CellWithNoBorder>
                 <CellWithRightBorder align="center">
-                  {weapon.lm ?? "-"}
+                  {GetCorrectStatView(weapon.profiles[0].lm, "", true)}
                 </CellWithRightBorder>
                 <CellWithRightBorder align="center">
-                  {weapon.s ?? "-"}
+                  {GetCorrectStatView(weapon.profiles[0].s)}
                 </CellWithRightBorder>
                 <CellWithRightBorder align="center">
-                  {weapon.d ?? "-"}
+                  {GetCorrectStatView(weapon.profiles[0].d)}
                 </CellWithRightBorder>
                 <CellWithRightBorder align="center">
-                  {weapon.ap ?? "-"}
+                  {GetCorrectStatView(weapon.profiles[0].ap, "", true)}
                 </CellWithRightBorder>
                 <CellWithRightBorder align="center">
-                  {weapon.am ?? "-"}+
+                  {GetCorrectStatView(weapon.profiles[0].am, "+")}
                 </CellWithRightBorder>
                 <CellWithNoBorder>
-                  {weapon.traits.map((value) => value.name)}
+                  {weapon.profiles[0].traits.map((value) => value.name)}
                 </CellWithNoBorder>
               </StyledTableRow>
             ))}
@@ -222,6 +256,10 @@ function FighterCard({ fighterView }: FighterCardProps) {
   return (
     <Card
       sx={{
+        borderRadius: "15px",
+        padding: "10px",
+        boxShadow:
+          "2px 2px 5px 3px rgb(0 0 0 / 50%), -2px -2px 5px 3px rgb(0 0 0 / 50%)",
         mt: 5,
         mb: 5,
         ml: 5,

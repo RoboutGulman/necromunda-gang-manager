@@ -20,14 +20,9 @@ export type Upgrade = {
   name: string;
 };
 
-export enum WeaponType {
-  MELEE,
-  RANGED
-}
-
-export type Weapon = {
-  id: string;
-  name: string;
+export type WeaponProfile = {
+  name: string | null;
+  isMelee: boolean;
   sr: number | null;
   lr: number | null;
   sm: number | null;
@@ -37,6 +32,12 @@ export type Weapon = {
   d: number | null;
   am: number | null;
   traits: Trait[];
+};
+
+export type Weapon = {
+  id: string;
+  name: string;
+  profiles: WeaponProfile[];
   upgrades: Upgrade[];
   cost: number;
   rarity: number | null;
