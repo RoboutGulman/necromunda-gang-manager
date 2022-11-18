@@ -1,4 +1,3 @@
-import {timeStamp} from "console";
 import {Characteristics} from "./Characteristics";
 
 export type TeamPreview = {
@@ -8,6 +7,11 @@ export type TeamPreview = {
   rating: number;
   creatorNickname: string;
   time: string;
+};
+
+export type MyTeamPreview = {
+  name: string;
+  faction: string;
 };
 
 export type Trait = {

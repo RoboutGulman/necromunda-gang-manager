@@ -8,7 +8,8 @@ import {
   TeamPreview,
   Trait,
   User,
-  Weapon
+  Weapon,
+  MyTeamPreview
 } from "./Types";
 
 export const TeamPreviewExamples: TeamPreview[] = [
@@ -33,6 +34,25 @@ export const TeamPreviewExamples: TeamPreview[] = [
     rating: 710,
     creatorNickname: "Omenos",
     time: "6 minutes"
+  }
+];
+
+export const MyTeamPreviewExample: MyTeamPreview[] = [
+  {
+    name: "my roster 1",
+    faction: "ash nomads"
+  }, {
+    name: " my roster 2",
+    faction: "orlocks"
+  }, {
+    name: " my roster 2",
+    faction: "orlocks"
+  }, {
+    name: " my roster 2",
+    faction: "orlocks"
+  }, {
+    name: " my roster 2",
+    faction: "orlocks"
   }
 ];
 

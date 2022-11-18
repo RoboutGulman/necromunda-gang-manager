@@ -1,7 +1,7 @@
-import { Container, Grid, Link, Stack, Typography } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import React from "react";
 import ResentGangs from "./ResentGangs";
-import MyGangsPrewiew from "./MyGangs";
+import MyGangsPreview from "./MyGangsPreview";
 
 interface EnterScreenProps {
   isUserAuthorized: boolean;
@@ -17,7 +17,7 @@ function HomePage({ isUserAuthorized, setUserAuthorized }: EnterScreenProps) {
           direction="row"
           sx={{ width: "90%" }}
           justifyContent="space-around ">
-          <MyGangsPrewiew
+          <MyGangsPreview
             isUserAuthorized={isUserAuthorized}
             setUserAuthorized={setUserAuthorized}
           />
