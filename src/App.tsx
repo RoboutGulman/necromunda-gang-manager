@@ -19,7 +19,12 @@ function App() {
         }>
         <Route
           index
-          element={<HomePage isUserAuthorized={isUserAuthorized} />}
+          element={
+            <HomePage
+              isUserAuthorized={isUserAuthorized}
+              setUserAuthorized={setUserAuthorized}
+            />
+          }
         />
         <Route path="roster" element={<TeamPage teamView={TeamExample} />} />
       </Route>

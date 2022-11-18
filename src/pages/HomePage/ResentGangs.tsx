@@ -1,16 +1,18 @@
 import {
   Box,
   Button,
+  Container,
   Divider,
   Grid,
+  Link,
   List,
   ListItem,
   Typography,
 } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import { Link } from "react-router-dom";
 import { TeamPreview } from "../../model/Types";
 import { TeamPreviewExamples } from "../../model/FakeData";
+import { Link as RouterLink } from "react-router-dom";
 
 interface GridItemWithTypographyProps {
   xs: number;
@@ -27,73 +29,74 @@ function GridItemWithTypography(props: GridItemWithTypographyProps) {
     </Grid>
   );
 }
-/*
- <AccountBoxIcon color="secondary" />
-                  <Typography variant="subtitle1" color="secondary">
-                    {item.creatorNickname}
-                  </Typography>
-<GridItemWithTypography
-                  xs={3}
-                  content={item.creatorNickname}
-                  color="secondary"
-                />
-*/
 
 function ResentGangs() {
   return (
-    <Box
-      sx={{
-        border: "solid",
-        width: "100%",
-        maxWidth: 500,
-        background: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))",
-      }}>
-      <List sx={{ padding: 0 }}>
-        {TeamPreviewExamples.map((item: TeamPreview, index: number) => (
-          <Box key={index}>
-            <ListItem>
-              <Grid container sx={{ flexGrow: 1 }}>
-                <GridItemWithTypography
-                  xs={8}
-                  content={item.name}
-                  color="secondary"
-                />
-                <Grid item xs={4}>
-                  <Link to="/roster">
+    <Container fixed>
+      <Typography
+        align="center"
+        sx={{ fontWeight: "600" }}
+        variant="h5"
+        color="secondary"
+        gutterBottom>
+        RECENT COMMUNITY GANGS
+      </Typography>
+      <Typography align="center" variant="body1" color="white" gutterBottom>
+        3 gangs and counting...
+      </Typography>
+      <Box
+        sx={{
+          margin: "auto",
+          border: "solid",
+          width: "100%",
+          maxWidth: 500,
+          background: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))",
+        }}>
+        <List sx={{ padding: 0 }}>
+          {TeamPreviewExamples.map((item: TeamPreview, index: number) => (
+            <Box key={index}>
+              <ListItem>
+                <Grid container sx={{ flexGrow: 1 }}>
+                  <Grid item xs={8}>
+                    <Link color="secondary" component={RouterLink} to="/roster">
+                      {item.name}
+                    </Link>
+                  </Grid>
+                  <Grid item xs={4}>
                     <Button
                       variant="outlined"
                       color="secondary"
                       startIcon={<AccountBoxIcon />}>
                       {item.creatorNickname}
                     </Button>
-                  </Link>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem>
-              <Grid container sx={{ flexGrow: 1 }}>
-                <GridItemWithTypography
-                  xs={5}
-                  content={item.faction}
-                  color="white"
-                />
-                <GridItemWithTypography
-                  xs={3}
-                  content={`Rating ${item.rating}`}
-                  color="white"
-                />
-                <GridItemWithTypography
-                  xs={4}
-                  content={item.time}
-                  color="#645A59"
-                />
-              </Grid>
-            </ListItem>
-            <Divider color="black" />
-          </Box>
-        ))}
-      </List>
-    </Box>
+              </ListItem>
+              <ListItem>
+                <Grid container sx={{ flexGrow: 1 }}>
+                  <GridItemWithTypography
+                    xs={5}
+                    content={item.faction}
+                    color="white"
+                  />
+                  <GridItemWithTypography
+                    xs={3}
+                    content={`Rating ${item.rating}`}
+                    color="white"
+                  />
+                  <GridItemWithTypography
+                    xs={4}
+                    content={item.time}
+                    color="#645A59"
+                  />
+                </Grid>
+              </ListItem>
+              <Divider color="black" />
+            </Box>
+          ))}
+        </List>
+      </Box>
+    </Container>
   );
 }
 export default ResentGangs;

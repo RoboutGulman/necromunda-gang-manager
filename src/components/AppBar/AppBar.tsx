@@ -8,7 +8,8 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import LogInDialogButton from "./LogInDialog";
+import LogInDialog from "./LogInDialog";
+import React from "react";
 
 interface AppBarProps {
   isUserAuthorized: boolean;
@@ -16,6 +17,7 @@ interface AppBarProps {
 }
 
 function AppBarEnterScreen(props: AppBarProps) {
+  const [isDialogOpen, setDialogOpen] = React.useState(false);
   return (
     <Box
       sx={{
@@ -50,7 +52,15 @@ function AppBarEnterScreen(props: AppBarProps) {
           ) : (
             <>
               <Box mr={3}>
-                <LogInDialogButton
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  onClick={() => setDialogOpen(true)}>
+                  Log In
+                </Button>
+                <LogInDialog
+                  open={isDialogOpen}
+                  setOpen={setDialogOpen}
                   setUserAuthorized={props.setUserAuthorized}
                 />
               </Box>

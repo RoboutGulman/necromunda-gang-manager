@@ -55,7 +55,7 @@ const Autogun: Weapon = {
   name: "Autogun",
   profiles: [
     {
-      name: null,
+      name: "Autogun",
       isMelee: false,
       sr: 8,
       lr: 24,

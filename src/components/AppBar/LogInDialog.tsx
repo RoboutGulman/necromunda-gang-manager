@@ -34,11 +34,16 @@ const Transition = React.forwardRef(function Transition(
 });
 
 interface LogInDialogProps {
+  open: boolean;
+  setOpen: (isDialogOpen: boolean) => void;
   setUserAuthorized: (isUserAuthorized: boolean) => void;
 }
 
-export default function LogInDialogButton(props: LogInDialogProps) {
-  const [open, setOpen] = React.useState(false);
+export default function LogInDialog({
+  open,
+  setOpen,
+  setUserAuthorized,
+}: LogInDialogProps) {
   const [userInfo, setUserInfo] = React.useState<State>({
     nickname: "",
     password: "",
@@ -71,10 +76,6 @@ export default function LogInDialogButton(props: LogInDialogProps) {
     });
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -82,7 +83,7 @@ export default function LogInDialogButton(props: LogInDialogProps) {
   const handleLogIn = () => {
     if (userInfoIsCorrect()) {
       setOpen(false);
-      props.setUserAuthorized(true);
+      setUserAuthorized(true);
     }
   };
 
@@ -94,9 +95,6 @@ export default function LogInDialogButton(props: LogInDialogProps) {
 
   return (
     <div>
-      <Button color="inherit" variant="outlined" onClick={handleClickOpen}>
-        Log In
-      </Button>
       <Dialog
         fullWidth={true}
         open={open}
