@@ -17,6 +17,7 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { TransitionProps } from "@mui/material/transitions";
+import {LoginRequest, LoginResponse, sendLoginRequest} from "../../request/sendLoginRequest";
 
 interface State {
   nickname: string;
@@ -51,17 +52,7 @@ export default function LogInDialog({
   });
   const [inputError, setInputError] = React.useState(false);
 
-  const userInfoIsCorrect = () => {
-    let result =
-      userInfo.nickname === "Robout Gulman" && userInfo.password === "12345";
-    if (!result) {
-      setInputError(true);
-    }
-
-    return result;
-  };
-
-  const handleChange =
+  const onChange =
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
       setUserInfo({
         ...userInfo,
@@ -76,14 +67,24 @@ export default function LogInDialog({
     });
   };
 
-  const handleClose = () => {
+  const onClose = () => {
     setOpen(false);
   };
 
-  const handleLogIn = () => {
-    if (userInfoIsCorrect()) {
+  const onSubmit = async () => {
+    const request: LoginRequest = {
+      username: userInfo.nickname,
+      password: userInfo.password,
+    }
+
+    const response: LoginResponse = await sendLoginRequest(request)
+
+    if (response.status === 200) {
       setOpen(false);
       setUserAuthorized(true);
+      console.log(response)
+    } else {
+      setInputError(true)
     }
   };
 
@@ -99,15 +100,15 @@ export default function LogInDialog({
         fullWidth={true}
         open={open}
         TransitionComponent={Transition}
-        onClose={handleClose}
+        onClose={onClose}
         aria-describedby="alert-dialog-slide-description">
-        <DialogTitle>{"Log in your account"}</DialogTitle>
+        <DialogTitle>{"Log in to your account"}</DialogTitle>
         <DialogContent>
           <Stack spacing={2}>
             <TextField
               error={inputError}
               value={userInfo.nickname}
-              onChange={handleChange("nickname")}
+              onChange={onChange("nickname")}
               id="filled-basic"
               label="Nickname"
               variant="filled"
@@ -124,7 +125,7 @@ export default function LogInDialog({
               <FilledInput
                 value={userInfo.password}
                 type={userInfo.showPassword ? "text" : "password"}
-                onChange={handleChange("password")}
+                onChange={onChange("password")}
                 id="filled-basic"
                 endAdornment={
                   <InputAdornment position="end">
@@ -146,8 +147,8 @@ export default function LogInDialog({
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Back</Button>
-          <Button onClick={handleLogIn}>Log In</Button>
+          <Button onClick={onClose}>Back</Button>
+          <Button onClick={onSubmit}>Log In</Button>
         </DialogActions>
       </Dialog>
     </div>

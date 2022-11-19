@@ -1,17 +1,17 @@
-type RequetsParams = {
+type RequestParams = {
     method: string;
     url: string;
     body: object;
-    authKey: string|null;
+    authToken: string|null;
     responseType: string;
 }
 
-export async function request(params: RequetsParams): Promise<any> {
+export async function request(params: RequestParams): Promise<any> {
     let response = await fetch(params.url, {
         method: params.method,
         headers: {
             'Content-Type': 'application/json',
-            'X_AUTH_KEY': params.authKey ?? '',
+            'X_AUTH_TOKEN': params.authToken ?? '',
         },
         body: JSON.stringify(params.body),
     })
