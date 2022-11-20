@@ -57,14 +57,17 @@ function ResentGangs() {
             <Box key={index}>
               <ListItem>
                 <Grid container sx={{ flexGrow: 1 }}>
-                  <Grid item xs={8}>
-                    <Link color="secondary" component={RouterLink} to="/roster/1">
+                  <Grid sx={{ pt: "7px" }} item xs={8}>
+                    <Link
+                      color="secondary"
+                      component={RouterLink}
+                      to="/roster/1">
                       {item.name}
                     </Link>
                   </Grid>
                   <Grid item xs={4}>
                     <Button
-                      variant="outlined"
+                      variant="text"
                       color="secondary"
                       startIcon={<AccountBoxIcon />}>
                       {item.creatorNickname}

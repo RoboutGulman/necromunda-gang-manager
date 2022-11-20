@@ -14,7 +14,7 @@ function HomePage({ isUserAuthorized, setUserAuthorized }: EnterScreenProps) {
       <Stack
         direction="row"
         sx={{ width: "90%" }}
-        justifyContent="space-around ">
+        justifyContent="space-around">
         <MyGangsPreview
           isUserAuthorized={isUserAuthorized}
           setUserAuthorized={setUserAuthorized}
