@@ -58,7 +58,7 @@ function ResentGangs() {
               <ListItem>
                 <Grid container sx={{ flexGrow: 1 }}>
                   <Grid item xs={8}>
-                    <Link color="secondary" component={RouterLink} to="/roster">
+                    <Link color="secondary" component={RouterLink} to="/roster/1">
                       {item.name}
                     </Link>
                   </Grid>

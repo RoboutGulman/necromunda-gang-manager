@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { amber, grey } from "@mui/material/colors";
-import { createTheme, Paper, ThemeProvider } from "@mui/material";
+import { Container, createTheme, Paper, ThemeProvider } from "@mui/material";
 import AppBarEnterScreen from "./AppBar/AppBar";
 import { getRandomHomePageBackground } from "../backgrounds/HomePage/GetRandomBackground";
 import { Outlet } from "react-router-dom";
@@ -39,6 +39,7 @@ function Layout(props: Props) {
           setUserAuthorized={props.setUserAuthorized}
           isUserAuthorized={props.isUserAuthorized}
         />
+        <Container maxWidth="sm" sx={{ mb: 4 }}></Container>
         <Outlet />
       </Paper>
     </ThemeProvider>

@@ -10,21 +10,18 @@ interface EnterScreenProps {
 
 function HomePage({ isUserAuthorized, setUserAuthorized }: EnterScreenProps) {
   return (
-    <>
-      <Container maxWidth="sm" sx={{ mb: 4 }}></Container>
-      <Container component="main" sx={{ mb: 4 }}>
-        <Stack
-          direction="row"
-          sx={{ width: "90%" }}
-          justifyContent="space-around ">
-          <MyGangsPreview
-            isUserAuthorized={isUserAuthorized}
-            setUserAuthorized={setUserAuthorized}
-          />
-          <ResentGangs />
-        </Stack>
-      </Container>
-    </>
+    <Container component="main" sx={{ mb: 4 }}>
+      <Stack
+        direction="row"
+        sx={{ width: "90%" }}
+        justifyContent="space-around ">
+        <MyGangsPreview
+          isUserAuthorized={isUserAuthorized}
+          setUserAuthorized={setUserAuthorized}
+        />
+        <ResentGangs />
+      </Stack>
+    </Container>
   );
 }
 

@@ -48,14 +48,14 @@ function MyGangsPreview({
               color="secondary"
               variant="body1"
               component={RouterLink}
-              to="/roster"
+              to="/roster/1"
               gutterBottom>
               Create new roster
             </Link>
             <List sx={{ padding: 0, width: "100%" }}>
               {MyTeamPreviewExample.map(
                 (item: MyTeamPreview, index: number) => (
-                  <RouterLink key={index} to="/roster">
+                  <RouterLink key={index} to="/roster/1">
                     <Box
                       maxWidth={350}
                       sx={{
