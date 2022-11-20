@@ -15,7 +15,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 type Props = {};
 
-function GangerPage({}: Props) {
+function FighterPage({}: Props) {
   return (
     <Container sx={{ mb: 4 }}>
       <Stack
@@ -29,7 +29,7 @@ function GangerPage({}: Props) {
   );
 }
 
-export default GangerPage;
+export default FighterPage;
 
 type NavigationInfo = {
   name: string;
@@ -38,7 +38,7 @@ type NavigationInfo = {
 
 const RosterNavigationInfo = { name: "roster", id: 3 };
 
-const GangNavigationInfo: NavigationInfo[] = [
+const TeamNavigationInfo: NavigationInfo[] = [
   { name: "Fedor", id: 10 },
   { name: "Kiril", id: 12 },
   { name: "Matew", id: 14 },
@@ -49,7 +49,7 @@ function NavigationTable() {
     <Box
       maxWidth="25%"
       sx={{
-        width: "200px",
+        minWidth: "200px",
         bgcolor: "background.paper",
       }}>
       <List sx={{ pt: "0" }}>
@@ -63,7 +63,7 @@ function NavigationTable() {
             <ListItemText primary={RosterNavigationInfo.name} />
           </ListItemButton>
         </ListItem>
-        {GangNavigationInfo.map((info, index) => (
+        {TeamNavigationInfo.map((info, index) => (
           <div key={index}>
             <Divider />
             <ListItem disablePadding>

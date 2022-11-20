@@ -72,6 +72,21 @@ const CharacteristicsTable = ({
   characteristics,
   xp,
 }: CharacteristicsProps) => {
+  const columns = [
+    "M",
+    "WS",
+    "BS",
+    "S",
+    "T",
+    "W",
+    "I",
+    "A",
+    "Ld",
+    "Cl",
+    "Wp",
+    "Int",
+    "Exp",
+  ];
   return (
     <>
       <ListItem disablePadding>
@@ -79,19 +94,9 @@ const CharacteristicsTable = ({
           direction="row"
           sx={{ width: "90%" }}
           justifyContent="space-around ">
-          <Item>M</Item>
-          <Item>WS</Item>
-          <Item>BS</Item>
-          <Item>S</Item>
-          <Item>T</Item>
-          <Item>W</Item>
-          <Item>I</Item>
-          <Item>A</Item>
-          <Item>Ld</Item>
-          <Item>Cl</Item>
-          <Item>Wp</Item>
-          <Item>Int</Item>
-          <Item>Exp</Item>
+          {columns.map((value, index) => (
+            <Item key={index}>{value}</Item>
+          ))}
         </Stack>
       </ListItem>
       <Divider

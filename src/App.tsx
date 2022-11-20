@@ -5,7 +5,7 @@ import Layout from "./components/Layout";
 import TeamPage from "./pages/TeamPage/TeamPage";
 import { TeamExample } from "./model/FakeData";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import GangerPage from "./pages/GangerPage/GangerPage";
+import FighterPage from "./pages/FighterPage/FighterPage";
 
 function App() {
   const [isUserAuthorized, setUserAuthorized] = React.useState(false);
@@ -32,7 +32,7 @@ function App() {
           path="roster/:id"
           element={<TeamPage teamView={TeamExample} />}
         />
-        <Route path="ganger/:id" element={<GangerPage />} />
+        <Route path="ganger/:id" element={<FighterPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
