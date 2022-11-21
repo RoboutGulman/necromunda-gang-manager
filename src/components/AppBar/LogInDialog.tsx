@@ -17,7 +17,7 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { TransitionProps } from "@mui/material/transitions";
-import {LoginRequest, LoginResponse, sendLoginRequest} from "../../request/sendLoginRequest";
+import {ApiMethods} from "../../request/methods/user/login";
 
 interface State {
   nickname: string;
@@ -72,17 +72,14 @@ export default function LogInDialog({
   };
 
   const onSubmit = async () => {
-    const request: LoginRequest = {
+    const authenticated: boolean = await ApiMethods.login({
       username: userInfo.nickname,
-      password: userInfo.password,
-    }
+      password: userInfo.password
+    })
 
-    const response: LoginResponse = await sendLoginRequest(request)
-
-    if (response.status === 200) {
+    if (authenticated) {
       setOpen(false);
       setUserAuthorized(true);
-      console.log(response)
     } else {
       setInputError(true)
     }

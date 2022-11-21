@@ -1,23 +1,28 @@
+import {getCookie} from "../utils/getCookie";
+
 type RequestParams = {
     method: string;
     url: string;
     body: object;
-    authToken: string|null;
-    responseType: string;
+    responseType?: string;
 }
 
-export async function request(params: RequestParams): Promise<any> {
-    let response = await fetch(params.url, {
-        method: params.method,
+export async function request({method, url, body, responseType = 'json'}: RequestParams): Promise<any> {
+    const authToken: string|null = getCookie('X_AUTH_TOKEN')
+    const authTokenHeader = authToken ? {
+        'X_AUTH_TOKEN': authToken
+      } : {}
+    let response = await fetch(url, {
+        method: method,
         headers: {
+            ...authTokenHeader,
             'Content-Type': 'application/json',
-            'X_AUTH_TOKEN': params.authToken ?? '',
         },
-        body: JSON.stringify(params.body),
+        body: JSON.stringify(body),
     })
 
     let data
-    switch (params.responseType) {
+    switch (responseType) {
         case 'json':
             data = response.json()
             break
