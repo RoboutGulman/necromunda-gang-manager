@@ -13,11 +13,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-type Props = {};
 
-function FighterPage({}: Props) {
+function FighterPage() {
   return (
-    <Container sx={{ mb: 4 }}>
+    <Container sx={{ mb: 4, ml: 0 }}>
       <Stack
         direction="row"
         justifyContent="space-between"

@@ -32,7 +32,7 @@ function App() {
           path="roster/:id"
           element={<TeamPage teamView={TeamExample} />}
         />
-        <Route path="ganger/:id" element={<FighterPage />} />
+        <Route path="fighter/:id" element={<FighterPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

@@ -3,7 +3,7 @@ import {Fighter, FighterView} from "./Types";
 
 function GetTotalCharacteristics(base : Characteristics, modificators : Characteristics[]): Characteristics {
   let result = base;
-  modificators.map((value : Characteristics) => {
+  modificators.forEach((value : Characteristics) => {
     result.add(value);
   });
   return result;
