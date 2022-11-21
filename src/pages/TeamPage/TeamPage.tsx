@@ -1,4 +1,4 @@
-import { Link, List, ListItem, Paper, Typography } from "@mui/material";
+import { Box, Link, List, ListItem, Paper, Typography } from "@mui/material";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import StatsTable from "../../components/FighterCard/StatsTable";
@@ -6,6 +6,7 @@ import FighterCard from "../../components/FighterCard/FighterCard";
 import { Characteristics } from "../../model/Characteristics";
 import { TeamView } from "../../model/Types";
 import WeaponsTable from "../../components/FighterCard/WeaponsTable";
+import cardNameBackground from "../../backgrounds/card_name_background.png";
 
 interface TeamPageProps {
   teamView: TeamView;
@@ -27,7 +28,12 @@ function TeamPage({ teamView }: TeamPageProps) {
           Return to home
         </Link>
         {teamView.fighters.map((fighterView, index) => (
-          <FighterCard key={index} fighterView={fighterView}>
+          <FighterCard key={index}>
+            <FighterCardHeader
+              name={fighterView.name}
+              rang={fighterView.rang}
+              totalCost={fighterView.totalCost}
+            />
             <StatsTable
               stats={GetCharacteristicView(
                 fighterView.totalCharacteristics,
@@ -70,4 +76,48 @@ function GetCharacteristicView(
     { name: "Int", value: chars.int + "+" },
     { name: "Exp", value: xp + "" },
   ];
+}
+
+interface FighterCardHeaderProps {
+  name: string;
+  rang: string;
+  totalCost: number;
+}
+
+function FighterCardHeader({ name, rang, totalCost }: FighterCardHeaderProps) {
+  return (
+    <ListItem>
+      <Paper
+        sx={{
+          width: "100%",
+          backgroundImage: `url('${cardNameBackground}')`,
+          height: "34px",
+          pt: "8px",
+        }}>
+        <Typography variant="h6" color="secondary">
+          {name}
+        </Typography>
+        <Box
+          sx={{
+            position: "absolute",
+            right: "14px",
+            top: "-2px",
+            backgroundColor: "#d6d6d6",
+            borderRadius: "50%",
+            border: "5px solid #302429",
+            textAlign: "center",
+            padding: "7px",
+          }}>
+          <Typography
+            sx={{ fontWeight: "600", lineHeight: "0.7", mt: "8px" }}
+            variant="h6">
+            {totalCost}
+          </Typography>
+          <Typography sx={{ fontSize: "0.6rem" }} variant="caption">
+            Credits
+          </Typography>
+        </Box>
+      </Paper>
+    </ListItem>
+  );
 }

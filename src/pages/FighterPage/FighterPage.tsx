@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Container,
   Divider,
@@ -8,11 +11,13 @@ import {
   ListItemIcon,
   ListItemText,
   Stack,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FighterCard from "../../components/FighterCard/FighterCard";
 
 function FighterPage() {
   return (
@@ -22,7 +27,9 @@ function FighterPage() {
         justifyContent="space-between"
         sx={{ width: "90%" }}>
         <NavigationTable />
-        <Box sx={{ width: "75%" }}></Box>
+        <Box sx={{ width: "75%" }}>
+          <FighterStats />
+        </Box>
       </Stack>
     </Container>
   );
@@ -74,5 +81,26 @@ function NavigationTable() {
         ))}
       </List>
     </Box>
+  );
+}
+
+function FighterStats() {
+  return (
+    <FighterCard>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header">
+          <Typography>Accordion 1</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+    </FighterCard>
   );
 }
