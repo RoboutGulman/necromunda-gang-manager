@@ -1,106 +1,162 @@
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Box,
-  Container,
-  Divider,
-  List,
+  IconButton,
   ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
+  Paper,
   Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
 } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FighterCard from "../../components/FighterCard/FighterCard";
+import cardNameBackground from "../../backgrounds/card_name_background.png";
+import { Characteristics } from "../../model/Characteristics";
+import { Bob } from "../../model/FakeData";
+import { FighterToFighterView } from "../../model/FighterToFighterView";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import NavigationList from "./NavigationList";
 
 function FighterPage() {
+  const fighterView = FighterToFighterView(Bob);
   return (
-    <Container sx={{ mb: 4, ml: 0 }}>
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        sx={{ width: "90%" }}>
-        <NavigationTable />
-        <Box sx={{ width: "75%" }}>
-          <FighterStats />
-        </Box>
-      </Stack>
-    </Container>
+    <Stack direction="row" justifyContent="center" spacing={8}>
+      <NavigationList />
+      <Box sx={{ width: "75%" }}>
+        <FighterCard>
+          <FighterCardHeader name={"Vasia"} rang={"ganger"} />
+          <ListItem>
+            <StatsTable
+              stats={GetCharacteristicView(
+                fighterView.totalCharacteristics,
+                fighterView.xp
+              )}
+            />
+          </ListItem>
+        </FighterCard>
+      </Box>
+    </Stack>
   );
 }
 
 export default FighterPage;
 
-type NavigationInfo = {
-  name: string;
-  id: number;
+interface StatsTableProps {
+  stats: { name: string; value: string }[];
+}
+
+const StatsTable = (props: StatsTableProps) => {
+  const [open, setOpen] = React.useState(false);
+  const values = props.stats.map((item) => item.value);
+  return (
+    <TableContainer component={Paper}>
+      <Table aria-label="collapsible table">
+        <TableHead>
+          <TableRow>
+            {props.stats.map((value) => (
+              <TableCell align="center">{value.name}</TableCell>
+            ))}
+            <TableCell>
+              <IconButton
+                aria-label="expand row"
+                size="small"
+                onClick={() => setOpen(!open)}>
+                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </IconButton>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <Row row={values} />
+          {open ? (
+            <>
+              <Row row={values} />
+              <Row row={values} />
+            </>
+          ) : (
+            <></>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
 };
 
-const RosterNavigationInfo = { name: "roster", id: 3 };
+interface RowProps {
+  row: string[];
+}
 
-const TeamNavigationInfo: NavigationInfo[] = [
-  { name: "Fedor", id: 10 },
-  { name: "Kiril", id: 12 },
-  { name: "Matew", id: 14 },
-];
-
-function NavigationTable() {
+function Row({ row }: RowProps) {
   return (
-    <Box
-      maxWidth="25%"
-      sx={{
-        minWidth: "200px",
-        bgcolor: "background.paper",
-      }}>
-      <List sx={{ pt: "0" }}>
-        <ListItem disablePadding sx={{ bgcolor: "#a05236", color: "white" }}>
-          <ListItemButton
-            component={Link}
-            to={`/roster/${RosterNavigationInfo.id}`}>
-            <ListItemIcon>
-              <ArrowBackIcon sx={{ color: "white" }} />
-            </ListItemIcon>
-            <ListItemText primary={RosterNavigationInfo.name} />
-          </ListItemButton>
-        </ListItem>
-        {TeamNavigationInfo.map((info, index) => (
-          <div key={index}>
-            <Divider />
-            <ListItem disablePadding>
-              <ListItemButton component={Link} to={`/ganger/${info.id}`}>
-                <ListItemText primary={info.name} />
-              </ListItemButton>
-            </ListItem>
-          </div>
+    <React.Fragment>
+      <TableRow>
+        {row.map((value) => (
+          <TableCell align="center">{value}</TableCell>
         ))}
-      </List>
-    </Box>
+        <TableCell />
+      </TableRow>
+    </React.Fragment>
   );
 }
 
-function FighterStats() {
+type CharacteristicView = {
+  name: string;
+  value: string;
+};
+
+function GetCharacteristicView(
+  chars: Characteristics,
+  xp: number
+): CharacteristicView[] {
+  return [
+    { name: "M", value: chars.m + '"' },
+    { name: "WS", value: chars.ws + "+" },
+    { name: "BS", value: chars.bs + "+" },
+    { name: "S", value: chars.s + "" },
+    { name: "T", value: chars.t + "" },
+    { name: "W", value: chars.w + "" },
+    { name: "I", value: chars.i + "" },
+    { name: "A", value: chars.a + "" },
+    { name: "Ld", value: chars.ld + "+" },
+    { name: "Cl", value: chars.cl + "+" },
+    { name: "Wp", value: chars.wp + "+" },
+    { name: "Int", value: chars.int + "+" },
+    { name: "Exp", value: xp + "" },
+  ];
+}
+
+interface FighterCardHeaderProps {
+  name: string;
+  rang: string;
+}
+
+function FighterCardHeader({ name, rang }: FighterCardHeaderProps) {
   return (
-    <FighterCard>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header">
-          <Typography>Accordion 1</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+    <ListItem>
+      <Paper
+        sx={{
+          width: "100%",
+          backgroundImage: `url('${cardNameBackground}')`,
+          height: "34px",
+          pt: "8px",
+        }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between">
+          <Typography variant="h6" color="secondary">
+            {name}
           </Typography>
-        </AccordionDetails>
-      </Accordion>
-    </FighterCard>
+          <Typography variant="h6" color="secondary">
+            {rang}
+          </Typography>
+        </Stack>
+      </Paper>
+    </ListItem>
   );
 }
