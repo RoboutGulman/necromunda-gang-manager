@@ -1,1 +1,1 @@
-export const BASE_URI = 'http://service.ngm.local'
+export const BASE_URI = "http://service.ngm.local";
