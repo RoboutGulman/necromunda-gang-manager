@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { amber, grey } from "@mui/material/colors";
-import { Container, createTheme, Paper, ThemeProvider } from "@mui/material";
+import { Box, Container, createTheme, ThemeProvider } from "@mui/material";
 import AppBarEnterScreen from "./AppBar/AppBar";
 import { getRandomHomePageBackground } from "../backgrounds/HomePage/GetRandomBackground";
 import { Outlet } from "react-router-dom";
@@ -28,13 +28,13 @@ function Layout(props: Props) {
 
   return (
     <ThemeProvider theme={outerTheme}>
-      <Paper
+      <Box
         sx={{
           height: "100vh",
           backgroundImage: `url('${background}')`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-          overflow: "auto",
+          overflowY: "scroll",
         }}>
         <AppBarEnterScreen
           setUserAuthorized={props.setUserAuthorized}
@@ -42,7 +42,7 @@ function Layout(props: Props) {
         />
         <Container maxWidth="sm" sx={{ mb: 4 }}></Container>
         <Outlet />
-      </Paper>
+      </Box>
     </ThemeProvider>
   );
 }

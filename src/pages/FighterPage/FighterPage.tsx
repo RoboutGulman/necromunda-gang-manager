@@ -29,10 +29,7 @@ const equimpentItems = [
   { name: "fighting knife", cost: "5" },
   { name: "flack armour", cost: "5" },
   { name: "chain axe", cost: "25" },
-  { name: "chain axe", cost: "25" },
-  { name: "chain axe", cost: "25" },
-  { name: "chain axe", cost: "25" },
-  { name: "chain axe", cost: "25" },
+  { name: "long rifle", cost: "35" },
 ];
 
 const skillItems = ["Unshakable Conviction"];
@@ -203,7 +200,8 @@ function FighterCardHeader({ name, rang }: FighterCardHeaderProps) {
         <Stack
           direction="row"
           alignItems="center"
-          justifyContent="space-between">
+          justifyContent="space-between"
+          sx={{ pl: "5px", pr: "5px" }}>
           <Typography variant="h6" color="secondary">
             {name}
           </Typography>

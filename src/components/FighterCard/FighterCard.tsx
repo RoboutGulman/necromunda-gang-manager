@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, List } from "@mui/material";
+import { Card, CardContent, List } from "@mui/material";
 import React from "react";
 import cardBackground from "../../backgrounds/card_background.jpg";
 

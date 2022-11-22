@@ -1,7 +1,6 @@
 import {
   Box,
   Fab,
-  IconButton,
   Link,
   List,
   ListItem,
@@ -27,7 +26,6 @@ function TeamPage({ teamView }: TeamPageProps) {
     <Paper
       style={{
         backgroundColor: "transparent",
-        maxHeight: "92vh",
       }}>
       <List>
         <Typography variant="h6" color="secondary">
