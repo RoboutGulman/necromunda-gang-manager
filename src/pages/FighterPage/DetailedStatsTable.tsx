@@ -68,8 +68,10 @@ const DetailedStatsTable = (props: DetailedStatsTableProps) => {
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              {props.stats.map((value) => (
-                <TableCell align="center">{value.name}</TableCell>
+              {props.stats.map((value, index) => (
+                <TableCell key={index} align="center">
+                  {value.name}
+                </TableCell>
               ))}
               <TableCell>
                 <IconButton
@@ -83,26 +85,34 @@ const DetailedStatsTable = (props: DetailedStatsTableProps) => {
           </TableHead>
           <TableBody>
             <TableRow>
-              {values.map((value) => (
-                <TableCell align="center">{value}</TableCell>
+              {values.map((value, index) => (
+                <TableCell key={index} align="center">
+                  {value}
+                </TableCell>
               ))}
               <TableCell colSpan={1} />
             </TableRow>
             <TableRow sx={{ backgroundColor: "#c3e6cb" }}>
-              {advansesValues.map((value) => (
-                <TableCell align="center">{value}</TableCell>
+              {advansesValues.map((value, index) => (
+                <TableCell key={index} align="center">
+                  {value}
+                </TableCell>
               ))}
               <TableCell colSpan={3}>Advances</TableCell>
             </TableRow>
             <TableRow sx={{ backgroundColor: "#f5c6cb" }}>
-              {injuriesValues.map((value) => (
-                <TableCell align="center">{value}</TableCell>
+              {injuriesValues.map((value, index) => (
+                <TableCell key={index} align="center">
+                  {value}
+                </TableCell>
               ))}
               <TableCell colSpan={3}>Injuries</TableCell>
             </TableRow>
             <TableRow>
-              {baseValues.map((value) => (
-                <TableCell align="center">{value}</TableCell>
+              {baseValues.map((value, index) => (
+                <TableCell key={index} align="center">
+                  {value}
+                </TableCell>
               ))}
               <TableCell colSpan={3}>Base</TableCell>
             </TableRow>
