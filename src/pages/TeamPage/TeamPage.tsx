@@ -1,4 +1,12 @@
-import { Box, Link, List, ListItem, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Link,
+  List,
+  ListItem,
+  Paper,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import StatsTable from "../../components/FighterCard/StatsTable";
@@ -7,6 +15,7 @@ import { Characteristics } from "../../model/Characteristics";
 import { TeamView } from "../../model/Types";
 import WeaponsTable from "../../components/FighterCard/WeaponsTable";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
+import EditIcon from "@mui/icons-material/Edit";
 
 interface TeamPageProps {
   teamView: TeamView;
@@ -43,6 +52,21 @@ function TeamPage({ teamView }: TeamPageProps) {
             <ListItem disablePadding>
               <WeaponsTable weapons={fighterView.weapons} />
             </ListItem>
+            <RouterLink to="/fighter/1">
+              <Box
+                sx={{
+                  backgroundColor: "#343a40",
+                  position: "absolute",
+                  right: "-21px",
+                  bottom: "-28px",
+                  borderRadius: "50%",
+                  border: "2px solid #747474",
+                }}>
+                <IconButton sx={{ color: "white" }}>
+                  <EditIcon />
+                </IconButton>
+              </Box>
+            </RouterLink>
           </FighterCard>
         ))}
       </List>
