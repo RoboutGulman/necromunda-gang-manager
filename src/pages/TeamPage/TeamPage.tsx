@@ -28,7 +28,6 @@ function TeamPage({ teamView }: TeamPageProps) {
       style={{
         backgroundColor: "transparent",
         maxHeight: "92vh",
-        overflow: "auto",
       }}>
       <List>
         <Typography variant="h6" color="secondary">

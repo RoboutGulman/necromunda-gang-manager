@@ -28,6 +28,11 @@ const equimpentItems = [
   },
   { name: "fighting knife", cost: "5" },
   { name: "flack armour", cost: "5" },
+  { name: "chain axe", cost: "25" },
+  { name: "chain axe", cost: "25" },
+  { name: "chain axe", cost: "25" },
+  { name: "chain axe", cost: "25" },
+  { name: "chain axe", cost: "25" },
 ];
 
 const skillItems = ["Unshakable Conviction"];
