@@ -47,7 +47,7 @@ function NavigationList() {
           <div key={index}>
             <Divider />
             <ListItem disablePadding>
-              <ListItemButton component={Link} to={`/ganger/${info.id}`}>
+              <ListItemButton component={Link} to={`/fighter/${info.id}`}>
                 <ListItemText primary={info.name} />
               </ListItemButton>
             </ListItem>

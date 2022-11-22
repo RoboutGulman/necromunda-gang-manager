@@ -94,62 +94,56 @@ export default function LogInDialog({
   };
 
   return (
-    <div>
-      <Dialog
-        fullWidth={true}
-        open={open}
-        TransitionComponent={Transition}
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description">
-        <DialogTitle>{"Log in your account"}</DialogTitle>
-        <DialogContent>
-          <Stack spacing={2}>
-            <TextField
-              error={inputError}
-              value={userInfo.nickname}
-              onChange={handleChange("nickname")}
+    <Dialog
+      fullWidth={true}
+      open={open}
+      TransitionComponent={Transition}
+      onClose={handleClose}
+      aria-describedby="alert-dialog-slide-description">
+      <DialogTitle>{"Log in your account"}</DialogTitle>
+      <DialogContent>
+        <Stack spacing={2}>
+          <TextField
+            error={inputError}
+            value={userInfo.nickname}
+            onChange={handleChange("nickname")}
+            id="filled-basic"
+            label="Nickname"
+            variant="filled"
+          />
+          <FormControl
+            error={inputError}
+            sx={{
+              m: 1,
+            }}
+            variant="filled">
+            <InputLabel htmlFor="filled-adornment-password">
+              Password
+            </InputLabel>
+            <FilledInput
+              value={userInfo.password}
+              type={userInfo.showPassword ? "text" : "password"}
+              onChange={handleChange("password")}
               id="filled-basic"
-              label="Nickname"
-              variant="filled"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end">
+                    {userInfo.showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
-            <FormControl
-              error={inputError}
-              sx={{
-                m: 1,
-              }}
-              variant="filled">
-              <InputLabel htmlFor="filled-adornment-password">
-                Password
-              </InputLabel>
-              <FilledInput
-                value={userInfo.password}
-                type={userInfo.showPassword ? "text" : "password"}
-                onChange={handleChange("password")}
-                id="filled-basic"
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end">
-                      {userInfo.showPassword ? (
-                        <VisibilityOff />
-                      ) : (
-                        <Visibility />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          </Stack>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Back</Button>
-          <Button onClick={handleLogIn}>Log In</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+          </FormControl>
+        </Stack>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Back</Button>
+        <Button onClick={handleLogIn}>Log In</Button>
+      </DialogActions>
+    </Dialog>
   );
 }
