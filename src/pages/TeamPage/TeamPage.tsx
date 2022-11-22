@@ -1,5 +1,6 @@
 import {
   Box,
+  Fab,
   IconButton,
   Link,
   List,
@@ -62,9 +63,9 @@ function TeamPage({ teamView }: TeamPageProps) {
                   borderRadius: "50%",
                   border: "2px solid #747474",
                 }}>
-                <IconButton sx={{ color: "white" }}>
+                <Fab size="medium" aria-label="add">
                   <EditIcon />
-                </IconButton>
+                </Fab>
               </Box>
             </RouterLink>
           </FighterCard>
