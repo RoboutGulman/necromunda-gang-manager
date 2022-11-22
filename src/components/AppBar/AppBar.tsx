@@ -1,4 +1,3 @@
-import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
 import {
   AppBar,
@@ -10,6 +9,8 @@ import {
 } from "@mui/material";
 import LogInDialog from "./LogInDialog";
 import React from "react";
+import HomeIcon from "@mui/icons-material/Home";
+import { Link as RouterLink } from "react-router-dom";
 
 interface AppBarProps {
   isUserAuthorized: boolean;
@@ -30,10 +31,12 @@ function AppBarEnterScreen(props: AppBarProps) {
             edge="start"
             color="inherit"
             aria-label="menu"
+            component={RouterLink}
+            to="/"
             sx={{
               mr: 2,
             }}>
-            <MenuIcon />
+            <HomeIcon />
           </IconButton>
           <Typography
             variant="h6"
