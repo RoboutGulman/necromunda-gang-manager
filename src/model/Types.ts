@@ -53,15 +53,14 @@ export type Advance = {
 
 export type WeaponProfile = {
   name: string | null;
-  isMelee: boolean;
-  sr: number | null;
-  lr: number | null;
-  sm: number | null;
-  lm: number | null;
-  s: number | null;
-  ap: number | null;
-  d: number | null;
-  am: number | null;
+  sr: string | null;
+  lr: string | null;
+  sm: string | null;
+  lm: string | null;
+  s: string | null;
+  ap: string | null;
+  d: string | null;
+  am: string | null;
   traits: Trait[];
 };
 
