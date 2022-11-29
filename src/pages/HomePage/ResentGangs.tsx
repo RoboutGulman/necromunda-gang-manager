@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { TeamPreview } from "../../model/Types";
-import { TeamPreviewExamples } from "../../model/FakeData";
+import { TeamPreviewExamples } from "../../model/FakeData/FakeData";
 import { Link as RouterLink } from "react-router-dom";
 
 interface GridItemWithTypographyProps {

@@ -46,6 +46,11 @@
     ],
     "equipment": [],
     "skills": [],
+    "specialRules": [
+        {
+            "name": "Leading by Example"
+        }
+    ],
     "status": 1,
     "xp": 0,
     "lvl": 1,

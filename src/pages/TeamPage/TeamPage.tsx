@@ -11,13 +11,14 @@ import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import StatsTable from "../../components/FighterCard/StatsTable";
 import FighterCard from "../../components/FighterCard/FighterCard";
-import { Characteristics } from "../../model/Characteristics";
 import WeaponsTable from "../../components/FighterCard/WeaponsTable";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
 import EditIcon from "@mui/icons-material/Edit";
-import { TeamView } from "../../model/TeamView";
-import TeamViewJson from "../../model/TeamViewExample.json";
+
+import { TeamView } from "../../model/Dto/TeamView";
+import TeamViewJson from "../../model/FakeData/TeamViewExample.json";
 import { plainToClass } from "class-transformer";
+import { Characteristics } from "../../model/Characteristics";
 
 function TeamPage() {
   const [teamView, setTeamView] = useState<TeamView>();

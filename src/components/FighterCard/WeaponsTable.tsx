@@ -8,7 +8,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Trait, Weapon } from "../../model/TeamView";
+import { Trait, Weapon } from "../../model/Types";
 
 const CellWithNoBorder = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: { fontWeight: "600" },

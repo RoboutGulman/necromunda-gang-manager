@@ -1,6 +1,12 @@
-import {Characteristics} from "./Characteristics";
-import {Equipment, Trait, User, Weapon} from "./TeamView";
-import {MyTeamPreview, TeamPreview} from "./Types";
+import {Characteristics} from "../Characteristics";
+import {
+  Equipment,
+  MyTeamPreview,
+  TeamPreview,
+  Trait,
+  User,
+  Weapon
+} from "../Types";
 
 export const TeamPreviewExamples: TeamPreview[] = [
   {

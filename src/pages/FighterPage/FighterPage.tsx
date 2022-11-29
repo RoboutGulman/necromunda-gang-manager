@@ -15,62 +15,44 @@ import FighterCard from "../../components/FighterCard/FighterCard";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
 import NavigationList from "./NavigationList";
 import DetailedStatsTable from "./DetailedStatsTable";
-import { Characteristics } from "../../model/Characteristics";
 import background from "../../backgrounds/dark_texture_bg.jpg";
 import EditIcon from "@mui/icons-material/Edit";
-import json from "../../model/FighterExample.json";
-import { FighterView } from "../../model/TeamView";
+
+import { Characteristics } from "../../model/Characteristics";
 import { plainToClass } from "class-transformer";
-
-const equimpentItems = [
-  {
-    name: "autogun",
-    cost: "25",
-  },
-  { name: "fighting knife", cost: "5" },
-  { name: "flack armour", cost: "5" },
-  { name: "chain axe", cost: "25" },
-  { name: "long rifle", cost: "35" },
-];
-
-const skillItems = ["Unshakable Conviction"];
-
-const injuries: string[] = [];
-const specialRules = [
-  "Fanatical",
-  "Gang Hierarchy (Champion)",
-  "Group Activation (1)",
-];
+import { Fighter } from "../../model/Dto/Fighter";
+import fighterExampleJson from "../../model/FakeData/FighterExample.json";
 
 function FighterPage() {
-  const [fighterView, setFighterView] = useState<FighterView>();
+  const [fighterInfo, setFighterInfo] = useState<Fighter>();
 
   useEffect(() => {
-    setFighterView(plainToClass(FighterView, json));
-  });
+    setFighterInfo(plainToClass(Fighter, fighterExampleJson));
+  }, []);
+
   return (
     <Stack direction="row" justifyContent="center" spacing={8}>
       <NavigationList />
       <Box sx={{ width: "75%" }}>
         <FighterCard>
           <FighterCardHeader name={"Vasia"} rang={"ganger"} />
-          <ListItem>
-            {fighterView === undefined ? (
-              <></>
-            ) : (
+          {fighterInfo === undefined ? (
+            <></>
+          ) : (
+            <ListItem>
               <DetailedStatsTable
                 stats={GetCharacteristicView(
-                  fighterView.totalCharacteristics,
-                  fighterView.xp,
-                  0
+                  fighterInfo.characteristics,
+                  fighterInfo.xp,
+                  fighterInfo.lvl
                 )}
               />
-            )}
-          </ListItem>
+            </ListItem>
+          )}
         </FighterCard>
         <Stack direction="row" justifyContent="center" spacing={8}>
           <StyledList header="Equipment">
-            {equimpentItems.map((item, index) => (
+            {fighterInfo?.equipment.map((item, index) => (
               <ListItem key={index}>
                 <ListItemText primary={item.name} />
                 <Chip
@@ -82,23 +64,23 @@ function FighterPage() {
             ))}
           </StyledList>
           <StyledList header="Skills">
-            {skillItems.map((item, index) => (
+            {fighterInfo?.skills.map((item, index) => (
               <ListItem key={index}>
-                <ListItemText primary={item} />
+                <ListItemText primary={item.name} />
               </ListItem>
             ))}
           </StyledList>
           <StyledList header="Injuries">
-            {injuries.map((item, index) => (
+            {fighterInfo?.injuries.map((item, index) => (
               <ListItem key={index}>
-                <ListItemText primary={item} />
+                <ListItemText primary={item.name} />
               </ListItem>
             ))}
           </StyledList>
           <StyledList header="Special Rules">
-            {specialRules.map((item, index) => (
+            {fighterInfo?.specialRules.map((item, index) => (
               <ListItem key={index}>
-                <ListItemText primary={item} />
+                <ListItemText primary={item.name} />
               </ListItem>
             ))}
           </StyledList>

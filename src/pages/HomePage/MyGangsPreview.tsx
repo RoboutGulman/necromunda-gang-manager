@@ -3,7 +3,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import LockIcon from "@mui/icons-material/Lock";
 import LogInDialog from "../../components/AppBar/LogInDialog";
-import { MyTeamPreviewExample } from "../../model/FakeData";
+import { MyTeamPreviewExample } from "../../model/FakeData/FakeData";
 import { getRosterBackground } from "../../backgrounds/RosterPreview/GetRosterBackground";
 import CreateGangDialog from "./CreateGangDialog";
 
