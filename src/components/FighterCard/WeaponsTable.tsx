@@ -8,9 +8,9 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Trait, Weapon } from "../../model/Types";
+import { Trait, Weapon } from "../../model/TeamView";
 
-const CellWithNoBorder = styled(TableCell)(({}) => ({
+const CellWithNoBorder = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: { fontWeight: "600" },
   borderWidth: 0,
 }));

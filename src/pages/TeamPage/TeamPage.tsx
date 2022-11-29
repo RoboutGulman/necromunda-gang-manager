@@ -7,21 +7,25 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import StatsTable from "../../components/FighterCard/StatsTable";
 import FighterCard from "../../components/FighterCard/FighterCard";
 import { Characteristics } from "../../model/Characteristics";
-import { TeamView } from "../../model/Types";
 import WeaponsTable from "../../components/FighterCard/WeaponsTable";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
 import EditIcon from "@mui/icons-material/Edit";
+import { TeamView } from "../../model/TeamView";
+import TeamViewJson from "../../model/TeamViewExample.json";
+import { plainToClass } from "class-transformer";
 
-interface TeamPageProps {
-  teamView: TeamView;
-}
+function TeamPage() {
+  const [teamView, setTeamView] = useState<TeamView>();
 
-function TeamPage({ teamView }: TeamPageProps) {
+  useEffect(() => {
+    setTeamView(plainToClass(TeamView, TeamViewJson));
+  }, []);
+
   return (
     <Paper
       style={{
@@ -34,39 +38,43 @@ function TeamPage({ teamView }: TeamPageProps) {
         <Link color="secondary" variant="h6" component={RouterLink} to="/">
           Return to home
         </Link>
-        {teamView.fighters.map((fighterView, index) => (
-          <FighterCard key={index}>
-            <FighterCardHeader
-              name={fighterView.name}
-              rang={fighterView.rang}
-              totalCost={fighterView.totalCost}
-            />
-            <StatsTable
-              stats={GetCharacteristicView(
-                fighterView.totalCharacteristics,
-                fighterView.xp
-              )}
-            />
-            <ListItem disablePadding>
-              <WeaponsTable weapons={fighterView.weapons} />
-            </ListItem>
-            <RouterLink to="/fighter/1">
-              <Box
-                sx={{
-                  backgroundColor: "#343a40",
-                  position: "absolute",
-                  right: "-21px",
-                  bottom: "-28px",
-                  borderRadius: "50%",
-                  border: "2px solid #747474",
-                }}>
-                <Fab size="medium" aria-label="add">
-                  <EditIcon />
-                </Fab>
-              </Box>
-            </RouterLink>
-          </FighterCard>
-        ))}
+        {teamView === undefined ? (
+          <></>
+        ) : (
+          teamView.fighters.map((fighterView, index) => (
+            <FighterCard key={index}>
+              <FighterCardHeader
+                name={fighterView.name}
+                rang={fighterView.rang}
+                totalCost={fighterView.totalCost}
+              />
+              <StatsTable
+                stats={GetCharacteristicView(
+                  fighterView.totalCharacteristics,
+                  fighterView.xp
+                )}
+              />
+              <ListItem disablePadding>
+                <WeaponsTable weapons={fighterView.weapons} />
+              </ListItem>
+              <RouterLink to="/fighter/1">
+                <Box
+                  sx={{
+                    backgroundColor: "#343a40",
+                    position: "absolute",
+                    right: "-21px",
+                    bottom: "-28px",
+                    borderRadius: "50%",
+                    border: "2px solid #747474",
+                  }}>
+                  <Fab size="medium" aria-label="add">
+                    <EditIcon />
+                  </Fab>
+                </Box>
+              </RouterLink>
+            </FighterCard>
+          ))
+        )}
       </List>
     </Paper>
   );

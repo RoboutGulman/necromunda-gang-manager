@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import Layout from "./components/Layout";
 import TeamPage from "./pages/TeamPage/TeamPage";
-import { TeamExample } from "./model/FakeData";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import FighterPage from "./pages/FighterPage/FighterPage";
 
@@ -28,10 +27,7 @@ function App() {
             />
           }
         />
-        <Route
-          path="roster/:id"
-          element={<TeamPage teamView={TeamExample} />}
-        />
+        <Route path="roster/:id" element={<TeamPage />} />
         <Route path="fighter/:id" element={<FighterPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

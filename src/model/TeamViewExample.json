@@ -1,0 +1,143 @@
+{
+    "id": "123",
+    "name": "Dust Raiders",
+    "faction": "ash wastes nomads",
+    "fighters": [
+        {
+            "id": "312",
+            "name": "Bob",
+            "rang": "ganger",
+            "totalCharacteristics": {
+                "m": 5,
+                "ws": 4,
+                "bs": 4,
+                "s": 3,
+                "t": 3,
+                "w": 1,
+                "i": 4,
+                "a": 1,
+                "ld": 7,
+                "cl": 7,
+                "wp": 7,
+                "int": 7
+            },
+            "weapons": [
+                {
+                    "id": "",
+                    "name": "Fighting Knife",
+                    "profiles": [
+                        {
+                            "name": null,
+                            "isMelee": true,
+                            "sr": null,
+                            "lr": null,
+                            "sm": null,
+                            "lm": null,
+                            "s": null,
+                            "ap": -1,
+                            "d": 1,
+                            "am": null,
+                            "traits": []
+                        }
+                    ],
+                    "upgrades": [],
+                    "cost": 25,
+                    "rarity": null,
+                    "availibleOnTraidingPost": true
+                }
+            ],
+            "equipment": [
+                {
+                    "name": "Flack armour"
+                }
+            ],
+            "skills": [],
+            "status": 1,
+            "totalCost": 120,
+            "xp": 0
+        },
+        {
+            "id": "1",
+            "name": "John",
+            "rang": "leader",
+            "totalCharacteristics": {
+                "m": 6,
+                "ws": 3,
+                "bs": 3,
+                "s": 3,
+                "t": 4,
+                "w": 2,
+                "i": 4,
+                "a": 2,
+                "ld": 5,
+                "cl": 6,
+                "wp": 6,
+                "int": 6
+            },
+            "weapons": [
+                {
+                    "id": "",
+                    "name": "Plasma Pistol",
+                    "profiles": [
+                        {
+                            "name": "low",
+                            "isMelee": false,
+                            "sr": 12,
+                            "lr": 24,
+                            "sm": 1,
+                            "lm": null,
+                            "s": 5,
+                            "ap": -1,
+                            "d": 1,
+                            "am": null,
+                            "traits": []
+                        },
+                        {
+                            "name": "max",
+                            "isMelee": false,
+                            "sr": 12,
+                            "lr": 24,
+                            "sm": 1,
+                            "lm": null,
+                            "s": 6,
+                            "ap": -2,
+                            "d": 2,
+                            "am": null,
+                            "traits": [
+                                {
+                                    "id": "1",
+                                    "name": "unstable"
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Rapid Fire"
+                                }
+                            ]
+                        }
+                    ],
+                    "upgrades": [],
+                    "cost": 25,
+                    "rarity": null,
+                    "availibleOnTraidingPost": true
+                }
+            ],
+            "equipment": [
+                {
+                    "name": "Mesh armour"
+                }
+            ],
+            "skills": [
+                {
+                    "name": "Nerves of Steel"
+                }
+            ],
+            "status": 1,
+            "totalCost": 250,
+            "xp": 12
+        }
+    ],
+    "creator": {
+        "id": "123",
+        "name": "Vasia"
+    }
+}

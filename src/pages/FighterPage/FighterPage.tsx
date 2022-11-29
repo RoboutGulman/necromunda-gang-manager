@@ -10,16 +10,17 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FighterCard from "../../components/FighterCard/FighterCard";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
-import { Bob } from "../../model/FakeData";
-import { FighterToFighterView } from "../../model/FighterToFighterView";
 import NavigationList from "./NavigationList";
 import DetailedStatsTable from "./DetailedStatsTable";
 import { Characteristics } from "../../model/Characteristics";
 import background from "../../backgrounds/dark_texture_bg.jpg";
 import EditIcon from "@mui/icons-material/Edit";
+import json from "../../model/FighterExample.json";
+import { FighterView } from "../../model/TeamView";
+import { plainToClass } from "class-transformer";
 
 const equimpentItems = [
   {
@@ -42,7 +43,11 @@ const specialRules = [
 ];
 
 function FighterPage() {
-  const fighterView = FighterToFighterView(Bob);
+  const [fighterView, setFighterView] = useState<FighterView>();
+
+  useEffect(() => {
+    setFighterView(plainToClass(FighterView, json));
+  });
   return (
     <Stack direction="row" justifyContent="center" spacing={8}>
       <NavigationList />
@@ -50,13 +55,17 @@ function FighterPage() {
         <FighterCard>
           <FighterCardHeader name={"Vasia"} rang={"ganger"} />
           <ListItem>
-            <DetailedStatsTable
-              stats={GetCharacteristicView(
-                fighterView.totalCharacteristics,
-                fighterView.xp,
-                Bob.lvl
-              )}
-            />
+            {fighterView === undefined ? (
+              <></>
+            ) : (
+              <DetailedStatsTable
+                stats={GetCharacteristicView(
+                  fighterView.totalCharacteristics,
+                  fighterView.xp,
+                  0
+                )}
+              />
+            )}
           </ListItem>
         </FighterCard>
         <Stack direction="row" justifyContent="center" spacing={8}>

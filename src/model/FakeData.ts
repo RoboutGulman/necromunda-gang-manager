@@ -1,16 +1,6 @@
 import {Characteristics} from "./Characteristics";
-import {FighterToFighterView} from "./FighterToFighterView";
-import {
-  Equipment,
-  Fighter,
-  Status,
-  TeamView,
-  TeamPreview,
-  Trait,
-  User,
-  Weapon,
-  MyTeamPreview
-} from "./Types";
+import {Equipment, Trait, User, Weapon} from "./TeamView";
+import {MyTeamPreview, TeamPreview} from "./Types";
 
 export const TeamPreviewExamples: TeamPreview[] = [
   {
@@ -125,7 +115,7 @@ const FlackArmour: Equipment = {
   cost: 15
 };
 
-export const Bob: Fighter = {
+/*export const Bob: Fighter = {
   id: "",
   name: "Bob",
   rang: "Ganger",
@@ -142,14 +132,16 @@ export const Bob: Fighter = {
   xp: 0,
   lvl: 1,
   totalCost: 120
-};
+};*/
 
 const Vasia: User = {
   id: "",
   name: "Vasia"
 };
 
-export const TeamExample: TeamView = {
+//export const TeamExample = ()
+
+/*export const TeamExample: TeamView = {
   id: "",
   name: "Raiders",
   fighters: [
@@ -157,4 +149,4 @@ export const TeamExample: TeamView = {
   ],
   faction: "Ash Waste Nomads",
   creator: Vasia
-};
+};*/
