@@ -103,13 +103,35 @@
                             "traits": [
                                 {
                                     "id": "1",
-                                    "name": "unstable"
+                                    "name": "Unstable"
                                 },
                                 {
                                     "id": "2",
                                     "name": "Rapid Fire"
                                 }
                             ]
+                        }
+                    ],
+                    "upgrades": [],
+                    "cost": 25,
+                    "rarity": null,
+                    "availibleOnTraidingPost": true
+                },
+                {
+                    "id": "",
+                    "name": "Fighting Knife",
+                    "profiles": [
+                        {
+                            "name": "Fighting Knife",
+                            "sr": null,
+                            "lr": null,
+                            "sm": null,
+                            "lm": null,
+                            "s": "S",
+                            "ap": "-1",
+                            "d": 1,
+                            "am": null,
+                            "traits": []
                         }
                     ],
                     "upgrades": [],

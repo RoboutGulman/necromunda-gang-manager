@@ -9,6 +9,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import internal from "stream";
 import { Trait, Weapon, WeaponProfile } from "../../model/Types";
 
 const CellWithNoBorder = styled(TableCell)(() => ({
@@ -27,9 +28,7 @@ const CellWithRightBorder = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
+  backgroundColor: theme.palette.action.hover,
 }));
 
 interface WeaponsTableProps {
@@ -64,12 +63,13 @@ function WeaponsTable({ weapons }: WeaponsTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {weapons.map((weapon) =>
+          {weapons.map((weapon, index) =>
             weapon.profiles.length == 1 ? (
-              <WeaponProfileRow weaponProfiles={weapon.profiles} />
+              <WeaponRow weaponProfiles={weapon.profiles} index={index} />
             ) : (
-              <WeaponProfileRow
+              <WeaponRow
                 weaponProfiles={weapon.profiles}
+                index={index}
                 name={weapon.name}
               />
             )
@@ -82,153 +82,86 @@ function WeaponsTable({ weapons }: WeaponsTableProps) {
 
 export default WeaponsTable;
 
-interface WeaponProfileRowProps {
+interface WeaponRowProps {
   weaponProfiles: WeaponProfile[];
+  index: number;
   name?: string;
 }
 
-function WeaponProfileRow({ weaponProfiles, name }: WeaponProfileRowProps) {
-  let strings: Array<Array<string>> = [[], [], [], [], [], [], [], [], [], []];
-  if (name != null) {
-    strings = [
-      [name],
-      ["_"],
-      ["_"],
-      ["_"],
-      ["_"],
-      ["_"],
-      ["_"],
-      ["_"],
-      ["_"],
-      ["_"],
-    ];
-  }
-
-  for (const profile of weaponProfiles) {
-    strings[0] = [...strings[0], profile.name ?? "-"];
-    strings[1] = [...strings[1], profile.sr ?? "-"];
-    strings[2] = [...strings[2], profile.lr ?? "-"];
-    strings[3] = [...strings[3], profile.sm ?? "-"];
-    strings[4] = [...strings[4], profile.lm ?? "-"];
-    strings[5] = [...strings[5], profile.s ?? "-"];
-    strings[6] = [...strings[6], profile.d ?? "-"];
-    strings[7] = [...strings[7], profile.ap ?? "-"];
-    strings[8] = [...strings[8], profile.am ?? "-"];
-    strings[9] = [
-      ...strings[9],
-      profile.traits.length === 0
-        ? "-"
-        : profile.traits.map((trait) => trait.name).join(","),
-    ];
-  }
-  console.log(strings);
-
+function WeaponRow({ weaponProfiles, index, name }: WeaponRowProps) {
   return (
     <>
-      <TableRow key={weaponProfiles[0].name}>
-        <CellWithRightBorder component="th" scope="row">
-          {strings[0].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithNoBorder align="center">
-          {strings[1].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithNoBorder>
-        <CellWithRightBorder align="center">
-          {strings[2].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithNoBorder align="center">
-          {strings[3].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithNoBorder>
-        <CellWithRightBorder align="center">
-          {strings[4].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithRightBorder align="center">
-          {strings[5].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithRightBorder align="center">
-          {strings[6].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithRightBorder align="center">
-          {strings[7].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithRightBorder align="center">
-          {strings[8].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithNoBorder>
-          {strings[9].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithNoBorder>
-      </TableRow>
-      <TableRow key={weaponProfiles[0].name}>
-        <CellWithRightBorder component="th" scope="row">
-          {strings[0].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithNoBorder align="center">
-          {strings[1].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithNoBorder>
-        <CellWithRightBorder align="center">
-          {strings[2].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithNoBorder align="center">
-          {strings[3].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithNoBorder>
-        <CellWithRightBorder align="center">
-          {strings[4].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithRightBorder align="center">
-          {strings[5].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithRightBorder align="center">
-          {strings[6].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithRightBorder align="center">
-          {strings[7].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithRightBorder align="center">
-          {strings[8].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithRightBorder>
-        <CellWithNoBorder>
-          {strings[9].map((profile: string) => (
-            <Typography>{profile}</Typography>
-          ))}
-        </CellWithNoBorder>
-      </TableRow>
+      {name === undefined ? (
+        <></>
+      ) : (
+        <Stroke
+          key={name}
+          items={[name, "", "", "", "", "", "", "", "", ""]}
+          index={index}
+          isHeader={true}
+        />
+      )}
+      {weaponProfiles.map((weaponProfile: WeaponProfile, keyIndex) => (
+        <Stroke
+          key={keyIndex}
+          items={[
+            weaponProfile.name ?? "",
+            weaponProfile.sr ?? "-",
+            weaponProfile.lr ?? "-",
+            weaponProfile.sm ?? "-",
+            weaponProfile.lm ?? "-",
+            weaponProfile.s ?? "-",
+            weaponProfile.d ?? "-",
+            weaponProfile.ap ?? "-",
+            weaponProfile.am ?? "-",
+            weaponProfile.traits.map((trait) => trait.name).join(","),
+          ]}
+          index={index}
+          isHeader={name === undefined ? true : false}
+        />
+      ))}
+    </>
+  );
+}
+
+interface StrokeProps {
+  items: string[];
+  index: number;
+  isHeader: boolean;
+}
+
+function Stroke({ items, index, isHeader }: StrokeProps) {
+  return (
+    <RowWithBackground index={index}>
+      <CellWithRightBorder component="th" scope="row">
+        {isHeader ? items[0] : "- " + items[0]}
+      </CellWithRightBorder>
+      <CellWithNoBorder align="center">{items[1]}</CellWithNoBorder>
+      <CellWithRightBorder align="center">{items[2]}</CellWithRightBorder>
+      <CellWithNoBorder align="center">{items[3]}</CellWithNoBorder>
+      <CellWithRightBorder align="center">{items[4]}</CellWithRightBorder>
+      <CellWithRightBorder align="center">{items[5]}</CellWithRightBorder>
+      <CellWithRightBorder align="center">{items[6]}</CellWithRightBorder>
+      <CellWithRightBorder align="center">{items[7]}</CellWithRightBorder>
+      <CellWithRightBorder align="center">{items[8]}</CellWithRightBorder>
+      <CellWithNoBorder>{items[9]}</CellWithNoBorder>
+    </RowWithBackground>
+  );
+}
+
+interface RowWithBackgroundProps {
+  index: number;
+  children: React.ReactNode;
+}
+
+function RowWithBackground({ index, children }: RowWithBackgroundProps) {
+  return (
+    <>
+      {index % 2 === 0 ? (
+        <TableRow>{children}</TableRow>
+      ) : (
+        <StyledTableRow>{children}</StyledTableRow>
+      )}
     </>
   );
 }
