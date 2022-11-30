@@ -7,8 +7,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
-import { Trait, Weapon } from "../../model/Types";
+import { Trait, Weapon, WeaponProfile } from "../../model/Types";
 
 const CellWithNoBorder = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: { fontWeight: "600" },
@@ -30,14 +31,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover,
   },
 }));
-
-function GetCorrectStatView(
-  stat: number | null,
-  symbol: string = "",
-  isModificator: boolean = false
-): string {
-  return stat ? (isModificator && stat > 0 ? "+" + stat : stat + symbol) : "-";
-}
 
 interface WeaponsTableProps {
   weapons: Weapon[];
@@ -71,40 +64,16 @@ function WeaponsTable({ weapons }: WeaponsTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {weapons.map((weapon) => (
-            <StyledTableRow key={weapon.name}>
-              <CellWithRightBorder component="th" scope="row">
-                {weapon.name}
-              </CellWithRightBorder>
-              <CellWithNoBorder align="center">
-                {GetCorrectStatView(weapon.profiles[0].sr, '"')}
-              </CellWithNoBorder>
-              <CellWithRightBorder align="center">
-                {GetCorrectStatView(weapon.profiles[0].lr, '"')}
-              </CellWithRightBorder>
-              <CellWithNoBorder align="center">
-                {GetCorrectStatView(weapon.profiles[0].sm, "", true)}
-              </CellWithNoBorder>
-              <CellWithRightBorder align="center">
-                {GetCorrectStatView(weapon.profiles[0].lm, "", true)}
-              </CellWithRightBorder>
-              <CellWithRightBorder align="center">
-                {GetCorrectStatView(weapon.profiles[0].s)}
-              </CellWithRightBorder>
-              <CellWithRightBorder align="center">
-                {GetCorrectStatView(weapon.profiles[0].d)}
-              </CellWithRightBorder>
-              <CellWithRightBorder align="center">
-                {GetCorrectStatView(weapon.profiles[0].ap, "", true)}
-              </CellWithRightBorder>
-              <CellWithRightBorder align="center">
-                {GetCorrectStatView(weapon.profiles[0].am, "+")}
-              </CellWithRightBorder>
-              <CellWithNoBorder>
-                {weapon.profiles[0].traits.map((value: Trait) => value.name)}
-              </CellWithNoBorder>
-            </StyledTableRow>
-          ))}
+          {weapons.map((weapon) =>
+            weapon.profiles.length == 1 ? (
+              <WeaponProfileRow weaponProfiles={weapon.profiles} />
+            ) : (
+              <WeaponProfileRow
+                weaponProfiles={weapon.profiles}
+                name={weapon.name}
+              />
+            )
+          )}
         </TableBody>
       </Table>
     </TableContainer>
@@ -112,3 +81,154 @@ function WeaponsTable({ weapons }: WeaponsTableProps) {
 }
 
 export default WeaponsTable;
+
+interface WeaponProfileRowProps {
+  weaponProfiles: WeaponProfile[];
+  name?: string;
+}
+
+function WeaponProfileRow({ weaponProfiles, name }: WeaponProfileRowProps) {
+  let strings: Array<Array<string>> = [[], [], [], [], [], [], [], [], [], []];
+  if (name != null) {
+    strings = [
+      [name],
+      ["_"],
+      ["_"],
+      ["_"],
+      ["_"],
+      ["_"],
+      ["_"],
+      ["_"],
+      ["_"],
+      ["_"],
+    ];
+  }
+
+  for (const profile of weaponProfiles) {
+    strings[0] = [...strings[0], profile.name ?? "-"];
+    strings[1] = [...strings[1], profile.sr ?? "-"];
+    strings[2] = [...strings[2], profile.lr ?? "-"];
+    strings[3] = [...strings[3], profile.sm ?? "-"];
+    strings[4] = [...strings[4], profile.lm ?? "-"];
+    strings[5] = [...strings[5], profile.s ?? "-"];
+    strings[6] = [...strings[6], profile.d ?? "-"];
+    strings[7] = [...strings[7], profile.ap ?? "-"];
+    strings[8] = [...strings[8], profile.am ?? "-"];
+    strings[9] = [
+      ...strings[9],
+      profile.traits.length === 0
+        ? "-"
+        : profile.traits.map((trait) => trait.name).join(","),
+    ];
+  }
+  console.log(strings);
+
+  return (
+    <>
+      <TableRow key={weaponProfiles[0].name}>
+        <CellWithRightBorder component="th" scope="row">
+          {strings[0].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithNoBorder align="center">
+          {strings[1].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithNoBorder>
+        <CellWithRightBorder align="center">
+          {strings[2].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithNoBorder align="center">
+          {strings[3].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithNoBorder>
+        <CellWithRightBorder align="center">
+          {strings[4].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithRightBorder align="center">
+          {strings[5].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithRightBorder align="center">
+          {strings[6].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithRightBorder align="center">
+          {strings[7].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithRightBorder align="center">
+          {strings[8].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithNoBorder>
+          {strings[9].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithNoBorder>
+      </TableRow>
+      <TableRow key={weaponProfiles[0].name}>
+        <CellWithRightBorder component="th" scope="row">
+          {strings[0].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithNoBorder align="center">
+          {strings[1].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithNoBorder>
+        <CellWithRightBorder align="center">
+          {strings[2].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithNoBorder align="center">
+          {strings[3].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithNoBorder>
+        <CellWithRightBorder align="center">
+          {strings[4].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithRightBorder align="center">
+          {strings[5].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithRightBorder align="center">
+          {strings[6].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithRightBorder align="center">
+          {strings[7].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithRightBorder align="center">
+          {strings[8].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithRightBorder>
+        <CellWithNoBorder>
+          {strings[9].map((profile: string) => (
+            <Typography>{profile}</Typography>
+          ))}
+        </CellWithNoBorder>
+      </TableRow>
+    </>
+  );
+}

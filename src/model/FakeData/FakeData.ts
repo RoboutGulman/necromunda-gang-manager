@@ -66,7 +66,7 @@ const Backstab: Trait = {
   name: "Backstab"
 };
 
-const Autogun: Weapon = {
+/*const Autogun: Weapon = {
   id: "",
   name: "Autogun",
   profiles: [
@@ -112,7 +112,7 @@ const FightingKnife: Weapon = {
   cost: 25,
   rarity: null,
   availibleOnTraidingPost: true
-};
+};*/
 
 const FlackArmour: Equipment = {
   id: "",
