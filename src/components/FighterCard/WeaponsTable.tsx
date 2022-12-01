@@ -7,10 +7,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
-import internal from "stream";
-import { Trait, Weapon, WeaponProfile } from "../../model/Types";
+import { Weapon, WeaponProfile } from "../../model/Types";
 
 const CellWithNoBorder = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: { fontWeight: "600" },
@@ -38,7 +36,7 @@ interface WeaponsTableProps {
 function WeaponsTable({ weapons }: WeaponsTableProps) {
   return (
     <TableContainer sx={{ maxHeight: 440 }}>
-      <Table>
+      <Table size="small">
         <TableHead>
           <TableRow>
             <CellWithNoBorder colSpan={1} />
@@ -56,8 +54,8 @@ function WeaponsTable({ weapons }: WeaponsTableProps) {
             <CellWithNoBorder align="center">S</CellWithNoBorder>
             <CellWithRightBorder align="center">L</CellWithRightBorder>
             <CellWithRightBorder align="center">Str</CellWithRightBorder>
-            <CellWithRightBorder align="center">D</CellWithRightBorder>
             <CellWithRightBorder align="center">Ap</CellWithRightBorder>
+            <CellWithRightBorder align="center">D</CellWithRightBorder>
             <CellWithRightBorder align="center">Am</CellWithRightBorder>
             <CellWithNoBorder>Traits</CellWithNoBorder>
           </TableRow>
@@ -65,9 +63,14 @@ function WeaponsTable({ weapons }: WeaponsTableProps) {
         <TableBody>
           {weapons.map((weapon, index) =>
             weapon.profiles.length == 1 ? (
-              <WeaponRow weaponProfiles={weapon.profiles} index={index} />
+              <WeaponRow
+                key={index}
+                weaponProfiles={weapon.profiles}
+                index={index}
+              />
             ) : (
               <WeaponRow
+                key={index}
                 weaponProfiles={weapon.profiles}
                 index={index}
                 name={weapon.name}
@@ -111,8 +114,8 @@ function WeaponRow({ weaponProfiles, index, name }: WeaponRowProps) {
             weaponProfile.sm ?? "-",
             weaponProfile.lm ?? "-",
             weaponProfile.s ?? "-",
-            weaponProfile.d ?? "-",
             weaponProfile.ap ?? "-",
+            weaponProfile.d ?? "-",
             weaponProfile.am ?? "-",
             weaponProfile.traits.map((trait) => trait.name).join(","),
           ]}
@@ -157,7 +160,7 @@ interface RowWithBackgroundProps {
 function RowWithBackground({ index, children }: RowWithBackgroundProps) {
   return (
     <>
-      {index % 2 === 0 ? (
+      {index % 2 === 1 ? (
         <TableRow>{children}</TableRow>
       ) : (
         <StyledTableRow>{children}</StyledTableRow>

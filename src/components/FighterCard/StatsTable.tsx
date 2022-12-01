@@ -19,7 +19,7 @@ const StatsTable = (props: StatsTableProps) => {
       <ListItem disablePadding>
         <Stack
           direction="row"
-          sx={{ width: "90%" }}
+          sx={{ width: "100%" }}
           justifyContent="space-around ">
           {props.stats.map((stat, index) => (
             <Item key={index}>{stat.name}</Item>
@@ -27,14 +27,12 @@ const StatsTable = (props: StatsTableProps) => {
         </Stack>
       </ListItem>
       <Divider
-        variant="middle"
-        component="li"
         sx={{ bgcolor: "secondary.light" }}
       />
       <ListItem disablePadding>
         <Stack
           direction="row"
-          sx={{ width: "90%" }}
+          sx={{ width: "100%" }}
           justifyContent="space-around ">
           {props.stats.map((stat, index) => (
             <Item key={index}>{stat.value}</Item>
