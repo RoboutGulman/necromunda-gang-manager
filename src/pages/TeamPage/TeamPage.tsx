@@ -1,16 +1,15 @@
 import {
   Box,
-  Divider,
+  Drawer,
   Fab,
   Grid,
+  IconButton,
   Link,
   List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
   Paper,
-  Table,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -20,123 +19,173 @@ import FighterCard from "../../components/FighterCard/FighterCard";
 import WeaponsTable from "../../components/FighterCard/WeaponsTable";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
 import EditIcon from "@mui/icons-material/Edit";
+import MenuIcon from "@mui/icons-material/Menu";
 
 import { TeamView } from "../../model/Dto/TeamView";
 import TeamViewJson from "../../model/FakeData/TeamViewExample.json";
 import { plainToClass } from "class-transformer";
 import { Characteristics } from "../../model/Characteristics";
 
-function TeamPage() {
+const drawerWidth = 240;
+
+interface Props {
+  window?: () => Window;
+}
+
+function TeamPage(props: Props) {
+  const { window } = props;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
   const [teamView, setTeamView] = useState<TeamView>();
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   useEffect(() => {
     setTeamView(plainToClass(TeamView, TeamViewJson));
   }, []);
 
-  return (
-    <Paper
-      style={{
-        backgroundColor: "transparent",
+  const drawer = (
+    <Box
+      sx={{
+        bgcolor: "background.paper",
+        borderRadius: "3px",
       }}>
-      <Grid container>
-        <Grid item xs={12} lg={8}>
-          <List>
-            <ListItem disablePadding>
-              <Typography variant="h6" color="secondary">
-                Roster page
-              </Typography>
-            </ListItem>
-            <ListItem disablePadding>
-              <Link
-                color="secondary"
-                variant="h6"
-                component={RouterLink}
-                to="/">
-                Return to home
-              </Link>
-            </ListItem>
-            {teamView === undefined ? (
-              <></>
-            ) : (
-              teamView.fighters.map((fighterView, index) => (
-                <ListItem>
-                  <FighterCard key={index}>
-                    <FighterCardHeader
-                      name={fighterView.name}
-                      rang={fighterView.rang}
-                      totalCost={fighterView.totalCost}
-                    />
-                    <StatsTable
-                      stats={GetCharacteristicView(
-                        fighterView.totalCharacteristics,
-                        fighterView.xp
-                      )}
-                    />
-                    <ListItem disablePadding sx={{ mb: "10px" }}>
-                      <WeaponsTable weapons={fighterView.weapons} />
-                    </ListItem>
-                    <ListItem disablePadding>
-                      <Grid container spacing={1}>
-                        <GridStroke
-                          name="EQUIPMENT"
-                          items={fighterView.equipment.map(
-                            (equipment) => equipment.name
-                          )}
-                        />
-                        <GridStroke
-                          name="SKILLS"
-                          items={fighterView.skills.map(
-                            (equipment) => equipment.name
-                          )}
-                        />
-                      </Grid>
-                    </ListItem>
-                    <RouterLink to="/fighter/1">
-                      <Box
-                        sx={{
-                          backgroundColor: "#343a40",
-                          position: "absolute",
-                          right: "-21px",
-                          bottom: "-28px",
-                          borderRadius: "50%",
-                          border: "2px solid #747474",
-                        }}>
-                        <Fab size="medium" aria-label="add">
-                          <EditIcon />
-                        </Fab>
-                      </Box>
-                    </RouterLink>
-                  </FighterCard>
-                </ListItem>
-              ))
-            )}
-          </List>
-        </Grid>
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemText primary="Inbox" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemText primary="Drafts" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </Box>
+  );
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
+
+  return (
+    <Box sx={{ display: "flex" }}>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          width: { xs: "100%", md: `calc(100% - ${drawerWidth}px)` },
+        }}>
+        <List>
+          <IconButton
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ color: "white", mr: 2, display: { md: "none" } }}>
+            <MenuIcon />
+          </IconButton>
+          <ListItem disablePadding>
+            <Typography variant="h6" color="secondary">
+              Roster page
+            </Typography>
+          </ListItem>
+          <ListItem disablePadding>
+            <Link color="secondary" variant="h6" component={RouterLink} to="/">
+              Return to home
+            </Link>
+          </ListItem>
+          {teamView === undefined ? (
+            <></>
+          ) : (
+            teamView.fighters.map((fighterView, index) => (
+              <ListItem>
+                <FighterCard key={index}>
+                  <FighterCardHeader
+                    name={fighterView.name}
+                    rang={fighterView.rang}
+                    totalCost={fighterView.totalCost}
+                  />
+                  <StatsTable
+                    stats={GetCharacteristicView(
+                      fighterView.totalCharacteristics,
+                      fighterView.xp
+                    )}
+                  />
+                  <ListItem disablePadding sx={{ mb: "10px" }}>
+                    <WeaponsTable weapons={fighterView.weapons} />
+                  </ListItem>
+                  <ListItem disablePadding>
+                    <Grid container spacing={1}>
+                      <GridStroke
+                        name="EQUIPMENT"
+                        items={fighterView.equipment.map(
+                          (equipment) => equipment.name
+                        )}
+                      />
+                      <GridStroke
+                        name="SKILLS"
+                        items={fighterView.skills.map(
+                          (equipment) => equipment.name
+                        )}
+                      />
+                    </Grid>
+                  </ListItem>
+                  <RouterLink to="/fighter/1">
+                    <Box
+                      sx={{
+                        backgroundColor: "#343a40",
+                        position: "absolute",
+                        right: "-21px",
+                        bottom: "-28px",
+                        borderRadius: "50%",
+                        border: "2px solid #747474",
+                      }}>
+                      <Fab size="medium" aria-label="add">
+                        <EditIcon />
+                      </Fab>
+                    </Box>
+                  </RouterLink>
+                </FighterCard>
+              </ListItem>
+            ))
+          )}
+        </List>
+      </Box>
+      <Box
+        component="nav"
+        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
+        aria-label="mailbox folders">
+        <Drawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}>
+          {drawer}
+        </Drawer>
         <Box
           sx={{
+            display: { xs: "none", md: "block" },
             position: "absolute",
-            right: "20px",
-            top: "20px",
-            width: "100%",
-            maxWidth: 360,
-            bgcolor: "background.paper",
-            borderRadius: "3px",
+            right: "60px",
+            top: "70px",
+            width: drawerWidth,
           }}>
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Inbox" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Drafts" />
-              </ListItemButton>
-            </ListItem>
-          </List>
+          {drawer}
         </Box>
-      </Grid>
-    </Paper>
+      </Box>
+    </Box>
   );
 }
 
