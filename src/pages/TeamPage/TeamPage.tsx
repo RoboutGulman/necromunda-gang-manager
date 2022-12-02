@@ -59,7 +59,7 @@ function TeamPage(props: Props) {
       sx={{
         bgcolor: "background.paper",
         borderRadius: "3px",
-        mr: "30px",
+        mr: { sx: "0", md: "15px" },
       }}>
       <List sx={{ paddingBottom: "0" }}>
         <ListItem disablePadding>
@@ -134,7 +134,6 @@ function TeamPage(props: Props) {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
           width: { xs: "100%", md: `calc(100% - ${drawerWidth}px)` },
         }}>
         <List>
@@ -145,16 +144,6 @@ function TeamPage(props: Props) {
             sx={{ color: "white", mr: 2, display: { md: "none" } }}>
             <MenuIcon />
           </IconButton>
-          <ListItem disablePadding>
-            <Typography variant="h6" color="secondary">
-              Roster page
-            </Typography>
-          </ListItem>
-          <ListItem disablePadding>
-            <Link color="secondary" variant="h6" component={RouterLink} to="/">
-              Return to home
-            </Link>
-          </ListItem>
           {teamView === undefined ? (
             <></>
           ) : (
@@ -239,8 +228,8 @@ function TeamPage(props: Props) {
             display: { xs: "none", md: "block" },
             "& .MuiDrawer-paper": {
               mr: "15px",
+              width: `${drawerWidth}px`,
               boxSizing: "border-box",
-              width: { drawerWidth },
               background: "transparent",
               justifyContent: "center",
             },
@@ -350,10 +339,10 @@ function GridStroke({ name, items }: GridStrokeProps) {
     <>
       {items.length > 0 ? (
         <>
-          <Grid item xs={2}>
+          <Grid item xs={6} md={2}>
             <Typography variant="body1">{name}</Typography>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={6} md={10}>
             <Typography variant="body1">{items.join(", ")}</Typography>
           </Grid>
         </>

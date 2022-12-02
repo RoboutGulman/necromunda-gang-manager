@@ -35,8 +35,20 @@ interface WeaponsTableProps {
 
 function WeaponsTable({ weapons }: WeaponsTableProps) {
   return (
-    <TableContainer sx={{ maxHeight: 440 }}>
+    <TableContainer>
       <Table size="small">
+        <colgroup>
+          <col style={{ width: "30%" }} />
+          <col style={{ width: "5%" }} />
+          <col style={{ width: "5%" }} />
+          <col style={{ width: "5%" }} />
+          <col style={{ width: "5%" }} />
+          <col style={{ width: "5%" }} />
+          <col style={{ width: "5%" }} />
+          <col style={{ width: "5%" }} />
+          <col style={{ width: "5%" }} />
+          <col style={{ width: "30%" }} />
+        </colgroup>
         <TableHead>
           <TableRow>
             <CellWithNoBorder colSpan={1} />
