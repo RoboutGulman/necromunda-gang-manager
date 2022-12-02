@@ -101,8 +101,8 @@ function TeamPage(props: Props) {
             <></>
           ) : (
             teamView.fighters.map((fighterView, index) => (
-              <ListItem>
-                <FighterCard key={index}>
+              <ListItem key={index}>
+                <FighterCard>
                   <FighterCardHeader
                     name={fighterView.name}
                     rang={fighterView.rang}
