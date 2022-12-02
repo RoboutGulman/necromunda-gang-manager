@@ -1,5 +1,6 @@
 import {
   Box,
+  Divider,
   Drawer,
   Fab,
   Grid,
@@ -8,6 +9,7 @@ import {
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   Paper,
   Typography,
@@ -20,13 +22,19 @@ import WeaponsTable from "../../components/FighterCard/WeaponsTable";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
 import EditIcon from "@mui/icons-material/Edit";
 import MenuIcon from "@mui/icons-material/Menu";
+import InfoIcon from "@mui/icons-material/Info";
+import AddHomeIcon from "@mui/icons-material/AddHome";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import AddIcon from "@mui/icons-material/Add";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { TeamView } from "../../model/Dto/TeamView";
 import TeamViewJson from "../../model/FakeData/TeamViewExample.json";
 import { plainToClass } from "class-transformer";
 import { Characteristics } from "../../model/Characteristics";
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 interface Props {
   window?: () => Window;
@@ -51,16 +59,66 @@ function TeamPage(props: Props) {
       sx={{
         bgcolor: "background.paper",
         borderRadius: "3px",
+        mr: "30px",
       }}>
-      <List>
+      <List sx={{ paddingBottom: "0" }}>
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemText primary="Inbox" />
+            <ListItemIcon>
+              <InfoIcon />
+            </ListItemIcon>
+            <ListItemText primary="Details" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemText primary="Drafts" />
+            <ListItemIcon>
+              <AddHomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Territories" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <BusinessCenterIcon />
+            </ListItemIcon>
+            <ListItemText primary="Stash" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <EditIcon />
+            </ListItemIcon>
+            <ListItemText primary="Notes" />
+          </ListItemButton>
+        </ListItem>
+        <Divider />
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <AddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Add fighter" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <MonetizationOnIcon />
+            </ListItemIcon>
+            <ListItemText primary="Trading Post" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem
+          disablePadding
+          sx={{ color: "white", backgroundColor: "red" }}>
+          <ListItemButton>
+            <ListItemIcon sx={{ color: "white" }}>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText primary="Delete Gang" />
           </ListItemButton>
         </ListItem>
       </List>
@@ -174,16 +232,22 @@ function TeamPage(props: Props) {
           }}>
           {drawer}
         </Drawer>
-        <Box
+        <Drawer
+          anchor="right"
+          variant="permanent"
           sx={{
             display: { xs: "none", md: "block" },
-            position: "absolute",
-            right: "60px",
-            top: "70px",
-            width: drawerWidth,
-          }}>
+            "& .MuiDrawer-paper": {
+              mr: "15px",
+              boxSizing: "border-box",
+              width: { drawerWidth },
+              background: "transparent",
+              justifyContent: "center",
+            },
+          }}
+          open>
           {drawer}
-        </Box>
+        </Drawer>
       </Box>
     </Box>
   );

@@ -15,7 +15,9 @@ function FighterCard({ children }: FighterCardProps) {
           "2px 2px 5px 3px rgb(0 0 0 / 50%), -2px -2px 5px 3px rgb(0 0 0 / 50%)",
         width: "100%",
         backgroundImage: `url('${cardBackground}')`,
-        maxWidth: 800,
+        backgroundSize: "100%",
+        backgroundRepeat: "repeat-y",
+        maxWidth: 900,
       }}>
       <CardContent>
         <Box sx={{ padding: "10px" }}>
