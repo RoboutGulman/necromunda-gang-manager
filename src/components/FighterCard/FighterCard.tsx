@@ -6,7 +6,7 @@ interface FighterCardProps {
   children: React.ReactNode;
 }
 
-function FighterCard({ children }: FighterCardProps) {
+export default function FighterCard({ children }: FighterCardProps) {
   return (
     <Card
       sx={{
@@ -27,5 +27,3 @@ function FighterCard({ children }: FighterCardProps) {
     </Card>
   );
 }
-
-export default FighterCard;

@@ -1,5 +1,4 @@
 import {
-  Box,
   ListItem,
   styled,
   Table,
@@ -23,7 +22,7 @@ const CellWithNoBorder = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: { borderWidth: 0 },
 }));
 
-const StatsTable = (props: StatsTableProps) => {
+export default function StatsTable(props: StatsTableProps) {
   return (
     <ListItem disablePadding>
       <TableContainer>
@@ -50,6 +49,4 @@ const StatsTable = (props: StatsTableProps) => {
       </TableContainer>
     </ListItem>
   );
-};
-
-export default StatsTable;
+}

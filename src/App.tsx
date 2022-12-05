@@ -6,7 +6,7 @@ import TeamPage from "./pages/TeamPage/TeamPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import FighterPage from "./pages/FighterPage/FighterPage";
 
-function App() {
+export default function App() {
   const [isUserAuthorized, setUserAuthorized] = React.useState(false);
   return (
     <Routes>
@@ -34,5 +34,3 @@ function App() {
     </Routes>
   );
 }
-
-export default App;

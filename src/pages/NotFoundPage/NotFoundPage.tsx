@@ -1,13 +1,24 @@
-import { Box, Link, Paper, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/styles";
 
-const NotFoundPage = () => {
+const useStyles = makeStyles({
+  boxWithText: {
+    background: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))",
+  },
+  linkBox: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+});
+
+export default function NotFoundPage() {
+  const classes = useStyles();
+
   return (
-    <Paper
-      sx={{
-        background: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))",
-      }}>
+    <Box className={classes.boxWithText}>
       <Typography
         align="center"
         sx={{ fontWeight: "600" }}
@@ -16,12 +27,7 @@ const NotFoundPage = () => {
         gutterBottom>
         PAGE NOT FOUND
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}>
+      <Box className={classes.linkBox}>
         <Link
           color="secondary"
           variant="h6"
@@ -31,8 +37,6 @@ const NotFoundPage = () => {
           Return to home
         </Link>
       </Box>
-    </Paper>
+    </Box>
   );
-};
-
-export default NotFoundPage;
+}

@@ -5,7 +5,6 @@ import {
   Fab,
   Grid,
   IconButton,
-  Link,
   List,
   ListItem,
   ListItemButton,
@@ -40,7 +39,7 @@ interface Props {
   window?: () => Window;
 }
 
-function TeamPage(props: Props) {
+export default function TeamPage(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -241,8 +240,6 @@ function TeamPage(props: Props) {
     </Box>
   );
 }
-
-export default TeamPage;
 
 type CharacteristicView = {
   name: string;

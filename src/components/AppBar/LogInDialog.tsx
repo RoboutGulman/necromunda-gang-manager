@@ -1,10 +1,8 @@
 import * as React from "react";
 import {
   Button,
-  Dialog,
   DialogActions,
   DialogContent,
-  Slide,
   DialogTitle,
   Stack,
   TextField,
@@ -16,22 +14,13 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { TransitionProps } from "@mui/material/transitions";
+import UserDialog from "../UserDialog";
 
 interface State {
   nickname: string;
   password: string;
   showPassword: boolean;
 }
-
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 interface LogInDialogProps {
   open: boolean;
@@ -94,12 +83,7 @@ export default function LogInDialog({
   };
 
   return (
-    <Dialog
-      fullWidth={true}
-      open={open}
-      TransitionComponent={Transition}
-      onClose={handleClose}
-      aria-describedby="alert-dialog-slide-description">
+    <UserDialog open={open} handleClose={handleClose}>
       <DialogTitle>{"Log in your account"}</DialogTitle>
       <DialogContent>
         <Stack spacing={2}>
@@ -144,6 +128,6 @@ export default function LogInDialog({
         <Button onClick={handleClose}>Back</Button>
         <Button onClick={handleLogIn}>Log In</Button>
       </DialogActions>
-    </Dialog>
+    </UserDialog>
   );
 }

@@ -21,7 +21,7 @@ const outerTheme = createTheme({
   },
 });
 
-function Layout(props: Props) {
+export default function Layout(props: Props) {
   const background = useMemo(() => {
     return getRandomHomePageBackground();
   }, []);
@@ -46,5 +46,3 @@ function Layout(props: Props) {
     </ThemeProvider>
   );
 }
-
-export default Layout;

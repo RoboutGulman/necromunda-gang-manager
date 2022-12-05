@@ -1,10 +1,8 @@
 import * as React from "react";
 import {
   Button,
-  Dialog,
   DialogActions,
   DialogContent,
-  Slide,
   DialogTitle,
   Stack,
   TextField,
@@ -12,22 +10,13 @@ import {
   InputLabel,
   FilledInput,
 } from "@mui/material";
-import { TransitionProps } from "@mui/material/transitions";
 import { useNavigate } from "react-router-dom";
+import UserDialog from "../../components/UserDialog";
 
 interface State {
   name: string;
   startCredits: number;
 }
-
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 interface CreateGangDialogProps {
   open: boolean;
@@ -75,12 +64,7 @@ export default function CreateGangDialog({
   };
 
   return (
-    <Dialog
-      fullWidth={true}
-      open={open}
-      TransitionComponent={Transition}
-      onClose={handleClose}
-      aria-describedby="alert-dialog-slide-description">
+    <UserDialog open={open} handleClose={handleClose}>
       <DialogTitle>{"Create new gang"}</DialogTitle>
       <DialogContent>
         <Stack spacing={2}>
@@ -113,6 +97,6 @@ export default function CreateGangDialog({
         <Button onClick={handleClose}>Back</Button>
         <Button onClick={handleCreate}>Create</Button>
       </DialogActions>
-    </Dialog>
+    </UserDialog>
   );
 }

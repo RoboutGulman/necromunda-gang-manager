@@ -17,7 +17,7 @@ interface DetailedStatsTableProps {
   stats: { name: string; value: string }[];
 }
 
-const DetailedStatsTable = (props: DetailedStatsTableProps) => {
+export default function DetailedStatsTable(props: DetailedStatsTableProps) {
   const [open, setOpen] = React.useState(false);
   const values = props.stats.map((item) => item.value);
   const advansesValues = [
@@ -121,6 +121,4 @@ const DetailedStatsTable = (props: DetailedStatsTableProps) => {
       </TableContainer>
     </Collapse>
   );
-};
-
-export default DetailedStatsTable;
+}

@@ -23,7 +23,7 @@ import { plainToClass } from "class-transformer";
 import { Fighter } from "../../model/Dto/Fighter";
 import fighterExampleJson from "../../model/FakeData/FighterExample.json";
 
-function FighterPage() {
+export default function FighterPage() {
   const [fighterInfo, setFighterInfo] = useState<Fighter>();
 
   useEffect(() => {
@@ -89,8 +89,6 @@ function FighterPage() {
     </Stack>
   );
 }
-
-export default FighterPage;
 
 interface StyledListProps {
   header: string;

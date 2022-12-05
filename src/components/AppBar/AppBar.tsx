@@ -17,7 +17,7 @@ interface AppBarProps {
   setUserAuthorized: (isUserAuthorized: boolean) => void;
 }
 
-function AppBarEnterScreen(props: AppBarProps) {
+export default function AppBarEnterScreen(props: AppBarProps) {
   const [isDialogOpen, setDialogOpen] = React.useState(false);
   return (
     <Box
@@ -77,5 +77,3 @@ function AppBarEnterScreen(props: AppBarProps) {
     </Box>
   );
 }
-
-export default AppBarEnterScreen;

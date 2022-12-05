@@ -20,17 +20,7 @@ interface GridItemWithTypographyProps {
   color: string;
 }
 
-function GridItemWithTypography(props: GridItemWithTypographyProps) {
-  return (
-    <Grid item xs={props.xs}>
-      <Typography variant="subtitle1" color={props.color}>
-        {props.content}
-      </Typography>
-    </Grid>
-  );
-}
-
-function ResentGangs() {
+export default function ResentGangs() {
   return (
     <Container fixed>
       <Typography
@@ -102,4 +92,13 @@ function ResentGangs() {
     </Container>
   );
 }
-export default ResentGangs;
+
+function GridItemWithTypography(props: GridItemWithTypographyProps) {
+  return (
+    <Grid item xs={props.xs}>
+      <Typography variant="subtitle1" color={props.color}>
+        {props.content}
+      </Typography>
+    </Grid>
+  );
+}

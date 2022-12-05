@@ -8,7 +8,10 @@ interface EnterScreenProps {
   setUserAuthorized: (isUserAuthorized: boolean) => void;
 }
 
-function HomePage({ isUserAuthorized, setUserAuthorized }: EnterScreenProps) {
+export default function HomePage({
+  isUserAuthorized,
+  setUserAuthorized,
+}: EnterScreenProps) {
   return (
     <Container component="main" sx={{ mb: 4 }}>
       <Stack
@@ -24,5 +27,3 @@ function HomePage({ isUserAuthorized, setUserAuthorized }: EnterScreenProps) {
     </Container>
   );
 }
-
-export default HomePage;

@@ -23,7 +23,7 @@ const TeamNavigationInfo: NavigationInfo[] = [
   { name: "Matew", id: 14 },
 ];
 
-function NavigationList() {
+export default function NavigationList() {
   return (
     <Box
       height="100%"
@@ -57,5 +57,3 @@ function NavigationList() {
     </Box>
   );
 }
-
-export default NavigationList;

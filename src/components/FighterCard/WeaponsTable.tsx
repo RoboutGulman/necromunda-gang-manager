@@ -33,7 +33,7 @@ interface WeaponsTableProps {
   weapons: Weapon[];
 }
 
-function WeaponsTable({ weapons }: WeaponsTableProps) {
+export default function WeaponsTable({ weapons }: WeaponsTableProps) {
   return (
     <TableContainer>
       <Table size="small">
@@ -74,7 +74,7 @@ function WeaponsTable({ weapons }: WeaponsTableProps) {
         </TableHead>
         <TableBody>
           {weapons.map((weapon, index) =>
-            weapon.profiles.length == 1 ? (
+            weapon.profiles.length === 1 ? (
               <WeaponRow
                 key={index}
                 weaponProfiles={weapon.profiles}
@@ -94,8 +94,6 @@ function WeaponsTable({ weapons }: WeaponsTableProps) {
     </TableContainer>
   );
 }
-
-export default WeaponsTable;
 
 interface WeaponRowProps {
   weaponProfiles: WeaponProfile[];

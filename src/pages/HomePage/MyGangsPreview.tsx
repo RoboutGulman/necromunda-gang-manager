@@ -19,7 +19,7 @@ const MTPrewier = MyTeamPreviewExample.map((prewiew, index) => {
   };
 });
 
-function MyGangsPreview({
+export default function MyGangsPreview({
   isUserAuthorized,
   setUserAuthorized,
 }: MyGangsPreviewProps) {
@@ -120,5 +120,3 @@ function MyGangsPreview({
     </Container>
   );
 }
-
-export default MyGangsPreview;
