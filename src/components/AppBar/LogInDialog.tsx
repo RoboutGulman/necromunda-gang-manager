@@ -72,12 +72,12 @@ export default function LogInDialog({
   };
 
   const onSubmit = async () => {
-    const authenticated: boolean = await ApiMethods.login({
+    const authorized: boolean = await ApiMethods.login({
       username: userInfo.nickname,
       password: userInfo.password
     })
 
-    if (authenticated) {
+    if (authorized) {
       setOpen(false);
       setUserAuthorized(true);
     } else {

@@ -1,12 +1,20 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import Layout from "./components/Layout";
 import TeamPage from "./pages/TeamPage/TeamPage";
 import { TeamExample } from "./model/FakeData";
+import {ApiMethods} from "./request/methods/user/authorizeByToken";
 
 function App() {
   const [isUserAuthorized, setUserAuthorized] = React.useState(false);
+
+  useEffect(() => {
+    ApiMethods.authorize().then((authorized) => {
+      setUserAuthorized(authorized)
+    });
+  }, [])
+
   return (
     <Routes>
       <Route

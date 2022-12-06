@@ -1,40 +1,56 @@
 import {getCookie} from "../utils/getCookie";
 
-type RequestParams = {
-  method: string;
-  url: string;
-  body: object;
-  responseType?: string;
-};
+export const AuthTokenCookie = "X-Auth-Token";
 
-export async function request({
-  method,
-  url,
-  body,
-  responseType = "json"
-} : RequestParams): Promise<any> {
-  const authToken: string | null = getCookie("X_AUTH_TOKEN");
-  const authTokenHeader = {
-    X_AUTH_TOKEN: authToken ?? ""
-  };
+export enum RequestMethod {
+  GET = "GET",
+  POST = "POST",
+}
 
-  let response = await fetch(url, {
-    method: method,
-    headers: {
-      ...authTokenHeader,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(body)
-  });
+export class ApiRequest {
+  _method: RequestMethod = RequestMethod.GET;
+  _url: string = "";
+  _body: string = "";
+  _headers: object = {};
+  _authToken: string|null;
 
-  let data;
-  switch (responseType) {
-    case "json":
-      data = response.json();
-      break;
-    default:
-      data = response.text();
+  constructor() {
+    this._authToken = getCookie(AuthTokenCookie)
+    if (this._authToken !== null) {
+      this._headers[AuthTokenCookie] = this._authToken;
+    }
   }
 
-  return data;
+  setMethod(method: RequestMethod) {
+    this._method = method;
+  }
+
+  setUrl(url: string) {
+    this._url = url;
+  }
+
+  setJsonBody(data: any) {
+    this._body = JSON.stringify(data);
+  }
+
+  async send(): Promise<object> {
+    if (this._url !== "") {
+      return await this._fetch();
+    } else {
+      console.warn("Request url not specified");
+    }
+  }
+
+  async _fetch(): Promise<object> {
+    let response = await fetch(this._url, {
+      method: this._method,
+      headers: {
+        ...this._headers,
+        "Content-Type": "application/json"
+      },
+      body: this._body,
+    });
+
+    return response.json();
+  }
 }
