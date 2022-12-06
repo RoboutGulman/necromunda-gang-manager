@@ -220,22 +220,17 @@ export default function TeamPage(props: Props) {
           }}>
           {drawer}
         </Drawer>
-        <Drawer
-          anchor="right"
-          variant="permanent"
+        <Box
           sx={{
             display: { xs: "none", md: "block" },
-            "& .MuiDrawer-paper": {
-              mr: "15px",
-              width: `${drawerWidth}px`,
-              boxSizing: "border-box",
-              background: "transparent",
-              justifyContent: "center",
-            },
-          }}
-          open>
+            position: "sticky",
+            right: "60px",
+            top: "35%",
+            width: drawerWidth,
+            boxSizing: "border-box",
+          }}>
           {drawer}
-        </Drawer>
+        </Box>
       </Box>
     </Box>
   );
