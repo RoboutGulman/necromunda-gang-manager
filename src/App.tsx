@@ -10,8 +10,9 @@ function App() {
   const [isUserAuthorized, setUserAuthorized] = React.useState(false);
 
   useEffect(() => {
-    ApiMethods.authorize().then((authorized) => {
-      setUserAuthorized(authorized)
+    ApiMethods.authorize().then((data) => {
+      setUserAuthorized(data.authorized)
+      console.log(data)
     });
   }, [])
 
