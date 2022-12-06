@@ -22,7 +22,7 @@ export namespace ApiMethods {
       username: username,
       password: password,
     });
-    const response: object = await apiRequest.send();
+    const response: any = await apiRequest.send();
 
     if (response["authorized"]) {
       saveAuthTokenCookie(response["token"])

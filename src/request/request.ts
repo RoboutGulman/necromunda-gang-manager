@@ -11,7 +11,7 @@ export class ApiRequest {
   _method: RequestMethod = RequestMethod.GET;
   _url: string = "";
   _body: string = "";
-  _headers: object = {};
+  _headers: any = {};
   _authToken: string|null;
 
   constructor() {
@@ -33,15 +33,16 @@ export class ApiRequest {
     this._body = JSON.stringify(data);
   }
 
-  async send(): Promise<object> {
+  async send(): Promise<any> {
     if (this._url !== "") {
       return await this._fetch();
     } else {
       console.warn("Request url not specified");
+      return null;
     }
   }
 
-  async _fetch(): Promise<object> {
+  async _fetch(): Promise<any> {
     let response = await fetch(this._url, {
       method: this._method,
       headers: {

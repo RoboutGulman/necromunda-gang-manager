@@ -3,19 +3,24 @@ import {ApiRequest, RequestMethod} from "../../request";
 export namespace ApiMethods {
   const URL = "/api/user/authorize";
 
-  export async function authorize(): Promise<object> {
+  export type AuthorizeResult = {
+    authorized: boolean;
+    user?: {id: number, name: string};
+  }
+
+  export async function authorize(): Promise<AuthorizeResult> {
     const apiRequest = new ApiRequest();
     apiRequest.setMethod(RequestMethod.POST);
     apiRequest.setUrl(URL);
 
-    const response: object = await apiRequest.send();
+    const response: any = await apiRequest.send();
 
     return {
       authorized: !!response["found"],
       user: !!response["found"] ? {
         id: response["id"],
         name: response["username"],
-      } : null,
+      } : undefined,
     };
   }
 }
