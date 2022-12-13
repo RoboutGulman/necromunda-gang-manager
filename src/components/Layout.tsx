@@ -4,6 +4,7 @@ import { Box, Container, createTheme, ThemeProvider } from "@mui/material";
 import AppBarEnterScreen from "./AppBar/AppBar";
 import { getRandomHomePageBackground } from "../backgrounds/HomePage/GetRandomBackground";
 import { Outlet } from "react-router-dom";
+import { DrawerControlProvider } from "../providers/DrawerControlProvider";
 
 type Props = {
   isUserAuthorized: boolean;
@@ -28,21 +29,23 @@ export default function Layout(props: Props) {
 
   return (
     <ThemeProvider theme={outerTheme}>
-      <Box
-        sx={{
-          height: "100vh",
-          backgroundImage: `url('${background}')`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          overflowY: "scroll",
-        }}>
-        <AppBarEnterScreen
-          setUserAuthorized={props.setUserAuthorized}
-          isUserAuthorized={props.isUserAuthorized}
-        />
-        <Container maxWidth="sm" sx={{ mb: 4 }}></Container>
-        <Outlet />
-      </Box>
+      <DrawerControlProvider>
+        <Box
+          sx={{
+            height: "100vh",
+            backgroundImage: `url('${background}')`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            overflowY: "scroll",
+          }}>
+          <AppBarEnterScreen
+            setUserAuthorized={props.setUserAuthorized}
+            isUserAuthorized={props.isUserAuthorized}
+          />
+          <Container maxWidth="sm" sx={{ mb: 4 }}></Container>
+          <Outlet />
+        </Box>
+      </DrawerControlProvider>
     </ThemeProvider>
   );
 }

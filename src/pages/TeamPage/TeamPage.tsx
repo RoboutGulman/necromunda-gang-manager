@@ -28,21 +28,21 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import MenuIcon from "@mui/icons-material/Menu";
 import InfoIcon from "@mui/icons-material/Info";
-import AddHomeIcon from "@mui/icons-material/AddHome";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import AddIcon from "@mui/icons-material/Add";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AppsIcon from "@mui/icons-material/Apps";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import cardBackground from "../../backgrounds/card_background.jpg";
 
 import { TeamView } from "../../model/Dto/TeamView";
 import TeamViewJson from "../../model/FakeData/TeamViewExample.json";
 import { plainToClass } from "class-transformer";
 import FighterCardList from "./FighterCardList";
+import {
+  useDrawerDispatch,
+  useDrawerState,
+} from "../../providers/DrawerControlProvider";
 
 interface Props {
   window?: () => Window;
@@ -50,12 +50,13 @@ interface Props {
 
 export default function TeamPage(props: Props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const mobileOpen = useDrawerState();
+  const setMobileOpen = useDrawerDispatch();
 
   const [teamView, setTeamView] = useState<TeamView>();
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    setMobileOpen({ type: "change" });
   };
 
   useEffect(() => {
@@ -71,13 +72,6 @@ export default function TeamPage(props: Props) {
         <Grid item xs={12} lg={8}>
           <Box component="main">
             <List>
-              <IconButton
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ color: "white", mr: 2, display: { lg: "none" } }}>
-                <MenuIcon />
-              </IconButton>
               <FighterCardList teamView={teamView} />
             </List>
           </Box>
@@ -98,7 +92,7 @@ export default function TeamPage(props: Props) {
         <Drawer
           container={container}
           variant="temporary"
-          open={mobileOpen}
+          open={mobileOpen.isOpen}
           onClose={handleDrawerToggle}
           sx={{
             "& .MuiDrawer-paper": {
@@ -257,12 +251,6 @@ function FullSizeMenuTeamInfo() {
 function MobileSizeMenuTeamInfo() {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
-  const fabStyle = {
-    position: "absolute",
-    bottom: 16,
-    right: 16,
-  };
-
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
@@ -280,7 +268,7 @@ function MobileSizeMenuTeamInfo() {
           <TeamInfoTable />
           <Stack spacing={2} direction="row" justifyContent="flex-end">
             <IconButton>
-              <AddIcon />
+              <EditIcon />
             </IconButton>
           </Stack>
         </AccordionDetails>

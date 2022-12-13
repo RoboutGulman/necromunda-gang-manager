@@ -11,6 +11,8 @@ import LogInDialog from "./LogInDialog";
 import React from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link as RouterLink } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useDrawerDispatch } from "../../providers/DrawerControlProvider";
 
 interface AppBarProps {
   isUserAuthorized: boolean;
@@ -19,6 +21,7 @@ interface AppBarProps {
 
 export default function AppBarEnterScreen(props: AppBarProps) {
   const [isDialogOpen, setDialogOpen] = React.useState(false);
+  const dispatch = useDrawerDispatch();
   return (
     <Box
       sx={{
@@ -30,13 +33,26 @@ export default function AppBarEnterScreen(props: AppBarProps) {
             size="large"
             edge="start"
             color="inherit"
-            aria-label="menu"
+            aria-label="home"
             component={RouterLink}
             to="/"
             sx={{
               mr: 2,
+              display: { xs: "none", lg: "block" },
             }}>
             <HomeIcon />
+          </IconButton>
+          <IconButton
+            onClick={() => dispatch({ type: "change" })}
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{
+              mr: 2,
+              display: { lg: "none" },
+            }}>
+            <MenuIcon />
           </IconButton>
           <Typography
             component={"span"}
