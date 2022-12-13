@@ -1,6 +1,5 @@
 import {
   Box,
-  Divider,
   Drawer,
   Grid,
   IconButton,
@@ -18,6 +17,7 @@ import {
   TableContainer,
   TableRow,
   Tabs,
+  TextField,
   Toolbar,
   Tooltip,
   Typography,
@@ -38,8 +38,6 @@ import TeamViewJson from "../../model/FakeData/TeamViewExample.json";
 import { plainToClass } from "class-transformer";
 import FighterCardList from "./FighterCardList";
 
-const drawerWidth = 400;
-
 interface Props {
   window?: () => Window;
 }
@@ -58,103 +56,39 @@ export default function TeamPage(props: Props) {
     setTeamView(plainToClass(TeamView, TeamViewJson));
   }, []);
 
-  const drawer = (
-    <Box
-      sx={{
-        bgcolor: "background.paper",
-        borderRadius: "3px",
-        mr: { sx: "0", md: "15px" },
-      }}>
-      <List sx={{ paddingBottom: "0" }}>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <InfoIcon />
-            </ListItemIcon>
-            <ListItemText primary="Details" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <AddHomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Territories" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <BusinessCenterIcon />
-            </ListItemIcon>
-            <ListItemText primary="Stash" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <EditIcon />
-            </ListItemIcon>
-            <ListItemText primary="Notes" />
-          </ListItemButton>
-        </ListItem>
-        <Divider />
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary="Add fighter" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <MonetizationOnIcon />
-            </ListItemIcon>
-            <ListItemText primary="Trading Post" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem
-          disablePadding
-          sx={{ color: "white", backgroundColor: "red" }}>
-          <ListItemButton>
-            <ListItemIcon sx={{ color: "white" }}>
-              <DeleteIcon />
-            </ListItemIcon>
-            <ListItemText primary="Delete Gang" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Box>
-  );
-
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          width: { xs: "100%", md: `calc(100% - ${drawerWidth}px)` },
-        }}>
-        <List>
-          <IconButton
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ color: "white", mr: 2, display: { md: "none" } }}>
-            <MenuIcon />
-          </IconButton>
-          <FighterCardList teamView={teamView} />
-        </List>
-      </Box>
-      <Box
-        component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-        aria-label="mailbox folders">
+      <Grid container spacing={2}>
+        <Grid item xs={12} lg={8}>
+          <Box component="main">
+            <List>
+              <IconButton
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ color: "white", mr: 2, display: { lg: "none" } }}>
+                <MenuIcon />
+              </IconButton>
+              <FighterCardList teamView={teamView} />
+            </List>
+          </Box>
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <Box
+            sx={{
+              display: { xs: "none", lg: "block" },
+              position: "sticky",
+              top: "15%",
+              marginRight: "15px",
+            }}>
+            <TeamMenu />
+          </Box>
+        </Grid>
+      </Grid>
+      <Box component="nav" aria-label="team menu">
         <Drawer
           container={container}
           variant="temporary"
@@ -162,24 +96,9 @@ export default function TeamPage(props: Props) {
           onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
           }}>
           <TeamMenu />
         </Drawer>
-        <Box
-          sx={{
-            display: { xs: "none", md: "block" },
-            position: "sticky",
-            top: "15%",
-            marginRight: "15px",
-          }}>
-          <TeamMenu />
-        </Box>
       </Box>
     </Box>
   );
@@ -224,18 +143,8 @@ function TeamMenu() {
     };
   }
 
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    "&:last-child td, &:last-child th": {
-      border: 0,
-    },
-  }));
-
   return (
-    <Paper>
+    <Paper sx={{ width: { xs: "350px", md: "450px", lg: "100%" } }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={activeTab}
@@ -264,90 +173,25 @@ function TeamMenu() {
       </Box>
       <TabPanel value={activeTab} index={0}>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={8}>
-            <Toolbar
-              sx={{
-                pl: { sm: 2 },
-                pr: { xs: 1, sm: 1 },
-              }}>
-              <Typography
-                sx={{ flex: "1 1 100%" }}
-                variant="h6"
-                id="tableTitle"
-                component="div">
-                Gang Info
-              </Typography>
-              <Tooltip title="Filter list">
-                <IconButton>
-                  <EditIcon />
-                </IconButton>
-              </Tooltip>
-            </Toolbar>
-            <TableContainer>
-              <Table size="small">
-                <TableBody>
-                  <StyledTableRow>
-                    <TableCell>Faction</TableCell>
-                    <TableCell>Cawdor</TableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                    <TableCell>Credits</TableCell>
-                    <TableCell>180</TableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                    <TableCell>Rating</TableCell>
-                    <TableCell>1200</TableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                    <TableCell>Games Number</TableCell>
-                    <TableCell>0</TableCell>
-                  </StyledTableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
+          <Grid item xs={12} md={6} lg={7}>
+            <TeamInfoTable />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Toolbar
-              sx={{
-                pl: { sm: 2 },
-                pr: { xs: 1, sm: 1 },
-              }}>
-              <Typography
-                sx={{ flex: "1 1 100%" }}
-                variant="h6"
-                id="tableTitle"
-                component="div">
-                Fighters
-              </Typography>
-            </Toolbar>
-            <TableContainer>
-              <Table size="small">
-                <TableBody>
-                  <StyledTableRow>
-                    <TableCell>Leader</TableCell>
-                    <TableCell>x1</TableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                    <TableCell>Champion</TableCell>
-                    <TableCell>x1</TableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                    <TableCell>Ganger</TableCell>
-                    <TableCell>x3</TableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                    <TableCell>Juve</TableCell>
-                    <TableCell>x2</TableCell>
-                  </StyledTableRow>
-                  <TableRow>
-                    <TableCell align="right" sx={{ fontWeight: "600" }}>
-                      Total
-                    </TableCell>
-                    <TableCell>x7</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
+          <Grid item xs={12} md={6} lg={5}>
+            <FighterRangsTable />
+          </Grid>
+          <Grid item xs={12} md={6} lg={7}>
+            <TextField
+              sx={{ width: "100%", mt: "15px" }}
+              id="standard-multiline-static"
+              label="Notes"
+              multiline
+              rows={4}
+              defaultValue="Default Value"
+              variant="filled"
+            />
+          </Grid>
+          <Grid item xs={12} md={6} lg={5}>
+            <TerritoriesTable />
           </Grid>
         </Grid>
       </TabPanel>
@@ -355,8 +199,179 @@ function TeamMenu() {
         Item Two
       </TabPanel>
       <TabPanel value={activeTab} index={2}>
-        Item Three
+        <List sx={{ paddingBottom: "0" }}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Add fighter" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem
+            disablePadding
+            sx={{ color: "white", backgroundColor: "red" }}>
+            <ListItemButton>
+              <ListItemIcon sx={{ color: "white" }}>
+                <DeleteIcon />
+              </ListItemIcon>
+              <ListItemText primary="Delete Gang" />
+            </ListItemButton>
+          </ListItem>
+        </List>
       </TabPanel>
     </Paper>
+  );
+}
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
+
+function TerritoriesTable() {
+  return (
+    <>
+      <Toolbar
+        sx={{
+          pl: { sm: 2 },
+          pr: { xs: 1, sm: 1 },
+        }}>
+        <Typography
+          sx={{ flex: "1 1 100%" }}
+          variant="h6"
+          id="tableTitle"
+          component="div">
+          Territories
+        </Typography>
+        <Tooltip title="Filter list">
+          <IconButton>
+            <AddIcon />
+          </IconButton>
+        </Tooltip>
+      </Toolbar>
+      <TableContainer>
+        <Table size="small">
+          <TableBody>
+            <StyledTableRow>
+              <TableCell>Guilder Stronghold</TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell>Settlement</TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell>Wall Outpost</TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell>Wastelands</TableCell>
+            </StyledTableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+}
+
+function FighterRangsTable() {
+  return (
+    <>
+      <Toolbar
+        sx={{
+          pl: { sm: 2 },
+          pr: { xs: 1, sm: 1 },
+        }}>
+        <Typography
+          sx={{ flex: "1 1 100%" }}
+          variant="h6"
+          id="tableTitle"
+          component="div">
+          Fighters
+        </Typography>
+        <Tooltip title="Filter list">
+          <IconButton>
+            <AddIcon />
+          </IconButton>
+        </Tooltip>
+      </Toolbar>
+      <TableContainer>
+        <Table size="small">
+          <TableBody>
+            <StyledTableRow>
+              <TableCell>Leader</TableCell>
+              <TableCell>x1</TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell>Champion</TableCell>
+              <TableCell>x1</TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell>Ganger</TableCell>
+              <TableCell>x3</TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell>Juve</TableCell>
+              <TableCell>x2</TableCell>
+            </StyledTableRow>
+            <TableRow>
+              <TableCell align="right" sx={{ fontWeight: "600" }}>
+                Total
+              </TableCell>
+              <TableCell>x7</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+}
+
+function TeamInfoTable() {
+  return (
+    <>
+      <Toolbar
+        sx={{
+          pl: { sm: 2 },
+          pr: { xs: 1, sm: 1 },
+        }}>
+        <Typography
+          sx={{ flex: "1 1 100%" }}
+          variant="h6"
+          id="tableTitle"
+          component="div">
+          Gang Info
+        </Typography>
+        <Tooltip title="Filter list">
+          <IconButton>
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+      </Toolbar>
+      <TableContainer>
+        <Table size="small">
+          <TableBody>
+            <StyledTableRow>
+              <TableCell>Faction</TableCell>
+              <TableCell>Cawdor</TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell>Credits</TableCell>
+              <TableCell>180</TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell>Rating</TableCell>
+              <TableCell>1200</TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell>Games Number</TableCell>
+              <TableCell>0</TableCell>
+            </StyledTableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
