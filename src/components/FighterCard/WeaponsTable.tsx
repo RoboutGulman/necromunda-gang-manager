@@ -73,7 +73,7 @@ export default function WeaponsTable({ weapons }: WeaponsTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {weapons.map((weapon, index) =>
+          {weapons.map((weapon: Weapon, index) =>
             weapon.profiles.length === 1 ? (
               <WeaponRow
                 key={index}
