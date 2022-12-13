@@ -102,10 +102,15 @@ function FighterCardHeader({ name, rang, totalCost }: FighterCardHeaderProps) {
             alignItems: "center",
             letterSpacing: "1px",
           }}>
-          <Typography variant="h6" color="secondary" sx={{ ml: "10px" }}>
+          <Typography
+            component={"span"}
+            variant="h6"
+            color="secondary"
+            sx={{ ml: "10px" }}>
             {name}
           </Typography>
           <Typography
+            component={"span"}
             variant="body1"
             color="secondary"
             sx={{ ml: "10px", textTransform: "capitalize" }}>
@@ -174,10 +179,14 @@ function GridStroke({ name, items }: GridStrokeProps) {
       {items.length > 0 ? (
         <>
           <Grid item xs={6} md={2}>
-            <Typography variant="body1">{name}</Typography>
+            <Typography component={"span"} variant="body1">
+              {name}
+            </Typography>
           </Grid>
           <Grid item xs={6} md={10}>
-            <Typography variant="body1">{items.join(", ")}</Typography>
+            <Typography component={"span"} variant="body1">
+              {items.join(", ")}
+            </Typography>
           </Grid>
         </>
       ) : (

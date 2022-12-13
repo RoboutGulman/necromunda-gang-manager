@@ -39,6 +39,7 @@ export default function AppBarEnterScreen(props: AppBarProps) {
             <HomeIcon />
           </IconButton>
           <Typography
+            component={"span"}
             variant="h6"
             sx={{
               flexGrow: 1,
@@ -50,7 +51,9 @@ export default function AppBarEnterScreen(props: AppBarProps) {
               <Box mr={3}>
                 <Avatar> RG</Avatar>
               </Box>
-              <Typography variant="h6">Robout Guilman</Typography>
+              <Typography component={"span"} variant="h6">
+                Robout Guilman
+              </Typography>
             </>
           ) : (
             <>

@@ -140,7 +140,7 @@ function TeamMenu() {
         {...other}>
         {value === index && (
           <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
+            <Typography component={"span"}>{children}</Typography>
           </Box>
         )}
       </div>
@@ -246,7 +246,7 @@ function FullSizeMenuTeamInfo() {
           variant="filled"
         />
       </Grid>
-      <Grid lg={5}>
+      <Grid item lg={5}>
         <TableToolbar title="Territories" icon={<AddIcon />} />
         <TerritoriesTable />
       </Grid>
@@ -274,7 +274,7 @@ function MobileSizeMenuTeamInfo() {
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}>
         <AccordionSummary aria-controls="panel1bh-content" id="panel1bh-header">
-          <Typography>Gang Info</Typography>
+          <Typography component={"span"}>Gang Info</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <TeamInfoTable />
@@ -289,7 +289,7 @@ function MobileSizeMenuTeamInfo() {
         expanded={expanded === "panel2"}
         onChange={handleChange("panel2")}>
         <AccordionSummary aria-controls="panel2bh-content" id="panel2bh-header">
-          <Typography>Fighters</Typography>
+          <Typography component={"span"}>Fighters</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <FighterRangsTable />
@@ -304,7 +304,7 @@ function MobileSizeMenuTeamInfo() {
         expanded={expanded === "panel3"}
         onChange={handleChange("panel3")}>
         <AccordionSummary aria-controls="panel3bh-content" id="panel3bh-header">
-          <Typography>Territories</Typography>
+          <Typography component={"span"}>Territories</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <TerritoriesTable />
@@ -332,10 +332,10 @@ function TableToolbar({ title, icon }: TableToolbarProps) {
         pr: { xs: 1, sm: 1 },
       }}>
       <Typography
+        component={"span"}
         sx={{ flex: "1 1 100%" }}
         variant="h6"
-        id="tableTitle"
-        component="div">
+        id="tableTitle">
         {title}
       </Typography>
       <Tooltip title="Filter list">
