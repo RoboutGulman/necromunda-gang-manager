@@ -44,11 +44,11 @@ import {
   useDrawerState,
 } from "../../providers/DrawerControlProvider";
 
-interface Props {
+interface TeamPageProps {
   window?: () => Window;
 }
 
-export default function TeamPage(props: Props) {
+export default function TeamPage(props: TeamPageProps) {
   const { window } = props;
   const mobileOpen = useDrawerState();
   const setMobileOpen = useDrawerDispatch();
@@ -97,6 +97,7 @@ export default function TeamPage(props: Props) {
           sx={{
             "& .MuiDrawer-paper": {
               backgroundImage: `url('${cardBackground}')`,
+              width: { xs: "270px", sm: "350px", md: "450px", lg: "100%" },
             },
           }}
           ModalProps={{
@@ -129,8 +130,8 @@ function TeamMenu() {
       <div
         role="tabpanel"
         hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
+        id={`menu-tabpanel-${index}`}
+        aria-labelledby={`menu-tab-${index}`}
         {...other}>
         {value === index && (
           <Box sx={{ p: 3 }}>
@@ -143,9 +144,26 @@ function TeamMenu() {
 
   function a11yProps(index: number) {
     return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
+      id: `menu-tab-${index}`,
+      "aria-controls": `menu-tabpanel-${index}`,
     };
+  }
+
+  interface AdaptiveTabProps {
+    label: string;
+    index: number;
+    icon:
+      | string
+      | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+      | undefined;
+  }
+
+  function AdaptiveLabel({ text }: { text: string }) {
+    return (
+      <Typography sx={{ display: { xs: "none", md: "flex" } }}>
+        {text}
+      </Typography>
+    );
   }
 
   return (
@@ -154,7 +172,6 @@ function TeamMenu() {
         sx={{
           borderBottom: 1,
           borderColor: "divider",
-          width: { xs: "350px", md: "450px", lg: "100%" },
         }}>
         <Tabs
           value={activeTab}
@@ -164,19 +181,22 @@ function TeamMenu() {
           <Tab
             iconPosition="start"
             icon={<InfoIcon />}
-            label="Info"
+            label={<AdaptiveLabel text="Info" />}
+            wrapped
             {...a11yProps(0)}
           />
           <Tab
             iconPosition="start"
             icon={<BusinessCenterIcon />}
-            label="Stash"
+            label={<AdaptiveLabel text="Stash" />}
+            wrapped
             {...a11yProps(1)}
           />
           <Tab
             iconPosition="start"
             icon={<AppsIcon />}
-            label="Actions"
+            label={<AdaptiveLabel text="Actions" />}
+            wrapped
             {...a11yProps(2)}
           />
         </Tabs>
@@ -326,7 +346,7 @@ function TableToolbar({ title, icon }: TableToolbarProps) {
         id="tableTitle">
         {title}
       </Typography>
-      <Tooltip title="Filter list">
+      <Tooltip title={title}>
         <IconButton>{icon}</IconButton>
       </Tooltip>
     </Toolbar>
