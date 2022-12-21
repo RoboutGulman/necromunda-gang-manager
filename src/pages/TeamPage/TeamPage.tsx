@@ -43,10 +43,13 @@ import {
   useDrawerDispatch,
   useDrawerState,
 } from "../../providers/DrawerControlProvider";
+import SimpleDialog from "./Dialog";
 
 interface TeamPageProps {
   window?: () => Window;
 }
+
+type DialogType = "none" | "add-fighter" | "edit-gang-info";
 
 export default function TeamPage(props: TeamPageProps) {
   const { window } = props;
@@ -113,6 +116,10 @@ export default function TeamPage(props: TeamPageProps) {
 function TeamMenu() {
   const [activeTab, setActiveTab] = React.useState(0);
 
+  const [whichDialogIsOpen, setDialogOpen] = useState<DialogType>("none");
+
+  const CloseDialog = () => setDialogOpen("none");
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
@@ -147,15 +154,6 @@ function TeamMenu() {
       id: `menu-tab-${index}`,
       "aria-controls": `menu-tabpanel-${index}`,
     };
-  }
-
-  interface AdaptiveTabProps {
-    label: string;
-    index: number;
-    icon:
-      | string
-      | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-      | undefined;
   }
 
   function AdaptiveLabel({ text }: { text: string }) {
@@ -203,10 +201,10 @@ function TeamMenu() {
       </Box>
       <TabPanel value={activeTab} index={0}>
         <Box sx={{ display: { xs: "none", lg: "flex" } }}>
-          <FullSizeMenuTeamInfo />
+          <FullSizeMenuTeamInfo setDialogOpen={setDialogOpen} />
         </Box>
         <Box sx={{ display: { lg: "none" } }}>
-          <MobileSizeMenuTeamInfo />
+          <MobileSizeMenuTeamInfo setDialogOpen={setDialogOpen} />
         </Box>
       </TabPanel>
       <TabPanel value={activeTab} index={1}>
@@ -234,19 +232,72 @@ function TeamMenu() {
           </ListItem>
         </List>
       </TabPanel>
+      <SimpleDialog
+        open={whichDialogIsOpen === "add-fighter"}
+        onClose={CloseDialog}
+      />
     </Box>
   );
 }
 
-function FullSizeMenuTeamInfo() {
+interface MenuTeamInfoProps {
+  setDialogOpen: React.Dispatch<React.SetStateAction<DialogType>>;
+}
+
+function FullSizeMenuTeamInfo({ setDialogOpen }: MenuTeamInfoProps) {
+  interface TableToolbarProps {
+    title: string;
+    icon: React.ReactNode;
+    setDialogOpen: React.Dispatch<React.SetStateAction<DialogType>>;
+    dialogType: DialogType;
+  }
+
+  function TableToolbar({
+    title,
+    icon,
+    setDialogOpen,
+    dialogType,
+  }: TableToolbarProps) {
+    return (
+      <Toolbar
+        sx={{
+          pl: { sm: 2 },
+          pr: { xs: 1, sm: 1 },
+        }}>
+        <Typography
+          component={"span"}
+          sx={{ flex: "1 1 100%" }}
+          variant="h6"
+          id="tableTitle">
+          {title}
+        </Typography>
+        <Tooltip title={title}>
+          <IconButton onClick={() => setDialogOpen(dialogType)}>
+            {icon}
+          </IconButton>
+        </Tooltip>
+      </Toolbar>
+    );
+  }
+
   return (
     <Grid container spacing={2}>
       <Grid item lg={7}>
-        <TableToolbar title="Gang Info" icon={<EditIcon />} />
+        <TableToolbar
+          title="Gang Info"
+          icon={<EditIcon />}
+          setDialogOpen={setDialogOpen}
+          dialogType={"add-fighter"}
+        />
         <TeamInfoTable />
       </Grid>
       <Grid item lg={5}>
-        <TableToolbar title="Fighters" icon={<AddIcon />} />
+        <TableToolbar
+          title="Fighters"
+          icon={<AddIcon />}
+          setDialogOpen={setDialogOpen}
+          dialogType={"add-fighter"}
+        />
         <FighterRangsTable />
       </Grid>
       <Grid item lg={7}>
@@ -261,14 +312,19 @@ function FullSizeMenuTeamInfo() {
         />
       </Grid>
       <Grid item lg={5}>
-        <TableToolbar title="Territories" icon={<AddIcon />} />
+        <TableToolbar
+          title="Territories"
+          icon={<AddIcon />}
+          setDialogOpen={setDialogOpen}
+          dialogType={"add-fighter"}
+        />
         <TerritoriesTable />
       </Grid>
     </Grid>
   );
 }
 
-function MobileSizeMenuTeamInfo() {
+function MobileSizeMenuTeamInfo({ setDialogOpen }: MenuTeamInfoProps) {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
@@ -282,12 +338,12 @@ function MobileSizeMenuTeamInfo() {
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}>
         <AccordionSummary aria-controls="panel1bh-content" id="panel1bh-header">
-          <Typography component={"span"}>Gang Info</Typography>
+          <Typography component={"span"}>{"Gang Info"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <TeamInfoTable />
           <Stack spacing={2} direction="row" justifyContent="flex-end">
-            <IconButton>
+            <IconButton onClick={() => setDialogOpen("add-fighter")}>
               <EditIcon />
             </IconButton>
           </Stack>
@@ -297,12 +353,12 @@ function MobileSizeMenuTeamInfo() {
         expanded={expanded === "panel2"}
         onChange={handleChange("panel2")}>
         <AccordionSummary aria-controls="panel2bh-content" id="panel2bh-header">
-          <Typography component={"span"}>Fighters</Typography>
+          <Typography component={"span"}>{"Fighters"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <FighterRangsTable />
           <Stack spacing={2} direction="row" justifyContent="flex-end">
-            <IconButton>
+            <IconButton onClick={() => setDialogOpen("add-fighter")}>
               <AddIcon />
             </IconButton>
           </Stack>
@@ -312,44 +368,18 @@ function MobileSizeMenuTeamInfo() {
         expanded={expanded === "panel3"}
         onChange={handleChange("panel3")}>
         <AccordionSummary aria-controls="panel3bh-content" id="panel3bh-header">
-          <Typography component={"span"}>Territories</Typography>
+          <Typography component={"span"}>{"Territories"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <TerritoriesTable />
           <Stack spacing={2} direction="row" justifyContent="flex-end">
-            <IconButton>
+            <IconButton onClick={() => setDialogOpen("add-fighter")}>
               <AddIcon />
             </IconButton>
           </Stack>
         </AccordionDetails>
       </Accordion>
     </div>
-  );
-}
-
-interface TableToolbarProps {
-  title: string;
-  icon: React.ReactNode;
-}
-
-function TableToolbar({ title, icon }: TableToolbarProps) {
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-      }}>
-      <Typography
-        component={"span"}
-        sx={{ flex: "1 1 100%" }}
-        variant="h6"
-        id="tableTitle">
-        {title}
-      </Typography>
-      <Tooltip title={title}>
-        <IconButton>{icon}</IconButton>
-      </Tooltip>
-    </Toolbar>
   );
 }
 
