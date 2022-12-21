@@ -33,6 +33,8 @@ import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AppsIcon from "@mui/icons-material/Apps";
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import cardBackground from "../../backgrounds/card_background.jpg";
 
 import { TeamView } from "../../model/Dto/TeamView";
@@ -43,13 +45,13 @@ import {
   useDrawerDispatch,
   useDrawerState,
 } from "../../providers/DrawerControlProvider";
-import SimpleDialog from "./Dialog";
+import Dialogs from "./Dialogs/Dialogs";
 
 interface TeamPageProps {
   window?: () => Window;
 }
 
-type DialogType = "none" | "add-fighter" | "edit-gang-info";
+export type DialogType = "none" | "add-fighter" | "edit-gang-info";
 
 export default function TeamPage(props: TeamPageProps) {
   const { window } = props;
@@ -232,10 +234,7 @@ function TeamMenu() {
           </ListItem>
         </List>
       </TabPanel>
-      <SimpleDialog
-        open={whichDialogIsOpen === "add-fighter"}
-        onClose={CloseDialog}
-      />
+      <Dialogs dialogType={whichDialogIsOpen} onClose={CloseDialog} />
     </Box>
   );
 }
@@ -337,7 +336,10 @@ function MobileSizeMenuTeamInfo({ setDialogOpen }: MenuTeamInfoProps) {
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}>
-        <AccordionSummary aria-controls="panel1bh-content" id="panel1bh-header">
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1bh-content"
+          id="panel1bh-header">
           <Typography component={"span"}>{"Gang Info"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -352,7 +354,10 @@ function MobileSizeMenuTeamInfo({ setDialogOpen }: MenuTeamInfoProps) {
       <Accordion
         expanded={expanded === "panel2"}
         onChange={handleChange("panel2")}>
-        <AccordionSummary aria-controls="panel2bh-content" id="panel2bh-header">
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2bh-content"
+          id="panel2bh-header">
           <Typography component={"span"}>{"Fighters"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -367,7 +372,10 @@ function MobileSizeMenuTeamInfo({ setDialogOpen }: MenuTeamInfoProps) {
       <Accordion
         expanded={expanded === "panel3"}
         onChange={handleChange("panel3")}>
-        <AccordionSummary aria-controls="panel3bh-content" id="panel3bh-header">
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel3bh-content"
+          id="panel3bh-header">
           <Typography component={"span"}>{"Territories"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -459,15 +467,35 @@ function TerritoriesTable() {
         <TableBody>
           <StyledTableRow>
             <TableCell>Guilder Stronghold</TableCell>
+            <TableCell>
+              <IconButton>
+                <CloseIcon />
+              </IconButton>
+            </TableCell>
           </StyledTableRow>
           <StyledTableRow>
             <TableCell>Settlement</TableCell>
+            <TableCell>
+              <IconButton>
+                <CloseIcon />
+              </IconButton>
+            </TableCell>
           </StyledTableRow>
           <StyledTableRow>
             <TableCell>Wall Outpost</TableCell>
+            <TableCell>
+              <IconButton>
+                <CloseIcon />
+              </IconButton>
+            </TableCell>
           </StyledTableRow>
           <StyledTableRow>
             <TableCell>Wastelands</TableCell>
+            <TableCell>
+              <IconButton>
+                <CloseIcon />
+              </IconButton>
+            </TableCell>
           </StyledTableRow>
         </TableBody>
       </Table>
