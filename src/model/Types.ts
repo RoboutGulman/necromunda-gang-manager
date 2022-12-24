@@ -99,3 +99,14 @@ export type FighterView = {
   totalCost: number;
   xp: number;
 };
+
+export type Faction = {
+  id: string;
+  name: string;
+  imageUrl: string;
+};
+
+export type Territory = {
+  id: string;
+  name: string;
+};

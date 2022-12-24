@@ -1,16 +1,37 @@
 import React from "react";
 import AddFighterDialog from "./AddFighterDialog";
 import { DialogType } from "../TeamPage";
+import EditTeamInfoDialog from "./EditGangInfoDialog";
+import { TeamInfo } from "../../../model/Dto/TeamView";
 
 export interface SimpleDialogProps {
+  teamInfo: TeamInfo;
   dialogType: DialogType;
   onClose: () => void;
 }
 
-export default function Dialogs({ onClose, dialogType }: SimpleDialogProps) {
+export default function Dialogs({
+  teamInfo,
+  onClose,
+  dialogType,
+}: SimpleDialogProps) {
   return (
     <>
-      <AddFighterDialog open={dialogType === "add-fighter"} onClose={onClose} />
+      <AddFighterDialog
+        factionId={teamInfo?.faction.id ?? ""}
+        open={dialogType === "add-fighter"}
+        onClose={onClose}
+      />
+      <EditTeamInfoDialog
+        initState={{
+          name: teamInfo?.name,
+          credits: teamInfo?.cash,
+          reputation: teamInfo?.reputation,
+          gamesNumber: teamInfo?.gamesPlayed,
+        }}
+        open={dialogType === "edit-gang-info"}
+        onClose={onClose}
+      />
     </>
   );
 }

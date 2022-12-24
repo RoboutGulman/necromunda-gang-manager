@@ -1,7 +1,50 @@
 {
-    "id": "123",
-    "name": "Dust Raiders",
-    "faction": "ash wastes nomads",
+    "info": {
+        "id": "123",
+        "name": "Dust Raiders",
+        "rating": "1000",
+        "cash": "100",
+        "reputation": "3",
+        "description": "gang description",
+        "creationDate": "2019-05-27",
+        "gamesPlayed": "1",
+        "faction": {
+            "id": "3333",
+            "name": "ash wastes nomads",
+            "imageUrl": "url"
+        },
+        "creator": {
+            "id": "123",
+            "name": "Vasia"
+        },
+        "territories": [
+            {
+                "id": "123",
+                "name": "Guilder stronghold"
+            }
+        ],
+        "rangStatistics": {
+            "total": 7,
+            "rangs": [
+                {
+                    "name": "leader",
+                    "count": 1
+                },
+                {
+                    "name": "champion",
+                    "count": 1
+                },
+                {
+                    "name": "ganger",
+                    "count": 3
+                },
+                {
+                    "name": "juve",
+                    "count": 2
+                }
+            ]
+        }
+    },
     "fighters": [
         {
             "id": "312",
@@ -154,9 +197,5 @@
             "totalCost": 250,
             "xp": 12
         }
-    ],
-    "creator": {
-        "id": "123",
-        "name": "Vasia"
-    }
+    ]
 }

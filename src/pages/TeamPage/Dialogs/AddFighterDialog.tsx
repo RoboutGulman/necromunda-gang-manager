@@ -18,21 +18,25 @@ import UserDialog from "../../../components/UserDialog";
 
 interface State {
   name: string;
+  showOnlyFactionFighterTypes: boolean;
   fighterTypeId: string;
   purchaseWithCredits: boolean;
 }
 
 export interface AddFighterDialogProps {
+  factionId: string;
   open: boolean;
   onClose: () => void;
 }
 
 export default function AddFighterDialog({
+  factionId,
   onClose,
   open,
 }: AddFighterDialogProps) {
   const [fighterInfo, setFighterInfo] = React.useState<State>({
     name: "",
+    showOnlyFactionFighterTypes: true,
     fighterTypeId: "1",
     purchaseWithCredits: true,
   });
@@ -61,21 +65,21 @@ export default function AddFighterDialog({
       });
     };
 
-  const handleTypeChange = (event: SelectChangeEvent) => {
-    setFighterInfo({
-      ...fighterInfo,
-      fighterTypeId: event.target.value as string,
-    });
-  };
+  const handleTypeChange =
+    (prop: keyof State) => (event: SelectChangeEvent) => {
+      setFighterInfo({
+        ...fighterInfo,
+        [prop]: event.target.value as string,
+      });
+    };
 
-  const handlePurchaseWithCreditsChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFighterInfo({
-      ...fighterInfo,
-      purchaseWithCredits: event.target.checked,
-    });
-  };
+  const handleCheckboxChange =
+    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFighterInfo({
+        ...fighterInfo,
+        [prop]: event.target.checked,
+      });
+    };
 
   const handleClose = () => {
     onClose();
@@ -107,16 +111,25 @@ export default function AddFighterDialog({
             label="Fighter Name"
             variant="filled"
           />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={fighterInfo.showOnlyFactionFighterTypes}
+                onChange={handleCheckboxChange("showOnlyFactionFighterTypes")}
+              />
+            }
+            label="Show only faction fighters?"
+          />
           <FormControl variant="filled" sx={{ mt: 2, minWidth: 120 }}>
             <InputLabel>fighter type</InputLabel>
             <Select
               autoFocus
               value={fighterInfo.fighterTypeId.toString()}
-              onChange={handleTypeChange}
+              onChange={handleTypeChange("fighterTypeId")}
               label="fighter type"
               inputProps={{
-                name: "max-width",
-                id: "max-width",
+                name: "fighter type",
+                id: "fighter type",
               }}>
               {Items}
             </Select>
@@ -125,7 +138,7 @@ export default function AddFighterDialog({
             control={
               <Checkbox
                 checked={fighterInfo.purchaseWithCredits}
-                onChange={handlePurchaseWithCreditsChange}
+                onChange={handleCheckboxChange("purchaseWithCredits")}
               />
             }
             label="Purchase with credits?"
@@ -134,7 +147,7 @@ export default function AddFighterDialog({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Back</Button>
-        <Button onClick={handleAdd}>Log In</Button>
+        <Button onClick={handleAdd}>Add</Button>
       </DialogActions>
     </UserDialog>
   );

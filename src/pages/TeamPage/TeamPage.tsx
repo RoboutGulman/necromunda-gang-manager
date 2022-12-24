@@ -3,6 +3,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Button,
   Drawer,
   Grid,
   IconButton,
@@ -29,15 +30,20 @@ import {
 import React, { useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
-import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AppsIcon from "@mui/icons-material/Apps";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import cardBackground from "../../backgrounds/card_background.jpg";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 
-import { TeamView } from "../../model/Dto/TeamView";
+import {
+  RangCount,
+  RangStatistics,
+  TeamInfo,
+  TeamView,
+} from "../../model/Dto/TeamView";
 import TeamViewJson from "../../model/FakeData/TeamViewExample.json";
 import { plainToClass } from "class-transformer";
 import FighterCardList from "./FighterCardList";
@@ -46,6 +52,7 @@ import {
   useDrawerState,
 } from "../../providers/DrawerControlProvider";
 import Dialogs from "./Dialogs/Dialogs";
+import { Territory } from "../../model/Types";
 
 interface TeamPageProps {
   window?: () => Window;
@@ -89,7 +96,7 @@ export default function TeamPage(props: TeamPageProps) {
               top: "15%",
               marginRight: "15px",
             }}>
-            <TeamMenu />
+            <TeamMenu teamInfo={teamView?.info} />
           </Paper>
         </Grid>
       </Grid>
@@ -103,26 +110,31 @@ export default function TeamPage(props: TeamPageProps) {
             "& .MuiDrawer-paper": {
               backgroundImage: `url('${cardBackground}')`,
               width: { xs: "270px", sm: "350px", md: "450px", lg: "100%" },
+              maxWidth: "500px",
             },
           }}
           ModalProps={{
             keepMounted: true,
           }}>
-          <TeamMenu />
+          <TeamMenu teamInfo={teamView?.info} />
         </Drawer>
       </Box>
     </Box>
   );
 }
 
-function TeamMenu() {
+interface TeamMenuProps {
+  teamInfo: TeamInfo | undefined;
+}
+
+function TeamMenu({ teamInfo }: TeamMenuProps) {
   const [activeTab, setActiveTab] = React.useState(0);
 
   const [whichDialogIsOpen, setDialogOpen] = useState<DialogType>("none");
 
   const CloseDialog = () => setDialogOpen("none");
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
 
@@ -187,8 +199,8 @@ function TeamMenu() {
           />
           <Tab
             iconPosition="start"
-            icon={<BusinessCenterIcon />}
-            label={<AdaptiveLabel text="Stash" />}
+            icon={<FormatListBulletedIcon />}
+            label={<AdaptiveLabel text="Notes" />}
             wrapped
             {...a11yProps(1)}
           />
@@ -203,14 +215,28 @@ function TeamMenu() {
       </Box>
       <TabPanel value={activeTab} index={0}>
         <Box sx={{ display: { xs: "none", lg: "flex" } }}>
-          <FullSizeMenuTeamInfo setDialogOpen={setDialogOpen} />
+          <FullSizeMenuTeamInfo info={teamInfo} setDialogOpen={setDialogOpen} />
         </Box>
         <Box sx={{ display: { lg: "none" } }}>
-          <MobileSizeMenuTeamInfo setDialogOpen={setDialogOpen} />
+          <MobileSizeMenuTeamInfo
+            info={teamInfo}
+            setDialogOpen={setDialogOpen}
+          />
         </Box>
       </TabPanel>
       <TabPanel value={activeTab} index={1}>
-        Item Two
+        <TextField
+          sx={{ width: "100%" }}
+          id="standard-multiline-static"
+          label="Notes"
+          multiline
+          rows={4}
+          value={teamInfo?.description}
+          variant="filled"
+        />
+        <Stack spacing={2} direction="row" justifyContent="flex-end">
+          <Button>Save</Button>
+        </Stack>
       </TabPanel>
       <TabPanel value={activeTab} index={2}>
         <List sx={{ paddingBottom: "0" }}>
@@ -234,16 +260,23 @@ function TeamMenu() {
           </ListItem>
         </List>
       </TabPanel>
-      <Dialogs dialogType={whichDialogIsOpen} onClose={CloseDialog} />
+      {teamInfo !== undefined && (
+        <Dialogs
+          teamInfo={teamInfo}
+          dialogType={whichDialogIsOpen}
+          onClose={CloseDialog}
+        />
+      )}
     </Box>
   );
 }
 
 interface MenuTeamInfoProps {
+  info: TeamInfo | undefined;
   setDialogOpen: React.Dispatch<React.SetStateAction<DialogType>>;
 }
 
-function FullSizeMenuTeamInfo({ setDialogOpen }: MenuTeamInfoProps) {
+function FullSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
   interface TableToolbarProps {
     title: string;
     icon: React.ReactNode;
@@ -286,9 +319,16 @@ function FullSizeMenuTeamInfo({ setDialogOpen }: MenuTeamInfoProps) {
           title="Gang Info"
           icon={<EditIcon />}
           setDialogOpen={setDialogOpen}
+          dialogType={"edit-gang-info"}
+        />
+        <TeamInfoTable info={info} />
+        <TableToolbar
+          title="Territories"
+          icon={<AddIcon />}
+          setDialogOpen={setDialogOpen}
           dialogType={"add-fighter"}
         />
-        <TeamInfoTable />
+        <TerritoriesTable territories={info?.territories} />
       </Grid>
       <Grid item lg={5}>
         <TableToolbar
@@ -297,37 +337,17 @@ function FullSizeMenuTeamInfo({ setDialogOpen }: MenuTeamInfoProps) {
           setDialogOpen={setDialogOpen}
           dialogType={"add-fighter"}
         />
-        <FighterRangsTable />
-      </Grid>
-      <Grid item lg={7}>
-        <TextField
-          sx={{ width: "90%", mt: "15px" }}
-          id="standard-multiline-static"
-          label="Notes"
-          multiline
-          rows={4}
-          defaultValue="Default Value"
-          variant="filled"
-        />
-      </Grid>
-      <Grid item lg={5}>
-        <TableToolbar
-          title="Territories"
-          icon={<AddIcon />}
-          setDialogOpen={setDialogOpen}
-          dialogType={"add-fighter"}
-        />
-        <TerritoriesTable />
+        <FighterRangsTable rangStatistics={info?.rangStatistics} />
       </Grid>
     </Grid>
   );
 }
 
-function MobileSizeMenuTeamInfo({ setDialogOpen }: MenuTeamInfoProps) {
+function MobileSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (panel: string) => (_: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
 
@@ -343,9 +363,9 @@ function MobileSizeMenuTeamInfo({ setDialogOpen }: MenuTeamInfoProps) {
           <Typography component={"span"}>{"Gang Info"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <TeamInfoTable />
+          <TeamInfoTable info={info} />
           <Stack spacing={2} direction="row" justifyContent="flex-end">
-            <IconButton onClick={() => setDialogOpen("add-fighter")}>
+            <IconButton onClick={() => setDialogOpen("edit-gang-info")}>
               <EditIcon />
             </IconButton>
           </Stack>
@@ -361,7 +381,7 @@ function MobileSizeMenuTeamInfo({ setDialogOpen }: MenuTeamInfoProps) {
           <Typography component={"span"}>{"Fighters"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FighterRangsTable />
+          <FighterRangsTable rangStatistics={info?.rangStatistics} />
           <Stack spacing={2} direction="row" justifyContent="flex-end">
             <IconButton onClick={() => setDialogOpen("add-fighter")}>
               <AddIcon />
@@ -379,7 +399,7 @@ function MobileSizeMenuTeamInfo({ setDialogOpen }: MenuTeamInfoProps) {
           <Typography component={"span"}>{"Territories"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <TerritoriesTable />
+          <TerritoriesTable territories={info?.territories} />
           <Stack spacing={2} direction="row" justifyContent="flex-end">
             <IconButton onClick={() => setDialogOpen("add-fighter")}>
               <AddIcon />
@@ -400,26 +420,38 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function TeamInfoTable() {
+interface TeamInfoTableProps {
+  info: TeamInfo | undefined;
+}
+
+function TeamInfoTable({ info }: TeamInfoTableProps) {
   return (
     <TableContainer>
       <Table size="small">
         <TableBody>
           <StyledTableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>{info?.name}</TableCell>
+          </StyledTableRow>
+          <StyledTableRow>
             <TableCell>Faction</TableCell>
-            <TableCell>Cawdor</TableCell>
+            <TableCell>{info?.faction.name}</TableCell>
           </StyledTableRow>
           <StyledTableRow>
             <TableCell>Credits</TableCell>
-            <TableCell>180</TableCell>
+            <TableCell>{info?.cash}</TableCell>
           </StyledTableRow>
           <StyledTableRow>
             <TableCell>Rating</TableCell>
-            <TableCell>1200</TableCell>
+            <TableCell>{info?.rating}</TableCell>
+          </StyledTableRow>
+          <StyledTableRow>
+            <TableCell>Reputation</TableCell>
+            <TableCell>{info?.reputation}</TableCell>
           </StyledTableRow>
           <StyledTableRow>
             <TableCell>Games Number</TableCell>
-            <TableCell>0</TableCell>
+            <TableCell>{info?.gamesPlayed}</TableCell>
           </StyledTableRow>
         </TableBody>
       </Table>
@@ -427,32 +459,26 @@ function TeamInfoTable() {
   );
 }
 
-function FighterRangsTable() {
+interface FighterRangsTableProps {
+  rangStatistics: RangStatistics | undefined;
+}
+
+function FighterRangsTable({ rangStatistics }: FighterRangsTableProps) {
   return (
     <TableContainer>
       <Table size="small">
         <TableBody>
-          <StyledTableRow>
-            <TableCell>Leader</TableCell>
-            <TableCell>x1</TableCell>
-          </StyledTableRow>
-          <StyledTableRow>
-            <TableCell>Champion</TableCell>
-            <TableCell>x1</TableCell>
-          </StyledTableRow>
-          <StyledTableRow>
-            <TableCell>Ganger</TableCell>
-            <TableCell>x3</TableCell>
-          </StyledTableRow>
-          <StyledTableRow>
-            <TableCell>Juve</TableCell>
-            <TableCell>x2</TableCell>
-          </StyledTableRow>
+          {rangStatistics?.rangs.map((value: RangCount, index) => (
+            <StyledTableRow key={index}>
+              <TableCell>{value.name}</TableCell>
+              <TableCell>x{value.count}</TableCell>
+            </StyledTableRow>
+          ))}
           <TableRow>
             <TableCell align="right" sx={{ fontWeight: "600" }}>
               Total
             </TableCell>
-            <TableCell>x7</TableCell>
+            <TableCell>x{rangStatistics?.total}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -460,43 +486,25 @@ function FighterRangsTable() {
   );
 }
 
-function TerritoriesTable() {
+interface TerritoriesTableProps {
+  territories: Territory[] | undefined;
+}
+
+function TerritoriesTable({ territories }: TerritoriesTableProps) {
   return (
     <TableContainer>
       <Table size="small">
         <TableBody>
-          <StyledTableRow>
-            <TableCell>Guilder Stronghold</TableCell>
-            <TableCell>
-              <IconButton>
-                <CloseIcon />
-              </IconButton>
-            </TableCell>
-          </StyledTableRow>
-          <StyledTableRow>
-            <TableCell>Settlement</TableCell>
-            <TableCell>
-              <IconButton>
-                <CloseIcon />
-              </IconButton>
-            </TableCell>
-          </StyledTableRow>
-          <StyledTableRow>
-            <TableCell>Wall Outpost</TableCell>
-            <TableCell>
-              <IconButton>
-                <CloseIcon />
-              </IconButton>
-            </TableCell>
-          </StyledTableRow>
-          <StyledTableRow>
-            <TableCell>Wastelands</TableCell>
-            <TableCell>
-              <IconButton>
-                <CloseIcon />
-              </IconButton>
-            </TableCell>
-          </StyledTableRow>
+          {territories?.map((territory: Territory, index) => (
+            <StyledTableRow>
+              <TableCell>{territory.name}</TableCell>
+              <TableCell>
+                <IconButton>
+                  <CloseIcon />
+                </IconButton>
+              </TableCell>
+            </StyledTableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

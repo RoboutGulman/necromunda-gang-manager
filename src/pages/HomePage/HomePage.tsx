@@ -1,4 +1,4 @@
-import { Container, Stack } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React from "react";
 import ResentGangs from "./ResentGangs";
 import MyGangsPreview from "./MyGangsPreview";
@@ -14,16 +14,18 @@ export default function HomePage({
 }: EnterScreenProps) {
   return (
     <Container component="main" sx={{ mb: 4 }}>
-      <Stack
-        direction="row"
-        sx={{ width: "90%" }}
-        justifyContent="space-around">
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", lg: "row" },
+          width: "90%",
+        }}>
         <MyGangsPreview
           isUserAuthorized={isUserAuthorized}
           setUserAuthorized={setUserAuthorized}
         />
         <ResentGangs />
-      </Stack>
+      </Box>
     </Container>
   );
 }
