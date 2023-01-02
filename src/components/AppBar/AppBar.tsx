@@ -1,7 +1,6 @@
 import Button from "@mui/material/Button";
 import {
   AppBar,
-  Avatar,
   Box,
   IconButton,
   Toolbar,
@@ -14,11 +13,13 @@ import { Link as RouterLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDrawerDispatch } from "../../providers/DrawerControlProvider";
 import { useUserState } from "../../providers/UserProvider";
+import UserPopover from "./UserPopover";
 
 export default function AppBarEnterScreen() {
   const [isDialogOpen, setDialogOpen] = React.useState(false);
   const user = useUserState();
   const drawerDispatch = useDrawerDispatch();
+
   return (
     <Box
       sx={{
@@ -60,14 +61,7 @@ export default function AppBarEnterScreen() {
             Necromunda Gang Manager
           </Typography>
           {user.authorized ? (
-            <>
-              <Box mr={3}>
-                <Avatar> {user.user?.name[0]}</Avatar>
-              </Box>
-              <Typography component={"span"} variant="h6">
-                {user.user?.name}
-              </Typography>
-            </>
+            <UserPopover />
           ) : (
             <>
               <Box mr={3}>

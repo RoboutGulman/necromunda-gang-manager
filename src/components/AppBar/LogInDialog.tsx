@@ -64,7 +64,6 @@ export default function LogInDialog({ open, setOpen }: LogInDialogProps) {
 
     if (authorized) {
       setOpen(false);
-      //setUserAuthorized(true);
     } else {
       setInputError(true);
     }

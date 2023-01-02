@@ -1,6 +1,8 @@
 import * as React from "react";
 import * as api from "../request/methods/user/getCurrentUserByToken";
 import * as login from "../request/methods/user/login";
+import { AuthTokenCookie } from "../request/request";
+import { deleteCookie } from "../utils/cookie";
 
 type Action =
   | { type: "register" }
@@ -32,7 +34,6 @@ async function logInUser(
 async function getCurrentUser(dispatch: Dispatch) {
   api.ApiMethods.getCurrentUser().then((data) => {
     dispatch({ type: "setUser", data: data });
-    //setUserAuthorized(data.authorized);
     console.log(data);
   });
 }
@@ -43,6 +44,7 @@ function userControlReducer(state: State, action: Action): State {
       return { authorized: action.result };
     }
     case "logout": {
+      deleteCookie(AuthTokenCookie);
       return { authorized: false };
     }
     case "setUser": {

@@ -495,8 +495,8 @@ function TerritoriesTable({ territories }: TerritoriesTableProps) {
     <TableContainer>
       <Table size="small">
         <TableBody>
-          {territories?.map((territory: Territory, index) => (
-            <StyledTableRow>
+          {territories?.map((territory: Territory, index: number) => (
+            <StyledTableRow key={index}>
               <TableCell>{territory.name}</TableCell>
               <TableCell>
                 <IconButton>
