@@ -10,7 +10,7 @@ const DrawerDispatchContext = React.createContext<Dispatch | undefined>(
   undefined
 );
 
-function drawerControlReducer(state: State, action: Action) {
+function drawerControlReducer(state: State, action: Action): State {
   switch (action.type) {
     case "change": {
       return { isOpen: !state.isOpen };

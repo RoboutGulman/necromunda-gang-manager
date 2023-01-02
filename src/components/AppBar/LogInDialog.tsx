@@ -15,8 +15,7 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import UserDialog from "../UserDialog";
-import { TransitionProps } from "@mui/material/transitions";
-import {ApiMethods} from "../../request/methods/user/login";
+import { logInUser, useUserDispatch } from "../../providers/UserProvider";
 
 interface State {
   nickname: string;
@@ -27,20 +26,16 @@ interface State {
 interface LogInDialogProps {
   open: boolean;
   setOpen: (isDialogOpen: boolean) => void;
-  setUserAuthorized: (isUserAuthorized: boolean) => void;
 }
 
-export default function LogInDialog({
-  open,
-  setOpen,
-  setUserAuthorized,
-}: LogInDialogProps) {
+export default function LogInDialog({ open, setOpen }: LogInDialogProps) {
   const [userInfo, setUserInfo] = React.useState<State>({
     nickname: "",
     password: "",
     showPassword: false,
   });
   const [inputError, setInputError] = React.useState(false);
+  const userDispatch = useUserDispatch();
 
   const onChange =
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,16 +57,16 @@ export default function LogInDialog({
   };
 
   const onSubmit = async () => {
-    const authorized: boolean = await ApiMethods.login({
+    const authorized: boolean = await logInUser(userDispatch, {
       username: userInfo.nickname,
-      password: userInfo.password
-    })
+      password: userInfo.password,
+    });
 
     if (authorized) {
       setOpen(false);
-      setUserAuthorized(true);
+      //setUserAuthorized(true);
     } else {
-      setInputError(true)
+      setInputError(true);
     }
   };
 

@@ -33,7 +33,7 @@ export default function FighterPage() {
   return (
     <Stack direction="row" justifyContent="center" spacing={8}>
       <NavigationList />
-      <Box sx={{ width: "75%" }}>
+      <Stack sx={{ width: "75%" }} spacing={4}>
         <FighterCard>
           <FighterCardHeader name={"Vasia"} rang={"ganger"} />
           {fighterInfo === undefined ? (
@@ -85,7 +85,7 @@ export default function FighterPage() {
             ))}
           </StyledList>
         </Stack>
-      </Box>
+      </Stack>
     </Stack>
   );
 }

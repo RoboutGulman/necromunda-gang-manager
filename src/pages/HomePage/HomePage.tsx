@@ -3,15 +3,7 @@ import React from "react";
 import ResentGangs from "./ResentGangs";
 import MyGangsPreview from "./MyGangsPreview";
 
-interface EnterScreenProps {
-  isUserAuthorized: boolean;
-  setUserAuthorized: (isUserAuthorized: boolean) => void;
-}
-
-export default function HomePage({
-  isUserAuthorized,
-  setUserAuthorized,
-}: EnterScreenProps) {
+export default function HomePage({}) {
   return (
     <Container component="main" sx={{ mb: 4 }}>
       <Box
@@ -20,10 +12,7 @@ export default function HomePage({
           flexDirection: { xs: "column", lg: "row" },
           width: "90%",
         }}>
-        <MyGangsPreview
-          isUserAuthorized={isUserAuthorized}
-          setUserAuthorized={setUserAuthorized}
-        />
+        <MyGangsPreview />
         <ResentGangs />
       </Box>
     </Container>

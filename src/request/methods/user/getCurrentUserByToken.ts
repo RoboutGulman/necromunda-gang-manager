@@ -8,7 +8,7 @@ export namespace ApiMethods {
     user?: {id: number, name: string};
   }
 
-  export async function authorize(): Promise<AuthorizeResult> {
+  export async function getCurrentUser(): Promise<AuthorizeResult> {
     const apiRequest = new ApiRequest();
     apiRequest.setMethod(RequestMethod.POST);
     apiRequest.setUrl(URL);

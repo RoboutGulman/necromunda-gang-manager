@@ -6,11 +6,7 @@ import LogInDialog from "../../components/AppBar/LogInDialog";
 import { MyTeamPreviewExample } from "../../model/FakeData/FakeData";
 import { getRosterBackground } from "../../backgrounds/RosterPreview/GetRosterBackground";
 import CreateGangDialog from "./CreateGangDialog";
-
-interface MyGangsPreviewProps {
-  isUserAuthorized: boolean;
-  setUserAuthorized: (isUserAuthorized: boolean) => void;
-}
+import { useUserState } from "../../providers/UserProvider";
 
 const MTPrewier = MyTeamPreviewExample.map((prewiew, index) => {
   return {
@@ -19,13 +15,12 @@ const MTPrewier = MyTeamPreviewExample.map((prewiew, index) => {
   };
 });
 
-export default function MyGangsPreview({
-  isUserAuthorized,
-  setUserAuthorized,
-}: MyGangsPreviewProps) {
+export default function MyGangsPreview() {
   const [isLoginDialogOpen, setLoginDialogOpen] = React.useState(false);
   const [isCreateGangDialogOpen, setCreateGangDialogOpen] =
     React.useState(false);
+  const user = useUserState();
+
   return (
     <Container>
       <Typography
@@ -37,7 +32,7 @@ export default function MyGangsPreview({
         MY GANGS
       </Typography>
 
-      {isUserAuthorized ? (
+      {user.authorized ? (
         <Box
           sx={{
             display: "flex",
@@ -112,7 +107,6 @@ export default function MyGangsPreview({
             <LogInDialog
               open={isLoginDialogOpen}
               setOpen={setLoginDialogOpen}
-              setUserAuthorized={setUserAuthorized}
             />
           </Stack>
         </Box>

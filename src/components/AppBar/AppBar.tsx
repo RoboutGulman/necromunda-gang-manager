@@ -13,15 +13,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import { Link as RouterLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDrawerDispatch } from "../../providers/DrawerControlProvider";
+import { useUserState } from "../../providers/UserProvider";
 
-interface AppBarProps {
-  isUserAuthorized: boolean;
-  setUserAuthorized: (isUserAuthorized: boolean) => void;
-}
-
-export default function AppBarEnterScreen(props: AppBarProps) {
+export default function AppBarEnterScreen() {
   const [isDialogOpen, setDialogOpen] = React.useState(false);
-  const dispatch = useDrawerDispatch();
+  const user = useUserState();
+  const drawerDispatch = useDrawerDispatch();
   return (
     <Box
       sx={{
@@ -43,7 +40,7 @@ export default function AppBarEnterScreen(props: AppBarProps) {
             <HomeIcon />
           </IconButton>
           <IconButton
-            onClick={() => dispatch({ type: "change" })}
+            onClick={() => drawerDispatch({ type: "change" })}
             size="large"
             edge="start"
             color="inherit"
@@ -62,13 +59,13 @@ export default function AppBarEnterScreen(props: AppBarProps) {
             }}>
             Necromunda Gang Manager
           </Typography>
-          {props.isUserAuthorized ? (
+          {user.authorized ? (
             <>
               <Box mr={3}>
-                <Avatar> RG</Avatar>
+                <Avatar> {user.user?.name[0]}</Avatar>
               </Box>
               <Typography component={"span"} variant="h6">
-                Robout Guilman
+                {user.user?.name}
               </Typography>
             </>
           ) : (
@@ -80,11 +77,7 @@ export default function AppBarEnterScreen(props: AppBarProps) {
                   onClick={() => setDialogOpen(true)}>
                   Log In
                 </Button>
-                <LogInDialog
-                  open={isDialogOpen}
-                  setOpen={setDialogOpen}
-                  setUserAuthorized={props.setUserAuthorized}
-                />
+                <LogInDialog open={isDialogOpen} setOpen={setDialogOpen} />
               </Box>
               <Button color="secondary" variant="contained">
                 Sign Up

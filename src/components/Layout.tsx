@@ -6,11 +6,6 @@ import { getRandomHomePageBackground } from "../backgrounds/HomePage/GetRandomBa
 import { Outlet } from "react-router-dom";
 import { DrawerControlProvider } from "../providers/DrawerControlProvider";
 
-type Props = {
-  isUserAuthorized: boolean;
-  setUserAuthorized: (isUserAuthorized: boolean) => void;
-};
-
 const outerTheme = createTheme({
   palette: {
     primary: {
@@ -22,7 +17,7 @@ const outerTheme = createTheme({
   },
 });
 
-export default function Layout(props: Props) {
+export default function Layout() {
   const background = useMemo(() => {
     return getRandomHomePageBackground();
   }, []);
@@ -38,10 +33,7 @@ export default function Layout(props: Props) {
             backgroundSize: "cover",
             overflowY: "scroll",
           }}>
-          <AppBarEnterScreen
-            setUserAuthorized={props.setUserAuthorized}
-            isUserAuthorized={props.isUserAuthorized}
-          />
+          <AppBarEnterScreen />
           <Container maxWidth="sm" sx={{ mb: 4 }}></Container>
           <Outlet />
         </Box>
