@@ -1,15 +1,13 @@
 import * as React from "react";
-import { ApiMethods } from "../request/methods/user/getCurrentUserByToken";
-
-import { AuthTokenCookie } from "../request/request";
-import { deleteCookie } from "../utils/cookie";
+import { AuthorizeResult } from "../request/api/user/getCurrentUser";
+import { Api } from "../request/api/api";
 
 type Action =
   | { type: "register" }
   | { type: "logout" }
-  | { type: "setUser"; data: ApiMethods.AuthorizeResult };
+  | { type: "setUser"; data: AuthorizeResult };
 type Dispatch = (action: Action) => void;
-type State = ApiMethods.AuthorizeResult;
+type State = AuthorizeResult;
 type UserProviderProps = { children: React.ReactNode };
 
 const UserStateContext = React.createContext<State | undefined>(undefined);
@@ -18,7 +16,7 @@ const UserDispatchContext = React.createContext<Dispatch | undefined>(
 );
 
 async function getCurrentUser(dispatch: Dispatch) {
-  ApiMethods.getCurrentUser().then((data) => {
+  Api.getCurrentUser().then((data) => {
     dispatch({ type: "setUser", data: data });
   });
 }
@@ -26,7 +24,7 @@ async function getCurrentUser(dispatch: Dispatch) {
 function userControlReducer(state: State, action: Action): State {
   switch (action.type) {
     case "logout": {
-      deleteCookie(AuthTokenCookie);
+      Api.logout();
       return { authorized: false };
     }
     case "setUser": {
