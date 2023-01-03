@@ -1,11 +1,5 @@
 import Button from "@mui/material/Button";
-import {
-  AppBar,
-  Box,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import LogInDialog from "./LogInDialog";
 import React from "react";
 import HomeIcon from "@mui/icons-material/Home";

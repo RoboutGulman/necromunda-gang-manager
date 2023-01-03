@@ -32,7 +32,7 @@ function UserPopover() {
           vertical: "bottom",
           horizontal: "left",
         }}>
-        <Button onClick={()=>dispatch({type:"logout"})}>Log out</Button>
+        <Button onClick={() => dispatch({ type: "logout" })}>Log out</Button>
       </Popover>
     </>
   );

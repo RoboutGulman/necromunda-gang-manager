@@ -11,16 +11,28 @@ import {
   FilledInput,
   InputAdornment,
   IconButton,
+  CircularProgress,
+  Typography,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import UserDialog from "../UserDialog";
-import { logInUser, useUserDispatch } from "../../providers/UserProvider";
+import { getCurrentUser, useUserDispatch } from "../../providers/UserProvider";
+import { blue } from "@mui/material/colors";
+import { ApiMethods } from "../../request/methods/user/login";
 
 interface State {
   nickname: string;
   password: string;
   showPassword: boolean;
+}
+
+async function logInUser(user: {
+  username: string;
+  password: string;
+}): Promise<boolean> {
+  const result = await ApiMethods.login(user);
+  return result;
 }
 
 interface LogInDialogProps {
@@ -35,6 +47,7 @@ export default function LogInDialog({ open, setOpen }: LogInDialogProps) {
     showPassword: false,
   });
   const [inputError, setInputError] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const userDispatch = useUserDispatch();
 
   const onChange =
@@ -45,39 +58,58 @@ export default function LogInDialog({ open, setOpen }: LogInDialogProps) {
       });
     };
 
-  const handleClickShowPassword = () => {
+  const clickShowPassword = () => {
     setUserInfo({
       ...userInfo,
       showPassword: !userInfo.showPassword,
     });
   };
 
-  const onClose = () => {
+  const close = () => {
     setOpen(false);
   };
 
-  const onSubmit = async () => {
-    const authorized: boolean = await logInUser(userDispatch, {
+  const submit = async () => {
+    setLoading(true);
+
+    let authorize = await logInUser({
       username: userInfo.nickname,
       password: userInfo.password,
     });
 
-    if (authorized) {
-      setOpen(false);
+    if (authorize) {
+      getCurrentUser(userDispatch).then(() => {
+        setLoading(false);
+        close();
+      });
     } else {
+      setLoading(false);
       setInputError(true);
     }
   };
 
-  const handleMouseDownPassword = (
+  const mouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
   };
 
   return (
-    <UserDialog open={open} handleClose={onClose}>
-      <DialogTitle>{"Log in your account"}</DialogTitle>
+    <UserDialog open={open} handleClose={close}>
+      <DialogTitle>
+        <Stack direction="row" alignItems="center">
+          <Typography>Log in your account</Typography>
+          {loading && (
+            <CircularProgress
+              size={24}
+              sx={{
+                color: blue[500],
+                marginLeft: "12px",
+              }}
+            />
+          )}
+        </Stack>
+      </DialogTitle>
       <DialogContent>
         <Stack spacing={2}>
           <TextField
@@ -106,8 +138,8 @@ export default function LogInDialog({ open, setOpen }: LogInDialogProps) {
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
+                    onClick={clickShowPassword}
+                    onMouseDown={mouseDownPassword}
                     edge="end">
                     {userInfo.showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -118,8 +150,8 @@ export default function LogInDialog({ open, setOpen }: LogInDialogProps) {
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Back</Button>
-        <Button onClick={onSubmit}>Log In</Button>
+        <Button onClick={close}>Back</Button>
+        <Button onClick={submit}>Log In</Button>
       </DialogActions>
     </UserDialog>
   );
