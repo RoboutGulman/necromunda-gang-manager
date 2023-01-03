@@ -4,7 +4,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  tableCellClasses,
   TableContainer,
   TableRow,
 } from "@mui/material";
@@ -19,11 +18,7 @@ interface StatsTableProps {
 }
 
 const CellWithNoBorder = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    fontWeight: "600",
-    borderColor: theme.palette.secondary.light,
-  },
-  [`&.${tableCellClasses.body}`]: { borderWidth: 0 },
+  borderWidth: 0,
 }));
 
 export default function StatsTable(props: StatsTableProps) {

@@ -6,13 +6,10 @@ import {
   ListItem,
   ListItemText,
   ListSubheader,
-  Paper,
   Stack,
-  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import FighterCard from "../../components/FighterCard/FighterCard";
-import cardNameBackground from "../../backgrounds/card_name_background.png";
 import NavigationList from "./NavigationList";
 import DetailedStatsTable from "./DetailedStatsTable";
 import EditIcon from "@mui/icons-material/Edit";
@@ -21,6 +18,9 @@ import { plainToClass } from "class-transformer";
 import { Fighter } from "../../model/Dto/Fighter";
 import fighterExampleJson from "../../model/FakeData/FighterExample.json";
 import { grey } from "@mui/material/colors";
+import FighterCardHeader from "../../components/FighterCard/FighterCardHeader";
+import cardBackground from "../../backgrounds/card_background.jpg";
+import cardNameBackground from "../../backgrounds/card_name_background.png";
 
 export default function FighterPage() {
   const [fighterInfo, setFighterInfo] = useState<Fighter | undefined>();
@@ -34,24 +34,32 @@ export default function FighterPage() {
       <NavigationList />
       <Stack sx={{ width: "75%" }} spacing={4}>
         <FighterCard>
-          <FighterCardHeader name={"Vasia"} rang={"ganger"} />
           {fighterInfo === undefined ? (
             <></>
           ) : (
-            <ListItem>
-              <DetailedStatsTable
-                baseCharacteristics={fighterInfo.baseCharacteristics}
-                totalCharacteristics={fighterInfo.totalCharacteristics}
-                totalInjuriesCharacteristics={
-                  fighterInfo.totalInjuriesCharacteristics
-                }
-                totalAdvancesCharacteristics={
-                  fighterInfo.totalAdvancesCharacteristics
-                }
-                exp={fighterInfo.xp}
-                lvl={fighterInfo.lvl}
-              />
-            </ListItem>
+            <>
+              <ListItem>
+                <FighterCardHeader
+                  name={fighterInfo.name}
+                  rang={fighterInfo.rang}
+                  totalCost={fighterInfo.totalCost}
+                />
+              </ListItem>
+              <ListItem>
+                <DetailedStatsTable
+                  baseCharacteristics={fighterInfo.baseCharacteristics}
+                  totalCharacteristics={fighterInfo.totalCharacteristics}
+                  totalInjuriesCharacteristics={
+                    fighterInfo.totalInjuriesCharacteristics
+                  }
+                  totalAdvancesCharacteristics={
+                    fighterInfo.totalAdvancesCharacteristics
+                  }
+                  exp={fighterInfo.xp}
+                  lvl={fighterInfo.lvl}
+                />
+              </ListItem>
+            </>
           )}
         </FighterCard>
         <Stack direction="row" justifyContent="center" spacing={8}>
@@ -105,19 +113,27 @@ function StyledList({ header, children }: StyledListProps) {
       sx={{
         width: "25%",
         height: "100%",
-        bgcolor: "background.paper",
+        backgroundImage: `url('${cardBackground}')`,
+        backgroundSize: "100%",
+        backgroundRepeat: "repeat-y",
       }}>
       <List
         sx={{
           width: "100%",
           color: "white",
+          "& .MuiPaper-root": {
+            boxShadow: "none",
+          },
         }}
         subheader={
           <ListSubheader
             sx={{
               fontSize: "1.1rem",
               color: "white",
-              bgcolor: grey[900],
+              backgroundColor: grey[500],
+              backgroundImage: `url('${cardNameBackground}')`,
+              backgroundPosition: "center",
+              backgroundSize: "120% 120%",
             }}>
             {header}
             <IconButton
@@ -140,37 +156,5 @@ function StyledList({ header, children }: StyledListProps) {
         )}
       </List>
     </Box>
-  );
-}
-
-interface FighterCardHeaderProps {
-  name: string;
-  rang: string;
-}
-
-function FighterCardHeader({ name, rang }: FighterCardHeaderProps) {
-  return (
-    <ListItem>
-      <Paper
-        sx={{
-          width: "100%",
-          backgroundImage: `url('${cardNameBackground}')`,
-          height: "34px",
-          pt: "8px",
-        }}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ pl: "5px", pr: "5px" }}>
-          <Typography variant="h6" color="secondary">
-            {name}
-          </Typography>
-          <Typography variant="h6" color="secondary">
-            {rang}
-          </Typography>
-        </Stack>
-      </Paper>
-    </ListItem>
   );
 }

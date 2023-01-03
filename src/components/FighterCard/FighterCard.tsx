@@ -1,10 +1,15 @@
-import { Box, Card, CardContent, List } from "@mui/material";
+import { Box, Card, CardContent, List, styled } from "@mui/material";
 import React from "react";
 import cardBackground from "../../backgrounds/card_background.jpg";
 
 interface FighterCardProps {
   children: React.ReactNode;
 }
+const StyledList = styled(List)<{ component?: React.ElementType }>({
+  "& .MuiPaper-root": {
+    boxShadow: "none",
+  },
+});
 
 export default function FighterCard({ children }: FighterCardProps) {
   return (
@@ -21,7 +26,7 @@ export default function FighterCard({ children }: FighterCardProps) {
       }}>
       <CardContent>
         <Box sx={{ padding: "10px" }}>
-          <List>{children}</List>
+          <StyledList>{children}</StyledList>
         </Box>
       </CardContent>
     </Card>
