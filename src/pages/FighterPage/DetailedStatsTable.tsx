@@ -4,88 +4,69 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
   IconButton,
-  Paper,
 } from "@mui/material";
 import React from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { Characteristics } from "../../model/Characteristics";
+import { GetCharacteristicView } from "../../utils/GetCharacteristicView";
+import StatsTableHeader from "../../components/FighterCard/StatsTableHeader";
 
 interface DetailedStatsTableProps {
-  stats: { name: string; value: string }[];
+  baseCharacteristics: Characteristics;
+  totalCharacteristics: Characteristics;
+  totalInjuriesCharacteristics: Characteristics;
+  totalAdvancesCharacteristics: Characteristics;
+  exp: number;
+  lvl: number;
+}
+
+function GetCharacteristicModificatorsView(
+  charsMods: Characteristics
+): string[] {
+  const chars: Characteristics = new Characteristics();
+  chars.add(charsMods);
+
+  return Object.values(chars).map((value) =>
+    value > 0 ? "+" + value : "" + value
+  );
 }
 
 export default function DetailedStatsTable(props: DetailedStatsTableProps) {
   const [open, setOpen] = React.useState(false);
-  const values = props.stats.map((item) => item.value);
-  const advansesValues = [
-    "+1",
-    "0",
-    "+2",
-    "0",
-    "0",
-    "0",
-    "0",
-    "+1",
-    "0",
-    "0",
-    "0",
-    "0",
-  ];
-  const injuriesValues = [
-    "0",
-    "-1",
-    "0",
-    "0",
-    "0",
-    "0",
-    "0",
-    "-1",
-    "-2",
-    "0",
-    "0",
-    "0",
-  ];
-  const baseValues = [
-    "4",
-    "3",
-    "6",
-    "3",
-    "3",
-    "1",
-    "4",
-    "1",
-    "5",
-    "7",
-    "7",
-    "7",
-  ];
+
+  const totalCharsView = GetCharacteristicView(
+    props.totalCharacteristics,
+    props.exp,
+    props.lvl
+  );
+
+  const advansesView = GetCharacteristicModificatorsView(
+    props.totalAdvancesCharacteristics
+  );
+
+  const injuriesView = GetCharacteristicModificatorsView(
+    props.totalInjuriesCharacteristics
+  );
+  const baseView = GetCharacteristicView(props.totalCharacteristics);
+
   return (
-    <Collapse in={open} collapsedSize={120}>
-      <TableContainer component={Paper}>
+    <Collapse in={open} collapsedSize={115}>
+      <TableContainer sx={{ background: "transparent" }}>
         <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              {props.stats.map((value, index) => (
-                <TableCell key={index} align="center">
-                  {value.name}
-                </TableCell>
-              ))}
-              <TableCell>
-                <IconButton
-                  aria-label="expand row"
-                  size="small"
-                  onClick={() => setOpen(!open)}>
-                  {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          </TableHead>
+          <StatsTableHeader>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}>
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </StatsTableHeader>
           <TableBody>
             <TableRow>
-              {values.map((value, index) => (
+              {totalCharsView.map((value, index) => (
                 <TableCell key={index} align="center">
                   {value}
                 </TableCell>
@@ -93,7 +74,7 @@ export default function DetailedStatsTable(props: DetailedStatsTableProps) {
               <TableCell colSpan={1} />
             </TableRow>
             <TableRow sx={{ backgroundColor: "#c3e6cb" }}>
-              {advansesValues.map((value, index) => (
+              {advansesView.map((value, index) => (
                 <TableCell key={index} align="center">
                   {value}
                 </TableCell>
@@ -101,7 +82,7 @@ export default function DetailedStatsTable(props: DetailedStatsTableProps) {
               <TableCell colSpan={3}>Advances</TableCell>
             </TableRow>
             <TableRow sx={{ backgroundColor: "#f5c6cb" }}>
-              {injuriesValues.map((value, index) => (
+              {injuriesView.map((value, index) => (
                 <TableCell key={index} align="center">
                   {value}
                 </TableCell>
@@ -109,7 +90,7 @@ export default function DetailedStatsTable(props: DetailedStatsTableProps) {
               <TableCell colSpan={3}>Injuries</TableCell>
             </TableRow>
             <TableRow>
-              {baseValues.map((value, index) => (
+              {baseView.map((value, index) => (
                 <TableCell key={index} align="center">
                   {value}
                 </TableCell>

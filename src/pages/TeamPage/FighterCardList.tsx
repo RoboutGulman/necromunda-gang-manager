@@ -6,7 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Characteristics } from "../../model/Characteristics";
 import { TeamView } from "../../model/Dto/TeamView";
 
-import StatsTable from "../../components/FighterCard/StatsTable";
+import StatsTable from "./StatsTable";
 import FighterCard from "../../components/FighterCard/FighterCard";
 import WeaponsTable from "../../components/FighterCard/WeaponsTable";
 
@@ -31,10 +31,9 @@ export default function FighterCardList({ teamView }: Props) {
                 totalCost={fighterView.totalCost}
               />
               <StatsTable
-                stats={GetCharacteristicView(
-                  fighterView.totalCharacteristics,
-                  fighterView.xp
-                )}
+                characteristics={fighterView.totalCharacteristics}
+                xp={fighterView.xp}
+                lvl={fighterView.lvl}
               />
               <ListItem disablePadding sx={{ mb: "10px" }}>
                 <WeaponsTable weapons={fighterView.weapons} />

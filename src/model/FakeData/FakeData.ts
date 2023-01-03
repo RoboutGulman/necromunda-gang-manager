@@ -1,11 +1,11 @@
-import {Characteristics} from "../Characteristics";
+import { Characteristics } from "../Characteristics";
 import {
   Equipment,
   MyTeamPreview,
   TeamPreview,
   Trait,
   User,
-  Weapon
+  Weapon,
 } from "../Types";
 
 export const TeamPreviewExamples: TeamPreview[] = [
@@ -15,55 +15,57 @@ export const TeamPreviewExamples: TeamPreview[] = [
     faction: "Ash Waste Nomads",
     rating: 0,
     creatorNickname: "serrath",
-    time: "2 seconds"
-  }, {
+    time: "2 seconds",
+  },
+  {
     id: "",
     name: "Belowed of the 4-armed Emperor",
     faction: "Genestealer Cult",
     rating: 145,
     creatorNickname: "Antihero",
-    time: "3 minutes"
-  }, {
+    time: "3 minutes",
+  },
+  {
     id: "",
     name: "HPED-v2",
     faction: "Enforcers",
     rating: 710,
     creatorNickname: "Omenos",
-    time: "6 minutes"
-  }
+    time: "6 minutes",
+  },
 ];
 
 export const MyTeamPreviewExample: MyTeamPreview[] = [
   {
     name: "my roster 1",
-    faction: "ash nomads"
-  }, {
+    faction: "ash nomads",
+  },
+  {
     name: " my roster 2",
-    faction: "orlocks"
-  }, {
+    faction: "orlocks",
+  },
+  {
     name: " my roster 2",
-    faction: "orlocks"
-  }, {
+    faction: "orlocks",
+  },
+  {
     name: " my roster 2",
-    faction: "orlocks"
-  }, {
+    faction: "orlocks",
+  },
+  {
     name: " my roster 2",
-    faction: "orlocks"
-  }
+    faction: "orlocks",
+  },
 ];
-
-const DefaultGangerCharacteristics = new Characteristics(5, 4, 4, 3, 3, 1, 4, 1, 7, 7, 7, 7);
-
-const ChampionCharacteristicsExample = new Characteristics(5, 3, 4, 4, 3, 2, 3, 1, 5, 6, 7, 8);
 
 const RapidFire: Trait = {
   id: "",
-  name: "Rapid Fire"
+  name: "Rapid Fire",
 };
 
 const Backstab: Trait = {
   id: "",
-  name: "Backstab"
+  name: "Backstab",
 };
 
 /*const Autogun: Weapon = {
@@ -118,7 +120,7 @@ const FlackArmour: Equipment = {
   id: "",
   name: "Flack armour",
   rarity: 0,
-  cost: 15
+  cost: 15,
 };
 
 /*export const Bob: Fighter = {
@@ -142,7 +144,7 @@ const FlackArmour: Equipment = {
 
 const Vasia: User = {
   id: "",
-  name: "Vasia"
+  name: "Vasia",
 };
 
 //export const TeamExample = ()
