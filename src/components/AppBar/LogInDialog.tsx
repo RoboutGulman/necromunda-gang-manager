@@ -68,6 +68,11 @@ export default function LogInDialog() {
   };
 
   const submit = async () => {
+    if (userInfo.nickname.length === 0 || userInfo.password.length === 0) {
+      setInputError(true);
+      return;
+    }
+
     setLoading(true);
 
     let authorize = await logInUser({

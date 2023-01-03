@@ -1,42 +1,50 @@
 export class Characteristics {
-  m !: number;
-  ws !: number;
-  bs !: number;
-  s !: number;
-  t !: number;
-  w !: number;
-  i !: number;
-  a !: number;
-  ld !: number;
-  cl !: number;
-  wp !: number;
-  int !: number;
-  constructor(m : number, ws : number, bs : number, s : number, t : number, w : number, i : number, a : number, ld : number, cl : number, wp : number, int : number) {
-    this.m = m;
-    this.ws = ws;
-    this.bs = bs;
-    this.s = s;
-    this.t = t;
-    this.w = w;
-    this.i = i;
-    this.a = a;
-    this.ld = ld;
-    this.cl = cl;
-    this.wp = wp;
-    this.int = int;
+  public m: number = 0;
+  public ws: number = 0;
+  public bs: number = 0;
+  public s: number = 0;
+  public t: number = 0;
+  public w: number = 0;
+  public i: number = 0;
+  public a: number = 0;
+  public ld: number = 0;
+  public cl: number = 0;
+  public wp: number = 0;
+  public int: number = 0;
+
+  public constructor(init?: Partial<Characteristics>) {
+    Object.assign(this, init);
   }
-  add(value : Characteristics): void {
-    this.m += value.m;
-    this.ws += value.ws;
-    this.bs += value.bs;
-    this.s += value.s;
-    this.t += value.t;
-    this.w += value.w;
-    this.i += value.i;
-    this.a += value.a;
-    this.ld += value.ld;
-    this.cl += value.cl;
-    this.wp += value.wp;
-    this.int += value.int;
+
+  add(value: Characteristics): void {
+    if (value.m != undefined) this.m += value.m;
+    if (value.ws != undefined) this.ws += value.ws;
+    if (value.bs != undefined) this.bs += value.bs;
+    if (value.s != undefined) this.s += value.s;
+    if (value.t != undefined) this.t += value.t;
+    if (value.w != undefined) this.w += value.w;
+    if (value.i != undefined) this.i += value.i;
+    if (value.a != undefined) this.a += value.a;
+    if (value.ld != undefined) this.ld += value.ld;
+    if (value.cl != undefined) this.cl += value.cl;
+    if (value.wp != undefined) this.wp += value.wp;
+    if (value.int != undefined) this.int += value.int;
   }
 }
+
+export const CharacteristicsNames: string[] = [
+  "M",
+  "WS",
+  "BS",
+  "S",
+  "T",
+  "W",
+  "I",
+  "A",
+  "Ld",
+  "Cl",
+  "Wp",
+  "Int",
+  "Exp",
+  "Lvl",
+];

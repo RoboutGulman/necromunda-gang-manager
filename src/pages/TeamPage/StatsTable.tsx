@@ -4,22 +4,21 @@ import {
   Table,
   TableBody,
   TableCell,
-  tableCellClasses,
   TableContainer,
-  TableHead,
   TableRow,
 } from "@mui/material";
+import StatsTableHeader from "../../components/FighterCard/StatsTableHeader";
+import { Characteristics } from "../../model/Characteristics";
+import { GetCharacteristicView } from "../../utils/GetCharacteristicView";
 
 interface StatsTableProps {
-  stats: { name: string; value: string }[];
+  characteristics: Characteristics;
+  xp: number;
+  lvl: number;
 }
 
 const CellWithNoBorder = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    fontWeight: "600",
-    borderColor: theme.palette.secondary.light,
-  },
-  [`&.${tableCellClasses.body}`]: { borderWidth: 0 },
+  borderWidth: 0,
 }));
 
 export default function StatsTable(props: StatsTableProps) {
@@ -27,20 +26,16 @@ export default function StatsTable(props: StatsTableProps) {
     <ListItem disablePadding>
       <TableContainer>
         <Table size="small">
-          <TableHead>
-            <TableRow sx={{ borderColor: "secondary.light" }}>
-              {props.stats.map((stat, index) => (
-                <CellWithNoBorder key={index} align="center">
-                  {stat.name}
-                </CellWithNoBorder>
-              ))}
-            </TableRow>
-          </TableHead>
+          <StatsTableHeader></StatsTableHeader>
           <TableBody>
             <TableRow>
-              {props.stats.map((stat, index) => (
+              {GetCharacteristicView(
+                props.characteristics,
+                props.xp,
+                props.lvl
+              ).map((stat, index) => (
                 <CellWithNoBorder key={index} align="center">
-                  {stat.value}
+                  {stat}
                 </CellWithNoBorder>
               ))}
             </TableRow>

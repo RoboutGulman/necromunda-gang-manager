@@ -1,4 +1,4 @@
-import {Characteristics} from "../Characteristics";
+import { Characteristics } from "../Characteristics";
 import {
   Advance,
   Equipment,
@@ -6,23 +6,26 @@ import {
   Skill,
   SpecialRule,
   Status,
-  Weapon
+  Weapon,
 } from "../Types";
 
 export class Fighter {
-  id !: string;
-  name !: string;
-  rang !: string;
-  description !: string;
-  characteristics !: Characteristics;
-  injuries !: Injury[];
-  advances !: Advance[];
-  weapons !: Weapon[];
-  equipment !: Equipment[];
-  skills !: Skill[];
-  specialRules !: SpecialRule[];
-  status !: Status | null;
-  xp !: number;
-  lvl !: number;
-  totalCost !: number;
+  id!: string;
+  name!: string;
+  rang!: string;
+  description!: string;
+  baseCharacteristics!: Characteristics;
+  totalCharacteristics!: Characteristics;
+  totalInjuriesCharacteristics!: Characteristics;
+  totalAdvancesCharacteristics!: Characteristics;
+  injuries!: Injury[];
+  advances!: Advance[];
+  weapons!: Weapon[];
+  equipment!: Equipment[];
+  skills!: Skill[];
+  specialRules!: SpecialRule[];
+  status!: Status | null;
+  xp!: number;
+  lvl!: number;
+  totalCost!: number;
 }

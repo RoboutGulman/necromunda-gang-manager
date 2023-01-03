@@ -98,6 +98,7 @@ export type FighterView = {
   status: Status;
   totalCost: number;
   xp: number;
+  lvl:number;
 };
 
 export type Faction = {
