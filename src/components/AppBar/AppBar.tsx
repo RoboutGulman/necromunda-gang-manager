@@ -1,18 +1,18 @@
 import Button from "@mui/material/Button";
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import LogInDialog from "./LogInDialog";
-import React from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link as RouterLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDrawerDispatch } from "../../providers/DrawerControlProvider";
 import { useUserState } from "../../providers/UserProvider";
 import UserPopover from "./UserPopover";
+import { useAuthDialogsDispatch } from "../../providers/AuthDialogsProvider";
 
 export default function AppBarEnterScreen() {
-  const [isDialogOpen, setDialogOpen] = React.useState(false);
   const user = useUserState();
   const drawerDispatch = useDrawerDispatch();
+  const setDialogOpen = useAuthDialogsDispatch();
 
   return (
     <Box
@@ -62,10 +62,10 @@ export default function AppBarEnterScreen() {
                 <Button
                   color="inherit"
                   variant="outlined"
-                  onClick={() => setDialogOpen(true)}>
+                  onClick={() => setDialogOpen({ type: "open-login" })}>
                   Log In
                 </Button>
-                <LogInDialog open={isDialogOpen} setOpen={setDialogOpen} />
+                <LogInDialog />
               </Box>
               <Button color="secondary" variant="contained">
                 Sign Up

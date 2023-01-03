@@ -20,6 +20,10 @@ import UserDialog from "../UserDialog";
 import { getCurrentUser, useUserDispatch } from "../../providers/UserProvider";
 import { blue } from "@mui/material/colors";
 import { ApiMethods } from "../../request/methods/user/login";
+import {
+  useAuthDialogsDispatch,
+  useAuthDialogsState,
+} from "../../providers/AuthDialogsProvider";
 
 interface State {
   nickname: string;
@@ -35,12 +39,7 @@ async function logInUser(user: {
   return result;
 }
 
-interface LogInDialogProps {
-  open: boolean;
-  setOpen: (isDialogOpen: boolean) => void;
-}
-
-export default function LogInDialog({ open, setOpen }: LogInDialogProps) {
+export default function LogInDialog() {
   const [userInfo, setUserInfo] = React.useState<State>({
     nickname: "",
     password: "",
@@ -49,6 +48,9 @@ export default function LogInDialog({ open, setOpen }: LogInDialogProps) {
   const [inputError, setInputError] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const userDispatch = useUserDispatch();
+
+  const open = useAuthDialogsState().whichDialogIsOpen === "login";
+  const setOpen = useAuthDialogsDispatch();
 
   const onChange =
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +68,7 @@ export default function LogInDialog({ open, setOpen }: LogInDialogProps) {
   };
 
   const close = () => {
-    setOpen(false);
+    setOpen({ type: "close" });
   };
 
   const submit = async () => {
@@ -88,9 +90,7 @@ export default function LogInDialog({ open, setOpen }: LogInDialogProps) {
     }
   };
 
-  const mouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const mouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 

@@ -5,6 +5,7 @@ import AppBarEnterScreen from "./AppBar/AppBar";
 import { getRandomHomePageBackground } from "../backgrounds/HomePage/GetRandomBackground";
 import { Outlet } from "react-router-dom";
 import { DrawerControlProvider } from "../providers/DrawerControlProvider";
+import { AuthDialogsControlProvider } from "../providers/AuthDialogsProvider";
 
 const outerTheme = createTheme({
   palette: {
@@ -25,18 +26,20 @@ export default function Layout() {
   return (
     <ThemeProvider theme={outerTheme}>
       <DrawerControlProvider>
-        <Box
-          sx={{
-            height: "100vh",
-            backgroundImage: `url('${background}')`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            overflowY: "scroll",
-          }}>
-          <AppBarEnterScreen />
-          <Container maxWidth="sm" sx={{ mb: 4 }}></Container>
-          <Outlet />
-        </Box>
+        <AuthDialogsControlProvider>
+          <Box
+            sx={{
+              height: "100vh",
+              backgroundImage: `url('${background}')`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              overflowY: "scroll",
+            }}>
+            <AppBarEnterScreen />
+            <Container maxWidth="sm" sx={{ mb: 4 }}></Container>
+            <Outlet />
+          </Box>
+        </AuthDialogsControlProvider>
       </DrawerControlProvider>
     </ThemeProvider>
   );
