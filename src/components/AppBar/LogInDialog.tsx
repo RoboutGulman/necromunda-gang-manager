@@ -80,10 +80,9 @@ export default function LogInDialog() {
     });
 
     if (authorize) {
-      getCurrentUser(userDispatch).then(() => {
-        setLoading(false);
-        close();
-      });
+      await getCurrentUser(userDispatch);
+      setLoading(false);
+      close();
     } else {
       setLoading(false);
       setInputError(true);

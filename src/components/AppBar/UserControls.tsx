@@ -56,7 +56,7 @@ function UserControls() {
           horizontal: "left",
         }}>
         <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-          <nav aria-label="main mailbox folders">
+          <nav aria-label="user controls">
             <List>
               <ListItem disablePadding>
                 <ListItemButton onClick={() => dispatch({ type: "logout" })}>
