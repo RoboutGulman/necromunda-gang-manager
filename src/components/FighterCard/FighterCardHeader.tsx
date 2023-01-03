@@ -19,7 +19,7 @@ export default function FighterCardHeader({
       <Paper
         sx={{
           width: "100%",
-          backgroundColor: grey[500],
+          backgroundColor: "transparent",
           backgroundImage: `url('${cardNameBackground}')`,
           backgroundPosition: "center",
           backgroundSize: "120% 120%",
@@ -62,20 +62,26 @@ function CreditsCostContainer({ cost }: CreditsCostContainerProps) {
     <Box
       sx={{
         position: "absolute",
-        right: "-4px",
-        top: "-13px",
+        right: "-20px",
+        top: "-10px",
         backgroundColor: "#d6d6d6",
         borderRadius: "50%",
         border: "5px solid #302429",
         textAlign: "center",
         padding: "7px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        aspectRatio: "1/1",
       }}>
       <Typography
-        sx={{ fontWeight: "600", lineHeight: "0.7", mt: "8px" }}
+        sx={{ fontWeight: "600", lineHeight: "0.7", mb: "6px" }}
         variant="h6">
         {cost}
       </Typography>
-      <Typography sx={{ fontSize: "0.6rem" }} variant="caption">
+      <Typography
+        sx={{ fontSize: "0.6rem", lineHeight: "0.8" }}
+        variant="caption">
         Credits
       </Typography>
     </Box>
