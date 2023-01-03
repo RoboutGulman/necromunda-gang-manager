@@ -6,7 +6,7 @@ import { Link as RouterLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDrawerDispatch } from "../../providers/DrawerControlProvider";
 import { useUserState } from "../../providers/UserProvider";
-import UserPopover from "./UserPopover";
+import UserControls from "./UserControls";
 import { useAuthDialogsDispatch } from "../../providers/AuthDialogsProvider";
 
 export default function AppBarEnterScreen() {
@@ -55,7 +55,7 @@ export default function AppBarEnterScreen() {
             Necromunda Gang Manager
           </Typography>
           {user.authorized ? (
-            <UserPopover />
+            <UserControls />
           ) : (
             <>
               <Box mr={3}>

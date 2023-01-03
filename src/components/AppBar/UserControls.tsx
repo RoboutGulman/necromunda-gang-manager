@@ -1,8 +1,20 @@
-import { Avatar, Button, Popover, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Popover,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { useUserDispatch, useUserState } from "../../providers/UserProvider";
+import LogoutIcon from "@mui/icons-material/Logout";
 
-function UserPopover() {
+function UserControls() {
   const user = useUserState();
   const [anchorEl, setAnchorEl] = React.useState<any | null>(null);
   const open = Boolean(anchorEl);
@@ -43,10 +55,23 @@ function UserPopover() {
           vertical: "bottom",
           horizontal: "left",
         }}>
-        <Button onClick={() => dispatch({ type: "logout" })}>Log out</Button>
+        <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+          <nav aria-label="main mailbox folders">
+            <List>
+              <ListItem disablePadding>
+                <ListItemButton onClick={() => dispatch({ type: "logout" })}>
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Log out" />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </nav>
+        </Box>
       </Popover>
     </>
   );
 }
 
-export default UserPopover;
+export default UserControls;

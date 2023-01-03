@@ -2,7 +2,6 @@ import { Box, Button, Container, List, Stack, Typography } from "@mui/material";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import LockIcon from "@mui/icons-material/Lock";
-import LogInDialog from "../../components/AppBar/LogInDialog";
 import { MyTeamPreviewExample } from "../../model/FakeData/FakeData";
 import { getRosterBackground } from "../../backgrounds/RosterPreview/GetRosterBackground";
 import CreateGangDialog from "./CreateGangDialog";
@@ -112,7 +111,6 @@ export default function MyGangsPreview() {
               startIcon={<LockIcon />}>
               Login \ Register
             </Button>
-            <LogInDialog />
           </Stack>
         </Box>
       )}
