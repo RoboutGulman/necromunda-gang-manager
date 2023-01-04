@@ -3,6 +3,10 @@
   "name": "Bob",
   "rang": "ganger",
   "description": "Just example of fighter",
+  "status": 1,
+  "xp": 0,
+  "lvl": 1,
+  "totalCost": 120,
   "baseCharacteristics": {
     "m": 5,
     "ws": 4,
@@ -40,6 +44,20 @@
     "i": 2,
     "a": 1
   },
+  "userCharacteristicsModificators": {
+    "m": 1,
+    "ws": -1,
+    "bs": 0,
+    "s": 0,
+    "t": 0,
+    "w": 0,
+    "i": 0,
+    "a": 0,
+    "ld": 0,
+    "cl": 0,
+    "wp": 0,
+    "int": 0
+  },
   "injuries": [],
   "advances": [],
   "weapons": [
@@ -72,9 +90,5 @@
     {
       "name": "Leading by Example"
     }
-  ],
-  "status": 1,
-  "xp": 0,
-  "lvl": 1,
-  "totalCost": 120
+  ]
 }
