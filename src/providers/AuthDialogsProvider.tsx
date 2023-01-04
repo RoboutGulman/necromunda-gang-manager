@@ -5,7 +5,7 @@ type Action =
   | { type: "open-register" }
   | { type: "close" };
 type Dispatch = (action: Action) => void;
-type State = { whichDialogIsOpen: "none" | "login" | "register" };
+type State = { whichDialogIsOpen: "None" | "Login" | "Register" };
 type AuthDialogsProviderProps = { children: React.ReactNode };
 
 const AuthDialogsStateContext = React.createContext<State | undefined>(
@@ -18,13 +18,13 @@ const AuthDialogsDispatchContext = React.createContext<Dispatch | undefined>(
 function authDialogsControlReducer(state: State, action: Action): State {
   switch (action.type) {
     case "close": {
-      return { whichDialogIsOpen: "none" };
+      return { whichDialogIsOpen: "None" };
     }
     case "open-login": {
-      return { whichDialogIsOpen: "login" };
+      return { whichDialogIsOpen: "Login" };
     }
     case "open-register": {
-      return { whichDialogIsOpen: "register" };
+      return { whichDialogIsOpen: "Register" };
     }
     default: {
       throw new Error(`Unhandled action type: ${action}`);
@@ -34,7 +34,7 @@ function authDialogsControlReducer(state: State, action: Action): State {
 
 function AuthDialogsControlProvider({ children }: AuthDialogsProviderProps) {
   const [state, dispatch] = React.useReducer(authDialogsControlReducer, {
-    whichDialogIsOpen: "none",
+    whichDialogIsOpen: "None",
   });
   return (
     <AuthDialogsStateContext.Provider value={state}>

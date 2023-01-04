@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  Alert,
   Button,
   CircularProgress,
   DialogActions,
@@ -10,6 +11,7 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  Link,
   Stack,
   TextField,
   Typography,
@@ -17,10 +19,13 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import UserDialog from "../UserDialog";
-import {getCurrentUser, useUserDispatch} from "../../providers/UserProvider";
-import {blue} from "@mui/material/colors";
-import {Api} from "../../request/api/api";
-import {useAuthDialogsDispatch, useAuthDialogsState,} from "../../providers/AuthDialogsProvider";
+import { getCurrentUser, useUserDispatch } from "../../providers/UserProvider";
+import { blue } from "@mui/material/colors";
+import { Api } from "../../request/api/api";
+import {
+  useAuthDialogsDispatch,
+  useAuthDialogsState,
+} from "../../providers/AuthDialogsProvider";
 
 interface State {
   nickname: string;
@@ -28,24 +33,28 @@ interface State {
   showPassword: boolean;
 }
 
-async function logInUser(user: {
-  username: string;
-  password: string;
-}): Promise<boolean> {
-  return await Api.login(user);
+interface UserAuthorizationDialogProps {
+  variant: "Login" | "Register";
 }
 
-export default function LogInDialog() {
+export default function UserAuthorizationDialog({
+  variant,
+}: UserAuthorizationDialogProps) {
   const [userInfo, setUserInfo] = React.useState<State>({
     nickname: "",
     password: "",
     showPassword: false,
   });
-  const [inputError, setInputError] = React.useState(false);
+
+  const [inputError, setInputError] = React.useState<{
+    isError: boolean;
+    errorMessage: string;
+  }>({ isError: false, errorMessage: "" });
+
   const [loading, setLoading] = React.useState(false);
   const userDispatch = useUserDispatch();
 
-  const open = useAuthDialogsState().whichDialogIsOpen === "login";
+  const open = useAuthDialogsState().whichDialogIsOpen === variant;
   const setOpen = useAuthDialogsDispatch();
 
   const onChange =
@@ -67,27 +76,63 @@ export default function LogInDialog() {
     setOpen({ type: "close" });
   };
 
-  const submit = async () => {
-    if (userInfo.nickname.length === 0 || userInfo.password.length === 0) {
-      setInputError(true);
-      return;
-    }
-
-    setLoading(true);
-
-    let authorize = await logInUser({
+  const tryLogin = async () => {
+    let loginResult = await Api.login({
       username: userInfo.nickname,
       password: userInfo.password,
     });
 
-    if (authorize) {
+    if (loginResult) {
       await getCurrentUser(userDispatch);
       setLoading(false);
       close();
     } else {
       setLoading(false);
-      setInputError(true);
+      setInputError({
+        isError: true,
+        errorMessage: "Incorrect nickname or password",
+      });
     }
+  };
+
+  const tryRegister = async () => {
+    let registerResult = await Api.register({
+      username: userInfo.nickname,
+      password: userInfo.password,
+    });
+
+    if (registerResult.success) {
+      await getCurrentUser(userDispatch);
+      setLoading(false);
+      close();
+    } else {
+      setLoading(false);
+      setInputError({
+        isError: true,
+        errorMessage: registerResult.message,
+      });
+    }
+  };
+
+  const submit = async () => {
+    if (userInfo.nickname.length === 0 || userInfo.password.length === 0) {
+      setInputError({
+        isError: true,
+        errorMessage: "Please complete both fields.",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    if (variant === "Login") {
+      tryLogin();
+      return;
+    }
+
+    tryRegister();
+
+    setLoading(false);
   };
 
   const mouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -98,7 +143,7 @@ export default function LogInDialog() {
     <UserDialog open={open} handleClose={close}>
       <DialogTitle>
         <Stack direction="row" alignItems="center">
-          <Typography>Log in your account</Typography>
+          <Typography>{`${variant} your account`}</Typography>
           {loading && (
             <CircularProgress
               size={24}
@@ -113,7 +158,7 @@ export default function LogInDialog() {
       <DialogContent>
         <Stack spacing={2}>
           <TextField
-            error={inputError}
+            error={inputError.isError}
             value={userInfo.nickname}
             onChange={onChange("nickname")}
             id="filled-basic"
@@ -121,7 +166,7 @@ export default function LogInDialog() {
             variant="filled"
           />
           <FormControl
-            error={inputError}
+            error={inputError.isError}
             sx={{
               m: 1,
             }}
@@ -146,12 +191,34 @@ export default function LogInDialog() {
                 </InputAdornment>
               }
             />
+            <Stack direction="row" sx={{ mt: "5px" }}>
+              <Link
+                sx={{ color: blue[500] }}
+                component="button"
+                variant="body2"
+                onClick={() => {
+                  setOpen({
+                    type: variant === "Login" ? "open-register" : "open-login",
+                  });
+                }}>
+                {variant === "Login"
+                  ? "Have no account?"
+                  : "Already have an account?"}
+              </Link>
+            </Stack>
           </FormControl>
+          {inputError.isError && (
+            <Alert severity="error">{inputError.errorMessage}</Alert>
+          )}
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={close}>Back</Button>
-        <Button onClick={submit}>Log In</Button>
+        <Button disabled={loading} onClick={close}>
+          Back
+        </Button>
+        <Button disabled={loading} onClick={submit}>
+          {variant}
+        </Button>
       </DialogActions>
     </UserDialog>
   );

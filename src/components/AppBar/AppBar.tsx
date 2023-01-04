@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
-import LogInDialog from "./LogInDialog";
+import UserAuthorizationDialog from "./UserAuthorizationDialog";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link as RouterLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -65,9 +65,13 @@ export default function AppBarEnterScreen() {
                   onClick={() => setDialogOpen({ type: "open-login" })}>
                   Log In
                 </Button>
-                <LogInDialog />
+                <UserAuthorizationDialog variant="Login" />
+                <UserAuthorizationDialog variant="Register" />
               </Box>
-              <Button color="secondary" variant="contained">
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => setDialogOpen({ type: "open-register" })}>
                 Sign Up
               </Button>
             </>
