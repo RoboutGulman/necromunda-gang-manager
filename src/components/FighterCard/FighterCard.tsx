@@ -11,6 +11,8 @@ const StyledList = styled(List)<{ component?: React.ElementType }>({
   },
 });
 
+
+
 export default function FighterCard({ children }: FighterCardProps) {
   return (
     <Card

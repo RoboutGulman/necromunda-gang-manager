@@ -11,37 +11,40 @@ import React from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Characteristics } from "../../model/Characteristics";
-import { GetCharacteristicView } from "../../utils/GetCharacteristicView";
 import StatsTableHeader from "../../components/FighterCard/StatsTableHeader";
+import { StyledTable } from "../../components/FighterCard/StyledTable";
+import { blue, green, red } from "@mui/material/colors";
 
 interface DetailedStatsTableProps {
   baseCharacteristics: Characteristics;
   totalCharacteristics: Characteristics;
   totalInjuriesCharacteristics: Characteristics;
   totalAdvancesCharacteristics: Characteristics;
+  userModificators: Characteristics;
   exp: number;
   lvl: number;
 }
 
 function GetCharacteristicModificatorsView(
-  charsMods: Characteristics
+  charsMods: Characteristics,
+  others?: Array<number>
 ): string[] {
   const chars: Characteristics = new Characteristics();
   chars.add(charsMods);
 
-  return Object.values(chars).map((value) =>
-    value > 0 ? "+" + value : "" + value
+  return [...Object.values(chars), ...(others ?? [])].map(
+    (value) => "" + value
   );
 }
 
 export default function DetailedStatsTable(props: DetailedStatsTableProps) {
   const [open, setOpen] = React.useState(false);
 
-  const totalCharsView = GetCharacteristicView(
+  const totalCharsView = GetCharacteristicModificatorsView(
     props.totalCharacteristics,
-    props.exp,
-    props.lvl
+    [props.exp, props.lvl]
   );
+  totalCharsView[0] += '"';
 
   const advansesView = GetCharacteristicModificatorsView(
     props.totalAdvancesCharacteristics
@@ -50,12 +53,15 @@ export default function DetailedStatsTable(props: DetailedStatsTableProps) {
   const injuriesView = GetCharacteristicModificatorsView(
     props.totalInjuriesCharacteristics
   );
-  const baseView = GetCharacteristicView(props.totalCharacteristics);
+  const baseView = GetCharacteristicModificatorsView(
+    props.totalCharacteristics
+  );
+  baseView[0] += '"';
 
   return (
-    <Collapse in={open} collapsedSize={115}>
+    <Collapse in={open} collapsedSize={65} sx={{ width: "100%" }}>
       <TableContainer sx={{ background: "transparent" }}>
-        <Table aria-label="collapsible table">
+        <StyledTable aria-label="collapsible table">
           <StatsTableHeader>
             <IconButton
               aria-label="expand row"
@@ -73,7 +79,7 @@ export default function DetailedStatsTable(props: DetailedStatsTableProps) {
               ))}
               <TableCell colSpan={1} />
             </TableRow>
-            <TableRow sx={{ backgroundColor: "#c3e6cb" }}>
+            <TableRow sx={{ backgroundColor: green[200] }}>
               {advansesView.map((value, index) => (
                 <TableCell key={index} align="center">
                   {value}
@@ -81,13 +87,21 @@ export default function DetailedStatsTable(props: DetailedStatsTableProps) {
               ))}
               <TableCell colSpan={3}>Advances</TableCell>
             </TableRow>
-            <TableRow sx={{ backgroundColor: "#f5c6cb" }}>
+            <TableRow sx={{ backgroundColor: red[200] }}>
               {injuriesView.map((value, index) => (
                 <TableCell key={index} align="center">
                   {value}
                 </TableCell>
               ))}
               <TableCell colSpan={3}>Injuries</TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: blue[200] }}>
+              {injuriesView.map((value, index) => (
+                <TableCell key={index} align="center">
+                  {value}
+                </TableCell>
+              ))}
+              <TableCell colSpan={3}>Your modificators</TableCell>
             </TableRow>
             <TableRow>
               {baseView.map((value, index) => (
@@ -98,7 +112,7 @@ export default function DetailedStatsTable(props: DetailedStatsTableProps) {
               <TableCell colSpan={3}>Base</TableCell>
             </TableRow>
           </TableBody>
-        </Table>
+        </StyledTable>
       </TableContainer>
     </Collapse>
   );

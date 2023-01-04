@@ -13,10 +13,11 @@ interface StatsTableHeaderProps {
 }
 
 function StatsTableHeader({ children }: StatsTableHeaderProps) {
-  const StyledCell = styled(TableCell)(() => ({
+  const StyledCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
       fontWeight: "600",
       borderColor: "#ba000d",
+      padding: theme.spacing(0.5),
     },
   }));
 

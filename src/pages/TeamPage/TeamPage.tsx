@@ -53,6 +53,7 @@ import {
 } from "../../providers/DrawerControlProvider";
 import Dialogs from "./Dialogs/Dialogs";
 import { Territory } from "../../model/Types";
+import { StyledTable } from "../../components/FighterCard/StyledTable";
 
 interface TeamPageProps {
   window?: () => Window;
@@ -427,7 +428,7 @@ interface TeamInfoTableProps {
 function TeamInfoTable({ info }: TeamInfoTableProps) {
   return (
     <TableContainer>
-      <Table size="small">
+      <StyledTable size="small">
         <TableBody>
           <StyledTableRow>
             <TableCell>Name</TableCell>
@@ -454,7 +455,7 @@ function TeamInfoTable({ info }: TeamInfoTableProps) {
             <TableCell>{info?.gamesPlayed}</TableCell>
           </StyledTableRow>
         </TableBody>
-      </Table>
+      </StyledTable>
     </TableContainer>
   );
 }
@@ -493,7 +494,7 @@ interface TerritoriesTableProps {
 function TerritoriesTable({ territories }: TerritoriesTableProps) {
   return (
     <TableContainer>
-      <Table size="small">
+      <StyledTable size="small">
         <TableBody>
           {territories?.map((territory: Territory, index: number) => (
             <StyledTableRow key={index}>
@@ -506,7 +507,7 @@ function TerritoriesTable({ territories }: TerritoriesTableProps) {
             </StyledTableRow>
           ))}
         </TableBody>
-      </Table>
+      </StyledTable>
     </TableContainer>
   );
 }

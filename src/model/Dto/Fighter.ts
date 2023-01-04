@@ -18,6 +18,7 @@ export class Fighter {
   totalCharacteristics!: Characteristics;
   totalInjuriesCharacteristics!: Characteristics;
   totalAdvancesCharacteristics!: Characteristics;
+  userCharacteristicsModificators!: Characteristics;
   injuries!: Injury[];
   advances!: Advance[];
   weapons!: Weapon[];

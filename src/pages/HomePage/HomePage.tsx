@@ -5,7 +5,7 @@ import MyGangsPreview from "./MyGangsPreview";
 
 export default function HomePage({}) {
   return (
-    <Container component="main" sx={{ mb: 4 }}>
+    <Container component="main">
       <Box
         sx={{
           display: "flex",

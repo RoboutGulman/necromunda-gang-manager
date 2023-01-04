@@ -1,6 +1,5 @@
 import {
   styled,
-  Table,
   TableBody,
   TableCell,
   tableCellClasses,
@@ -9,8 +8,9 @@ import {
   TableRow,
 } from "@mui/material";
 import { Weapon, WeaponProfile } from "../../model/Types";
+import { StyledTable } from "./StyledTable";
 
-const CellWithNoBorder = styled(TableCell)(() => ({
+const CellWithNoBorder = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: { fontWeight: "600" },
   borderWidth: 0,
 }));
@@ -36,7 +36,7 @@ interface WeaponsTableProps {
 export default function WeaponsTable({ weapons }: WeaponsTableProps) {
   return (
     <TableContainer>
-      <Table size="small">
+      <StyledTable size="small">
         <colgroup>
           <col style={{ width: "30%" }} />
           <col style={{ width: "5%" }} />
@@ -90,7 +90,7 @@ export default function WeaponsTable({ weapons }: WeaponsTableProps) {
             )
           )}
         </TableBody>
-      </Table>
+      </StyledTable>
     </TableContainer>
   );
 }
