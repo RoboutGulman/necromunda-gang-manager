@@ -1,29 +1,26 @@
 import * as React from "react";
 import {
   Button,
+  CircularProgress,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FilledInput,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
   Stack,
   TextField,
-  FormControl,
-  InputLabel,
-  FilledInput,
-  InputAdornment,
-  IconButton,
-  CircularProgress,
   Typography,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import UserDialog from "../UserDialog";
-import { getCurrentUser, useUserDispatch } from "../../providers/UserProvider";
-import { blue } from "@mui/material/colors";
-import { ApiMethods } from "../../request/methods/user/login";
-import {
-  useAuthDialogsDispatch,
-  useAuthDialogsState,
-} from "../../providers/AuthDialogsProvider";
+import {getCurrentUser, useUserDispatch} from "../../providers/UserProvider";
+import {blue} from "@mui/material/colors";
+import {Api} from "../../request/api/api";
+import {useAuthDialogsDispatch, useAuthDialogsState,} from "../../providers/AuthDialogsProvider";
 
 interface State {
   nickname: string;
@@ -35,8 +32,7 @@ async function logInUser(user: {
   username: string;
   password: string;
 }): Promise<boolean> {
-  const result = await ApiMethods.login(user);
-  return result;
+  return await Api.login(user);
 }
 
 export default function LogInDialog() {

@@ -1,7 +1,3 @@
-import {getCookie} from "../utils/cookie";
-
-export const AuthTokenCookie = "X-Auth-Token";
-
 export enum RequestMethod {
   GET = "GET",
   POST = "POST",
@@ -11,15 +7,6 @@ export class ApiRequest {
   _method: RequestMethod = RequestMethod.GET;
   _url: string = "";
   _body: string = "";
-  _headers: any = {};
-  _authToken: string|null;
-
-  constructor() {
-    this._authToken = getCookie(AuthTokenCookie)
-    if (this._authToken !== null) {
-      this._headers[AuthTokenCookie] = this._authToken;
-    }
-  }
 
   setMethod(method: RequestMethod) {
     this._method = method;
@@ -46,10 +33,9 @@ export class ApiRequest {
     let response = await fetch(this._url, {
       method: this._method,
       headers: {
-        ...this._headers,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: this._body,
+      body: this._method === RequestMethod.POST ? this._body : undefined,
     });
 
     return response.json();

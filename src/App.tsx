@@ -14,8 +14,10 @@ export default function App() {
   const userDispatch = useUserDispatch();
 
   useEffect(() => {
-    getCurrentUser(userDispatch);
-  }, []);
+    // Опционально: добавить прелоадер на весь экран, пока идет получение текущего пользователя
+    // чтобы избежать моргания после подгрузки данных пользователя
+    getCurrentUser(userDispatch).then(() => console.log('getCurrentUser in useEffect completed'));
+  }, [userDispatch]);
 
   return (
     <Routes>
