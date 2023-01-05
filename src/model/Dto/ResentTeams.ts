@@ -15,6 +15,6 @@ export type RecentTeam = {
 };
 
 type Faction = {
-  id: string;
+  id: number;
   name: string;
 };

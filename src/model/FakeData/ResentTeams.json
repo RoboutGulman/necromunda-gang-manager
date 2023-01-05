@@ -7,11 +7,11 @@
       "rating": 0,
       "timeSinceLastEdit": "10 seconds",
       "faction": {
-        "id": "12",
+        "id": 12,
         "name": "Ash Waste Nomads"
       },
       "creator": {
-        "id": "12",
+        "id": 12,
         "name": "serrath"
       }
     },
@@ -21,11 +21,11 @@
       "rating": 145,
       "timeSinceLastEdit": "10 minutes",
       "faction": {
-        "id": "12",
+        "id": 12,
         "name": "Genestealer Cult"
       },
       "creator": {
-        "id": "12",
+        "id": 12,
         "name": "Antihero"
       }
     },
@@ -35,11 +35,11 @@
       "rating": 710,
       "timeSinceLastEdit": "30 minutes",
       "faction": {
-        "id": "12",
+        "id": 12,
         "name": "Enforcers"
       },
       "creator": {
-        "id": "12",
+        "id": 12,
         "name": "Omenos"
       }
     }

@@ -55,7 +55,7 @@ export default function MarketDialog({ onClose, open }: MarketDialogProps) {
               </TableHead>
             </MarketTable>
             {market.categories.map((category, index) => (
-              <CategoryTable category={category} />
+              <CategoryTable key={index} category={category} />
             ))}
           </>
         )}

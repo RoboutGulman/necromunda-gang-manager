@@ -1,7 +1,7 @@
 {
   "availibleForEdit": true,
   "info": {
-    "id": "123",
+    "id": 123,
     "name": "Dust Raiders",
     "rating": "1000",
     "cash": "100",
@@ -10,17 +10,17 @@
     "creationDate": "2019-05-27",
     "gamesPlayed": "1",
     "faction": {
-      "id": "3333",
+      "id": 3333,
       "name": "ash wastes nomads",
       "imageUrl": "url"
     },
     "creator": {
-      "id": "123",
+      "id": 123,
       "name": "Vasia"
     },
     "territories": [
       {
-        "id": "123",
+        "id": 123,
         "name": "Guilder stronghold"
       }
     ],
@@ -67,7 +67,7 @@
       },
       "weapons": [
         {
-          "id": "",
+          "id": 0,
           "name": "Fighting Knife",
           "profiles": [
             {
@@ -101,7 +101,7 @@
       "lvl": 1
     },
     {
-      "id": "1",
+      "id": 0,
       "name": "John",
       "rang": "leader",
       "totalCharacteristics": {
@@ -120,7 +120,7 @@
       },
       "weapons": [
         {
-          "id": "",
+          "id": 0,
           "name": "Plasma Pistol",
           "profiles": [
             {
@@ -147,11 +147,11 @@
               "am": "5+",
               "traits": [
                 {
-                  "id": "1",
+                  "id": 1,
                   "name": "Unstable"
                 },
                 {
-                  "id": "2",
+                  "id": 2,
                   "name": "Rapid Fire"
                 }
               ]
@@ -159,15 +159,15 @@
           ],
           "upgrades": [
             {
-              "id": "1",
+              "id": 1,
               "name": "Telescopic sight"
             },
             {
-              "id": "1",
+              "id": 1,
               "name": "Suspensors"
             },
             {
-              "id": "1",
+              "id": 1,
               "name": "Infra-sight"
             }
           ],
@@ -176,7 +176,7 @@
           "availibleOnTraidingPost": true
         },
         {
-          "id": "",
+          "id": 8,
           "name": "Fighting Knife",
           "profiles": [
             {

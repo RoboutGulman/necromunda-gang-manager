@@ -7,7 +7,7 @@ export class TeamView {
 }
 
 export type TeamInfo = {
-  id: string;
+  id: number;
   name: string;
   rating: number;
   cash: number;

@@ -13,6 +13,13 @@ import { StyledTable } from "./StyledTable";
 interface WeaponsTableProps {
   weapons: Weapon[];
 }
+/*
+<UpgradesRow
+                key={`${index}-upgrade`}
+                upgrades={weapon.upgrades}
+                index={index}
+              />
+              */
 
 export default function WeaponsTable({ weapons }: WeaponsTableProps) {
   return (
@@ -54,28 +61,30 @@ export default function WeaponsTable({ weapons }: WeaponsTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {weapons.map((weapon: Weapon, index) => (
-            <>
-              {weapon.profiles.length === 1 ? (
-                <WeaponRow
-                  key={index}
-                  weaponProfiles={weapon.profiles}
-                  index={index}
-                />
-              ) : (
-                <WeaponRow
-                  key={index}
-                  weaponProfiles={weapon.profiles}
-                  index={index}
-                  name={weapon.name}
-                />
-              )}
-              <UpgradesRow upgrades={weapon.upgrades} index={index} />
-            </>
+          {weapons.map((weapon: Weapon, index: number) => (
+            <WeaponInfo key={index} weapon={weapon} index={index} />
           ))}
         </TableBody>
       </StyledTable>
     </TableContainer>
+  );
+}
+
+interface WeaponInfoProps {
+  weapon: Weapon;
+  index: number;
+}
+
+function WeaponInfo({ weapon, index }: WeaponInfoProps) {
+  return (
+    <>
+      <WeaponRow
+        weaponProfiles={weapon.profiles}
+        index={index}
+        name={weapon.profiles.length === 1 ? undefined : weapon.name}
+      />
+      <UpgradesRow upgrades={weapon.upgrades} index={index} />
+    </>
   );
 }
 
@@ -91,7 +100,6 @@ function UpgradesRow({ upgrades, index }: UpgradesRowProps) {
         <></>
       ) : (
         <Stroke
-          key={index}
           items={[
             ` Upgrades: ${upgrades.map((upgrade) => upgrade.name).join(", ")}`,
             "",
@@ -125,13 +133,12 @@ function WeaponRow({ weaponProfiles, index, name }: WeaponRowProps) {
         <></>
       ) : (
         <Stroke
-          key={name}
           items={[name, "", "", "", "", "", "", "", "", ""]}
           index={index}
           isHeader={true}
         />
       )}
-      {weaponProfiles.map((weaponProfile: WeaponProfile, keyIndex) => (
+      {weaponProfiles.map((weaponProfile: WeaponProfile, keyIndex: number) => (
         <Stroke
           key={keyIndex}
           items={[

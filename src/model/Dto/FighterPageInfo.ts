@@ -9,7 +9,7 @@ export type NavigationInfo = {
   teamId: number;
   teamName: string;
   otherFighters: {
-    id: string;
+    id: number;
     name: string;
   }[];
 };

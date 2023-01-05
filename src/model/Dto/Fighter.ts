@@ -10,7 +10,7 @@ import {
 } from "../Types";
 
 export class Fighter {
-  id!: string;
+  id!: number;
   name!: string;
   rang!: string;
   description!: string;

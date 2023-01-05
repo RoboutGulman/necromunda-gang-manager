@@ -1,27 +1,27 @@
 import { Characteristics } from "./Characteristics";
 
 export type User = {
-  id: string;
+  id: number;
   name: string;
 };
 
 export type SpecialRule = {
-  id: string;
+  id: number;
   name: string;
 };
 
 export type Trait = {
-  id: string;
+  id: number;
   name: string;
 };
 
 export type Skill = {
-  id: string;
+  id: number;
   name: string;
 };
 
 export type TeamPreview = {
-  id: string;
+  id: number;
   name: string;
   faction: string;
   rating: number;
@@ -30,7 +30,7 @@ export type TeamPreview = {
 };
 
 export type WeaponUpgrade = {
-  id: string;
+  id: number;
   name: string;
 };
 
@@ -40,13 +40,13 @@ export type MyTeamPreview = {
 };
 
 export type Injury = {
-  id: string;
+  id: number;
   name: string;
   characteristicsMods: Characteristics;
 };
 
 export type Advance = {
-  id: string;
+  id: number;
   name: string;
   characteristicsMods: Characteristics;
 };
@@ -65,7 +65,7 @@ export type WeaponProfile = {
 };
 
 export type Weapon = {
-  id: string;
+  id: number;
   name: string;
   profiles: WeaponProfile[];
   upgrades: WeaponUpgrade[];
@@ -75,7 +75,7 @@ export type Weapon = {
 };
 
 export type Equipment = {
-  id: string | null;
+  id: number | null;
   name: string;
   rarity: number | null;
   cost: number;
@@ -88,7 +88,7 @@ export enum Status {
 }
 
 export type FighterView = {
-  id: string;
+  id: number;
   name: string;
   rang: string;
   totalCharacteristics: Characteristics;
@@ -102,12 +102,12 @@ export type FighterView = {
 };
 
 export type Faction = {
-  id: string;
+  id: number;
   name: string;
   imageUrl: string;
 };
 
 export type Territory = {
-  id: string;
+  id: number;
   name: string;
 };

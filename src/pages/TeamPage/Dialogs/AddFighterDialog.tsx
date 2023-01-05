@@ -24,7 +24,7 @@ interface State {
 }
 
 export interface AddFighterDialogProps {
-  factionId: string;
+  factionId: number;
   open: boolean;
   onClose: () => void;
 }
@@ -92,8 +92,8 @@ export default function AddFighterDialog({
     { id: "4", name: "juve", cost: "30" },
   ];
 
-  const Items = fighterTypes.map((item) => (
-    <MenuItem key={item.id} value={item.id}>
+  const Items = fighterTypes.map((item, number) => (
+    <MenuItem key={number} value={item.id}>
       {item.name + " (" + item.cost + ")"}
     </MenuItem>
   ));

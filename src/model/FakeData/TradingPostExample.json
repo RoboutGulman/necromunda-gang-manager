@@ -6,19 +6,19 @@
       "isEquipment": true,
       "items": [
         {
-          "id": "12",
+          "id": 12,
           "name": "flack armour",
           "cost": 5,
           "rarity": null
         },
         {
-          "id": "12",
+          "id": 12,
           "name": "mesh armour",
           "cost": 15,
           "rarity": null
         },
         {
-          "id": "12",
+          "id": 12,
           "name": "hazard armour",
           "cost": 5,
           "rarity": null
@@ -30,25 +30,25 @@
       "isEquipment": false,
       "items": [
         {
-          "id": "12",
+          "id": 12,
           "name": "autogun",
           "cost": 25,
           "rarity": null
         },
         {
-          "id": "12",
+          "id": 12,
           "name": "shotgun",
           "cost": 25,
           "rarity": null
         },
         {
-          "id": "12",
+          "id": 12,
           "name": "lasgun",
           "cost": 25,
           "rarity": null
         },
         {
-          "id": "12",
+          "id": 12,
           "name": "combat shotgun",
           "cost": 25,
           "rarity": null
@@ -60,19 +60,19 @@
       "isEquipment": false,
       "items": [
         {
-          "id": "12",
+          "id": 12,
           "name": "Fighting Knife",
           "cost": 5,
           "rarity": null
         },
         {
-          "id": "12",
+          "id": 12,
           "name": "Shock Whip",
           "cost": 30,
           "rarity": 8
         },
         {
-          "id": "12",
+          "id": 12,
           "name": "Thunder Hammer (Prestige)",
           "cost": 70,
           "rarity": 12

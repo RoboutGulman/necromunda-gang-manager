@@ -7,7 +7,7 @@ export type Category = {
   name: string;
   isEquipment: boolean;
   items: {
-    id: string;
+    id: number;
     name: string;
     cost: string;
     rarity?: number;

@@ -1,24 +1,24 @@
 {
   "navigationInfo": {
-    "teamId": "1",
+    "teamId": 1,
     "teamName": "Dust raiders",
     "otherFighters": [
       {
-        "id": "1",
+        "id": 1,
         "name": "Fedor"
       },
       {
-        "id": "1",
+        "id": 1,
         "name": "Kiril"
       },
       {
-        "id": "1",
+        "id": 1,
         "name": "Matew"
       }
     ]
   },
   "fighter": {
-    "id": "312",
+    "id": 312,
     "name": "Bob",
     "rang": "ganger",
     "description": "Just example of fighter",
@@ -82,7 +82,7 @@
     "advances": [],
     "weapons": [
       {
-        "id": "",
+        "id": 1,
         "name": "Fighting Knife",
         "profiles": [
           {
