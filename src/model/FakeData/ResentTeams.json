@@ -1,0 +1,47 @@
+{
+  "totalTeamsNumber": 10,
+  "teams": [
+    {
+      "id": 12,
+      "name": "Windraiders",
+      "rating": 0,
+      "timeSinceLastEdit": "10 seconds",
+      "faction": {
+        "id": "12",
+        "name": "Ash Waste Nomads"
+      },
+      "creator": {
+        "id": "12",
+        "name": "serrath"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Belowed of the 4-armed Emperor",
+      "rating": 145,
+      "timeSinceLastEdit": "10 minutes",
+      "faction": {
+        "id": "12",
+        "name": "Genestealer Cult"
+      },
+      "creator": {
+        "id": "12",
+        "name": "Antihero"
+      }
+    },
+    {
+      "id": 12,
+      "name": "HPED-v2",
+      "rating": 710,
+      "timeSinceLastEdit": "30 minutes",
+      "faction": {
+        "id": "12",
+        "name": "Enforcers"
+      },
+      "creator": {
+        "id": "12",
+        "name": "Omenos"
+      }
+    }
+  ]
+}

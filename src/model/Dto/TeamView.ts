@@ -1,8 +1,9 @@
-import {Faction, FighterView, Territory, User} from "../Types";
+import { Faction, FighterView, Territory, User } from "../Types";
 
 export class TeamView {
-  info !: TeamInfo;
-  fighters !: FighterView[];
+  availibleForEdit!: boolean;
+  info!: TeamInfo;
+  fighters!: FighterView[];
 }
 
 export type TeamInfo = {
@@ -12,7 +13,8 @@ export type TeamInfo = {
   cash: number;
   reputation: number;
   description: string;
-  creationDate: Date;
+  lastEditTime: Date;
+  creationTime: Date;
   gamesPlayed: number;
   faction: Faction;
   creator: User;

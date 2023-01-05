@@ -10,18 +10,22 @@ import {
   Typography,
 } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import { TeamPreview } from "../../model/Types";
-import { TeamPreviewExamples } from "../../model/FakeData/FakeData";
 import { Link as RouterLink } from "react-router-dom";
-
-interface GridItemWithTypographyProps {
-  xs: number;
-  content: string;
-  color: string;
-}
+import { useEffect, useState } from "react";
+import { RecentTeam, RecentTeams } from "../../model/Dto/ResentTeams";
+import resentTeamsJson from "../../model/FakeData/ResentTeams.json";
+import { plainToClass } from "class-transformer";
 
 export default function ResentGangs() {
-  return (
+  const [resentTeams, setResentTeams] = useState<RecentTeams>();
+
+  useEffect(() => {
+    setResentTeams(plainToClass(RecentTeams, resentTeamsJson));
+  }, []);
+
+  return resentTeams === undefined ? (
+    <></>
+  ) : (
     <Container fixed>
       <Typography
         align="center"
@@ -32,7 +36,7 @@ export default function ResentGangs() {
         RECENT COMMUNITY GANGS
       </Typography>
       <Typography align="center" variant="body1" color="white" gutterBottom>
-        3 gangs and counting...
+        {`${resentTeams?.totalTeamsNumber}gangs and counting...`}
       </Typography>
       <Box
         sx={{
@@ -43,7 +47,7 @@ export default function ResentGangs() {
           background: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))",
         }}>
         <List sx={{ padding: 0 }}>
-          {TeamPreviewExamples.map((item: TeamPreview, index: number) => (
+          {resentTeams?.teams.map((item: RecentTeam, index: number) => (
             <Box key={index}>
               <ListItem>
                 <Grid container sx={{ flexGrow: 1 }}>
@@ -60,7 +64,7 @@ export default function ResentGangs() {
                       variant="text"
                       color="secondary"
                       startIcon={<AccountBoxIcon />}>
-                      {item.creatorNickname}
+                      {item.creator.name}
                     </Button>
                   </Grid>
                 </Grid>
@@ -69,7 +73,7 @@ export default function ResentGangs() {
                 <Grid container sx={{ flexGrow: 1 }}>
                   <GridItemWithTypography
                     xs={5}
-                    content={item.faction}
+                    content={item.faction.name}
                     color="white"
                   />
                   <GridItemWithTypography
@@ -79,7 +83,7 @@ export default function ResentGangs() {
                   />
                   <GridItemWithTypography
                     xs={4}
-                    content={item.time}
+                    content={item.timeSinceLastEdit}
                     color="#645A59"
                   />
                 </Grid>
@@ -91,6 +95,12 @@ export default function ResentGangs() {
       </Box>
     </Container>
   );
+}
+
+interface GridItemWithTypographyProps {
+  xs: number;
+  content: string;
+  color: string;
 }
 
 function GridItemWithTypography(props: GridItemWithTypographyProps) {

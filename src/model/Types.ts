@@ -1,4 +1,4 @@
-import {Characteristics} from "./Characteristics";
+import { Characteristics } from "./Characteristics";
 
 export type User = {
   id: string;
@@ -84,7 +84,7 @@ export type Equipment = {
 export enum Status {
   ACTIVE,
   DEAD,
-  ON_RECOVERY
+  ON_RECOVERY,
 }
 
 export type FighterView = {
@@ -98,7 +98,7 @@ export type FighterView = {
   status: Status;
   totalCost: number;
   xp: number;
-  lvl:number;
+  lvl: number;
 };
 
 export type Faction = {
