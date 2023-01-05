@@ -1,7 +1,6 @@
 import {
   Collapse,
   TableContainer,
-  Table,
   TableBody,
   TableCell,
   TableRow,

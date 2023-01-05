@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { Weapon, WeaponProfile, WeaponUpgrade } from "../../model/Types";
 import { StyledTable } from "./StyledTable";
-import BuildCircleIcon from "@mui/icons-material/BuildCircle";
 
 interface WeaponsTableProps {
   weapons: Weapon[];
@@ -108,21 +107,6 @@ function UpgradesRow({ upgrades, index }: UpgradesRowProps) {
           index={index}
           isHeader={true}
         />
-        // <RowWithBackground index={index}>
-        //   <CellWithRightBorder scope="row">
-        //     <BuildCircleIcon sx={{ fontSize: 16 }} />
-        //     {` Upgrades: ${upgrades.map((upgrade) => upgrade.name).join(", ")}`,}
-        //   </CellWithRightBorder>
-        //   <CellWithNoBorder />
-        //   <CellWithRightBorder />
-        //   <CellWithNoBorder />
-        //   <CellWithRightBorder />
-        //   <CellWithRightBorder />
-        //   <CellWithRightBorder />
-        //   <CellWithRightBorder />
-        //   <CellWithRightBorder />
-        //   <CellWithNoBorder />
-        // </RowWithBackground>
       )}
     </>
   );

@@ -59,7 +59,7 @@ interface TeamPageProps {
   window?: () => Window;
 }
 
-export type DialogType = "none" | "add-fighter" | "edit-gang-info";
+export type TeamPageDialogType = "none" | "add-fighter" | "edit-gang-info";
 
 export default function TeamPage(props: TeamPageProps) {
   const { window } = props;
@@ -131,7 +131,8 @@ interface TeamMenuProps {
 function TeamMenu({ teamInfo }: TeamMenuProps) {
   const [activeTab, setActiveTab] = React.useState(0);
 
-  const [whichDialogIsOpen, setDialogOpen] = useState<DialogType>("none");
+  const [whichDialogIsOpen, setDialogOpen] =
+    useState<TeamPageDialogType>("none");
 
   const CloseDialog = () => setDialogOpen("none");
 
@@ -274,15 +275,15 @@ function TeamMenu({ teamInfo }: TeamMenuProps) {
 
 interface MenuTeamInfoProps {
   info: TeamInfo | undefined;
-  setDialogOpen: React.Dispatch<React.SetStateAction<DialogType>>;
+  setDialogOpen: React.Dispatch<React.SetStateAction<TeamPageDialogType>>;
 }
 
 function FullSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
   interface TableToolbarProps {
     title: string;
     icon: React.ReactNode;
-    setDialogOpen: React.Dispatch<React.SetStateAction<DialogType>>;
-    dialogType: DialogType;
+    setDialogOpen: React.Dispatch<React.SetStateAction<TeamPageDialogType>>;
+    dialogType: TeamPageDialogType;
   }
 
   function TableToolbar({

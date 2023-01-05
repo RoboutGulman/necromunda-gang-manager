@@ -5,13 +5,6 @@ import cardBackground from "../../backgrounds/card_background.jpg";
 interface FighterCardProps {
   children: React.ReactNode;
 }
-const StyledList = styled(List)<{ component?: React.ElementType }>({
-  "& .MuiPaper-root": {
-    boxShadow: "none",
-  },
-});
-
-
 
 export default function FighterCard({ children }: FighterCardProps) {
   return (
@@ -34,3 +27,9 @@ export default function FighterCard({ children }: FighterCardProps) {
     </Card>
   );
 }
+
+const StyledList = styled(List)<{ component?: React.ElementType }>({
+  "& .MuiPaper-root": {
+    boxShadow: "none",
+  },
+});

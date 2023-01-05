@@ -1,12 +1,12 @@
 import React from "react";
 import AddFighterDialog from "./AddFighterDialog";
-import { DialogType } from "../TeamPage";
+import { TeamPageDialogType } from "../TeamPage";
 import EditTeamInfoDialog from "./EditGangInfoDialog";
 import { TeamInfo } from "../../../model/Dto/TeamView";
 
 export interface SimpleDialogProps {
   teamInfo: TeamInfo;
-  dialogType: DialogType;
+  dialogType: TeamPageDialogType;
   onClose: () => void;
 }
 
