@@ -13,13 +13,6 @@ import { StyledTable } from "./StyledTable";
 interface WeaponsTableProps {
   weapons: Weapon[];
 }
-/*
-<UpgradesRow
-                key={`${index}-upgrade`}
-                upgrades={weapon.upgrades}
-                index={index}
-              />
-              */
 
 export default function WeaponsTable({ weapons }: WeaponsTableProps) {
   return (
