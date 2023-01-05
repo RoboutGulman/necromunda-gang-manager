@@ -16,24 +16,32 @@ import DetailedStatsTable from "./DetailedStatsTable";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { plainToClass } from "class-transformer";
-import { Fighter } from "../../model/Dto/Fighter";
-import fighterExampleJson from "../../model/FakeData/FighterExample.json";
+import fighterPageInfoExampleJson from "../../model/FakeData/FighterPageInfoExample.json";
 import FighterCardHeader from "../../components/FighterCard/FighterCardHeader";
 import cardBackground from "../../backgrounds/card_background.jpg";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
+import { FighterPageInfo } from "../../model/Dto/FighterPageInfo";
 
 export default function FighterPage() {
-  const [fighterInfo, setFighterInfo] = useState<Fighter | undefined>();
+  const [fighterPageInfo, setFighterPageInfo] = useState<
+    FighterPageInfo | undefined
+  >();
 
   useEffect(() => {
-    setFighterInfo(plainToClass(Fighter, fighterExampleJson));
+    setFighterPageInfo(
+      plainToClass(FighterPageInfo, fighterPageInfoExampleJson)
+    );
   }, []);
 
   return (
     <Grid container spacing={4}>
       <Grid item xs={12} lg={3}>
         <Stack sx={{ alignItems: { xs: "center", lg: "flex-end" } }}>
-          <NavigationList />
+          {fighterPageInfo === undefined ? (
+            <></>
+          ) : (
+            <NavigationList navigationInfo={fighterPageInfo.navigationInfo} />
+          )}
         </Stack>
       </Grid>
       <Grid item xs={12} lg={9}>
@@ -41,30 +49,37 @@ export default function FighterPage() {
           spacing={4}
           sx={{ alignItems: { xs: "center", lg: "flex-start" } }}>
           <FighterCard>
-            {fighterInfo === undefined ? (
+            {fighterPageInfo === undefined ? (
               <></>
             ) : (
               <>
                 <FighterCardHeader
-                  name={fighterInfo.name}
-                  rang={fighterInfo.rang}
-                  totalCost={fighterInfo.totalCost}
+                  name={fighterPageInfo.fighter.name}
+                  rang={fighterPageInfo.fighter.rang}
+                  totalCost={fighterPageInfo.fighter.totalCost}
                 />
                 <ListItem>
                   <DetailedStatsTable
-                    baseCharacteristics={fighterInfo.baseCharacteristics}
-                    totalCharacteristics={fighterInfo.totalCharacteristics}
+                    baseCharacteristics={
+                      fighterPageInfo.fighter.baseCharacteristics
+                    }
+                    totalCharacteristics={
+                      fighterPageInfo.fighter.totalCharacteristics
+                    }
                     totalInjuriesCharacteristics={
-                      fighterInfo.totalInjuriesCharacteristics
+                      fighterPageInfo.fighter.totalInjuriesCharacteristics
                     }
                     totalAdvancesCharacteristics={
-                      fighterInfo.totalAdvancesCharacteristics
+                      fighterPageInfo.fighter.totalAdvancesCharacteristics
                     }
                     userModificators={
-                      fighterInfo.userCharacteristicsModificators
+                      fighterPageInfo.fighter.userCharacteristicsModificators
                     }
-                    exp={fighterInfo.xp}
-                    lvl={fighterInfo.lvl}
+                    userCostModificator={
+                      fighterPageInfo.fighter.userCostModificator
+                    }
+                    exp={fighterPageInfo.fighter.xp}
+                    lvl={fighterPageInfo.fighter.lvl}
                   />
                 </ListItem>
               </>
@@ -72,7 +87,17 @@ export default function FighterPage() {
           </FighterCard>
           <Grid container>
             <StyledList header="Equipment">
-              {fighterInfo?.equipment.map((item, index) => (
+              {fighterPageInfo?.fighter.weapons.map((item, index) => (
+                <ListItem key={index}>
+                  <ListItemText primary={item.name} />
+                  <Chip
+                    size="small"
+                    sx={{ backgroundColor: "#6c757d", color: "white" }}
+                    label={item.cost}
+                  />
+                </ListItem>
+              ))}
+              {fighterPageInfo?.fighter.equipment.map((item, index) => (
                 <ListItem key={index}>
                   <ListItemText primary={item.name} />
                   <Chip
@@ -84,14 +109,14 @@ export default function FighterPage() {
               ))}
             </StyledList>
             <StyledList header="Skills">
-              {fighterInfo?.skills.map((item, index) => (
+              {fighterPageInfo?.fighter.skills.map((item, index) => (
                 <ListItem key={index}>
                   <ListItemText primary={item.name} />
                 </ListItem>
               ))}
             </StyledList>
             <StyledList header="Injuries">
-              {fighterInfo?.injuries.map((item, index) => (
+              {fighterPageInfo?.fighter.injuries.map((item, index) => (
                 <ListItem key={index}>
                   <ListItemText primary={item.name} />
                 </ListItem>
@@ -124,7 +149,6 @@ function StyledList({ header, children }: StyledListProps) {
           <List
             sx={{
               width: "100%",
-              color: "white",
               "& .MuiPaper-root": {
                 boxShadow: "none",
               },
@@ -155,7 +179,7 @@ function StyledList({ header, children }: StyledListProps) {
               children
             ) : (
               <ListItem>
-                <ListItemText sx={{ color: "#6c757d" }} primary="None" />
+                <ListItemText primary="None" />
               </ListItem>
             )}
           </List>

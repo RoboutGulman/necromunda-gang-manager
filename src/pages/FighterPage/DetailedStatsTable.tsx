@@ -21,6 +21,7 @@ interface DetailedStatsTableProps {
   totalInjuriesCharacteristics: Characteristics;
   totalAdvancesCharacteristics: Characteristics;
   userModificators: Characteristics;
+  userCostModificator: number;
   exp: number;
   lvl: number;
 }

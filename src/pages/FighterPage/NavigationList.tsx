@@ -9,21 +9,15 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
+import { NavigationInfo } from "../../model/Dto/FighterPageInfo";
 
-type NavigationInfo = {
-  name: string;
-  id: number;
-};
+interface NavigationListProps {
+  navigationInfo: NavigationInfo;
+}
 
-const RosterNavigationInfo = { name: "roster", id: 3 };
-
-const TeamNavigationInfo: NavigationInfo[] = [
-  { name: "Fedor", id: 10 },
-  { name: "Kiril", id: 12 },
-  { name: "Matew", id: 14 },
-];
-
-export default function NavigationList() {
+export default function NavigationList({
+  navigationInfo,
+}: NavigationListProps) {
   return (
     <Box
       height="100%"
@@ -36,14 +30,14 @@ export default function NavigationList() {
         <ListItem disablePadding sx={{ bgcolor: "#a05236", color: "white" }}>
           <ListItemButton
             component={Link}
-            to={`/roster/${RosterNavigationInfo.id}`}>
+            to={`/roster/${navigationInfo.teamId}`}>
             <ListItemIcon>
               <ArrowBackIcon sx={{ color: "white" }} />
             </ListItemIcon>
-            <ListItemText primary={RosterNavigationInfo.name} />
+            <ListItemText primary={navigationInfo.teamName} />
           </ListItemButton>
         </ListItem>
-        {TeamNavigationInfo.map((info, index) => (
+        {navigationInfo.otherFighters.map((info, index) => (
           <div key={index}>
             <Divider />
             <ListItem disablePadding>

@@ -1,0 +1,120 @@
+{
+  "navigationInfo": {
+    "teamId": "1",
+    "teamName": "Dust raiders",
+    "otherFighters": [
+      {
+        "id": "1",
+        "name": "Fedor"
+      },
+      {
+        "id": "1",
+        "name": "Kiril"
+      },
+      {
+        "id": "1",
+        "name": "Matew"
+      }
+    ]
+  },
+  "fighter": {
+    "id": "312",
+    "name": "Bob",
+    "rang": "ganger",
+    "description": "Just example of fighter",
+    "status": 1,
+    "xp": 0,
+    "lvl": 1,
+    "totalCost": 120,
+    "userCostModificator": 10,
+    "baseCharacteristics": {
+      "m": 5,
+      "ws": 4,
+      "bs": 4,
+      "s": 3,
+      "t": 3,
+      "w": 1,
+      "i": 4,
+      "a": 1,
+      "ld": 7,
+      "cl": 7,
+      "wp": 7,
+      "int": 7
+    },
+    "totalCharacteristics": {
+      "m": 5,
+      "ws": 3,
+      "bs": 5,
+      "s": 3,
+      "t": 3,
+      "w": 1,
+      "i": 2,
+      "a": 2,
+      "ld": 7,
+      "cl": 9,
+      "wp": 7,
+      "int": 7
+    },
+    "totalInjuriesCharacteristics": {
+      "bs": -1,
+      "cl": -2
+    },
+    "totalAdvancesCharacteristics": {
+      "ws": 1,
+      "i": 2,
+      "a": 1
+    },
+    "userCharacteristicsModificators": {
+      "m": 1,
+      "ws": -1,
+      "bs": 0,
+      "s": 0,
+      "t": 0,
+      "w": 0,
+      "i": 0,
+      "a": 0,
+      "ld": 0,
+      "cl": 0,
+      "wp": 0,
+      "int": 0
+    },
+    "injuries": [],
+    "advances": [],
+    "weapons": [
+      {
+        "id": "",
+        "name": "Fighting Knife",
+        "profiles": [
+          {
+            "name": null,
+            "sr": null,
+            "lr": null,
+            "sm": null,
+            "lm": null,
+            "s": null,
+            "ap": -1,
+            "d": 1,
+            "am": null,
+            "traits": []
+          }
+        ],
+        "upgrades": [],
+        "cost": 25,
+        "rarity": null,
+        "availibleOnTraidingPost": true
+      }
+    ],
+    "equipment": [
+      {
+        "name": "Mesh armour",
+        "cost": 15
+      }
+    ],
+    "skills": [],
+    "specialRules": [
+      {
+        "name": "Leading by Example"
+      }
+    ]
+  }
+}

@@ -29,4 +29,5 @@ export class Fighter {
   xp!: number;
   lvl!: number;
   totalCost!: number;
+  userCostModificator!: number;
 }
