@@ -157,7 +157,20 @@
               ]
             }
           ],
-          "upgrades": [],
+          "upgrades": [
+            {
+              "id": "1",
+              "name": "Telescopic sight"
+            },
+            {
+              "id": "1",
+              "name": "Suspensors"
+            },
+            {
+              "id": "1",
+              "name": "Infra-sight"
+            }
+          ],
           "cost": 25,
           "rarity": null,
           "availibleOnTraidingPost": true

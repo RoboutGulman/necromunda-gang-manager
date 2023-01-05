@@ -7,27 +7,9 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Weapon, WeaponProfile } from "../../model/Types";
+import { Weapon, WeaponProfile, WeaponUpgrade } from "../../model/Types";
 import { StyledTable } from "./StyledTable";
-
-const CellWithNoBorder = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: { fontWeight: "600" },
-  borderWidth: 0,
-}));
-
-const CellWithRightBorder = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    fontWeight: "600",
-  },
-  borderWidth: 0,
-  borderRightWidth: 1,
-  borderRightColor: theme.palette.grey[500],
-  borderRightStyle: "solid",
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  backgroundColor: theme.palette.action.hover,
-}));
+import BuildCircleIcon from "@mui/icons-material/BuildCircle";
 
 interface WeaponsTableProps {
   weapons: Weapon[];
@@ -73,25 +55,76 @@ export default function WeaponsTable({ weapons }: WeaponsTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {weapons.map((weapon: Weapon, index) =>
-            weapon.profiles.length === 1 ? (
-              <WeaponRow
-                key={index}
-                weaponProfiles={weapon.profiles}
-                index={index}
-              />
-            ) : (
-              <WeaponRow
-                key={index}
-                weaponProfiles={weapon.profiles}
-                index={index}
-                name={weapon.name}
-              />
-            )
-          )}
+          {weapons.map((weapon: Weapon, index) => (
+            <>
+              {weapon.profiles.length === 1 ? (
+                <WeaponRow
+                  key={index}
+                  weaponProfiles={weapon.profiles}
+                  index={index}
+                />
+              ) : (
+                <WeaponRow
+                  key={index}
+                  weaponProfiles={weapon.profiles}
+                  index={index}
+                  name={weapon.name}
+                />
+              )}
+              <UpgradesRow upgrades={weapon.upgrades} index={index} />
+            </>
+          ))}
         </TableBody>
       </StyledTable>
     </TableContainer>
+  );
+}
+
+interface UpgradesRowProps {
+  upgrades: WeaponUpgrade[];
+  index: number;
+}
+
+function UpgradesRow({ upgrades, index }: UpgradesRowProps) {
+  return (
+    <>
+      {upgrades.length === 0 ? (
+        <></>
+      ) : (
+        <Stroke
+          key={index}
+          items={[
+            ` Upgrades: ${upgrades.map((upgrade) => upgrade.name).join(", ")}`,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+          ]}
+          index={index}
+          isHeader={true}
+        />
+        // <RowWithBackground index={index}>
+        //   <CellWithRightBorder scope="row">
+        //     <BuildCircleIcon sx={{ fontSize: 16 }} />
+        //     {` Upgrades: ${upgrades.map((upgrade) => upgrade.name).join(", ")}`,}
+        //   </CellWithRightBorder>
+        //   <CellWithNoBorder />
+        //   <CellWithRightBorder />
+        //   <CellWithNoBorder />
+        //   <CellWithRightBorder />
+        //   <CellWithRightBorder />
+        //   <CellWithRightBorder />
+        //   <CellWithRightBorder />
+        //   <CellWithRightBorder />
+        //   <CellWithNoBorder />
+        // </RowWithBackground>
+      )}
+    </>
   );
 }
 
@@ -178,3 +211,22 @@ function RowWithBackground({ index, children }: RowWithBackgroundProps) {
     </>
   );
 }
+
+const CellWithNoBorder = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: { fontWeight: "600" },
+  borderWidth: 0,
+}));
+
+const CellWithRightBorder = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    fontWeight: "600",
+  },
+  borderWidth: 0,
+  borderRightWidth: 1,
+  borderRightColor: theme.palette.grey[500],
+  borderRightStyle: "solid",
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  backgroundColor: theme.palette.action.hover,
+}));
