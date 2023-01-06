@@ -17,5 +17,5 @@ export async function login({username, password}: LoginRequest): Promise<boolean
   });
   const response: any = await apiRequest.send();
 
-  return response["authorized"];
+  return response.data["authorized"];
 }

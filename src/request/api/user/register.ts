@@ -25,8 +25,8 @@ export async function register({username, password}: RegisterRequest): Promise<R
   const response: any = await apiRequest.send();
 
   return {
-    id: response["id"],
-    message: response["error_message"],
-    success: response["success"],
+    id: response.data["id"],
+    message: response.data["error_message"],
+    success: response.data["success"],
   };
 }

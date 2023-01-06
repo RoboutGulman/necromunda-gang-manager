@@ -38,6 +38,9 @@ export class ApiRequest {
       body: this._method === RequestMethod.POST ? this._body : undefined,
     });
 
-    return response.json();
+    return {
+      status: response.status,
+      data: await response.json()
+    };
   }
 }
