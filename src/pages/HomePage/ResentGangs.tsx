@@ -36,7 +36,7 @@ export default function ResentGangs() {
         RECENT COMMUNITY GANGS
       </Typography>
       <Typography align="center" variant="body1" color="white" gutterBottom>
-        {`${resentTeams?.totalTeamsNumber}gangs and counting...`}
+        {`${resentTeams?.totalTeamsNumber} gangs and counting...`}
       </Typography>
       <Box
         sx={{
