@@ -83,7 +83,7 @@ export default function ResentGangs() {
                   />
                   <GridItemWithTypography
                     xs={4}
-                    content={item.timeSinceLastEdit}
+                    content={item.timeSinceLastEdit.toLocaleString()}
                     color="#645A59"
                   />
                 </Grid>

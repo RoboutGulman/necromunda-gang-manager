@@ -9,7 +9,7 @@ export type RecentTeam = {
   id: number;
   name: string;
   rating: number;
-  timeSinceLastEdit: string;
+  timeSinceLastEdit: Date;
   faction: Faction;
   creator: User;
 };
