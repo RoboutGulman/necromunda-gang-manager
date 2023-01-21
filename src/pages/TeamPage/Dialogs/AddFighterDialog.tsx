@@ -12,8 +12,10 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import React from "react";
+import CheckboxWithText from "../../../components/CheckboxWithText";
 import UserDialog from "../../../components/UserDialog";
 
 interface State {
@@ -111,14 +113,10 @@ export default function AddFighterDialog({
             label="Fighter Name"
             variant="filled"
           />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={fighterInfo.showOnlyFactionFighterTypes}
-                onChange={handleCheckboxChange("showOnlyFactionFighterTypes")}
-              />
-            }
-            label="Show only faction fighters?"
+          <CheckboxWithText
+            checked={fighterInfo.showOnlyFactionFighterTypes}
+            onChange={() => handleCheckboxChange("showOnlyFactionFighterTypes")}
+            text="Show only faction fighters?"
           />
           <FormControl variant="filled" sx={{ mt: 2, minWidth: 120 }}>
             <InputLabel>fighter type</InputLabel>
@@ -134,14 +132,10 @@ export default function AddFighterDialog({
               {Items}
             </Select>
           </FormControl>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={fighterInfo.purchaseWithCredits}
-                onChange={handleCheckboxChange("purchaseWithCredits")}
-              />
-            }
-            label="Purchase with credits?"
+          <CheckboxWithText
+            checked={fighterInfo.purchaseWithCredits}
+            onChange={() => handleCheckboxChange("purchaseWithCredits")}
+            text="Purchase with credits?"
           />
         </Stack>
       </DialogContent>
