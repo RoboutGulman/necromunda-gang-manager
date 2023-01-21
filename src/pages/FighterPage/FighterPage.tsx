@@ -24,6 +24,17 @@ import { FighterPageInfo } from "../../model/Dto/FighterPageInfo";
 import { Fighter } from "../../model/Dto/Fighter";
 import Dialogs, { FighterPageDialogType } from "./Dialogs/Dialogs";
 
+/*TODO:: 
+таблица адвансов
+модалка адвансов
+функции бойца(поменять статус на убитый, поменять статус на раненый и т.д.)
+заметки
+модалка скилов
+модалка травм
+изменение характеристик бойца
+менять режим покупки на оружейную дома и уникальное оружие
+*/
+
 export default function FighterPage() {
   const [fighterPageInfo, setFighterPageInfo] = useState<
     FighterPageInfo | undefined
