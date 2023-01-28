@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { RecentTeam, RecentTeams } from "../../model/Dto/ResentTeams";
 import resentTeamsJson from "../../model/FakeData/ResentTeams.json";
 import { plainToClass } from "class-transformer";
+import ItemsList from "../../components/ItemsList";
 
 export default function ResentGangs() {
   const [resentTeams, setResentTeams] = useState<RecentTeams>();
@@ -47,50 +48,53 @@ export default function ResentGangs() {
           background: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))",
         }}>
         <List sx={{ padding: 0 }}>
-          {resentTeams?.teams.map((item: RecentTeam, index: number) => (
-            <Box key={index}>
-              <ListItem>
-                <Grid container sx={{ flexGrow: 1 }}>
-                  <Grid sx={{ pt: "7px" }} item xs={8}>
-                    <Link
-                      color="secondary"
-                      component={RouterLink}
-                      to="/roster/1">
-                      {item.name}
-                    </Link>
+          <ItemsList
+            items={resentTeams?.teams}
+            renderItem={(item: RecentTeam, index: number) => (
+              <Box key={index}>
+                <ListItem>
+                  <Grid container sx={{ flexGrow: 1 }}>
+                    <Grid sx={{ pt: "7px" }} item xs={8}>
+                      <Link
+                        color="secondary"
+                        component={RouterLink}
+                        to="/roster/1">
+                        {item.name}
+                      </Link>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Button
+                        variant="text"
+                        color="secondary"
+                        startIcon={<AccountBoxIcon />}>
+                        {item.creator.name}
+                      </Button>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Button
-                      variant="text"
-                      color="secondary"
-                      startIcon={<AccountBoxIcon />}>
-                      {item.creator.name}
-                    </Button>
+                </ListItem>
+                <ListItem>
+                  <Grid container sx={{ flexGrow: 1 }}>
+                    <GridItemWithTypography
+                      xs={5}
+                      content={item.faction.name}
+                      color="white"
+                    />
+                    <GridItemWithTypography
+                      xs={3}
+                      content={`Rating ${item.rating}`}
+                      color="white"
+                    />
+                    <GridItemWithTypography
+                      xs={4}
+                      content={item.timeSinceLastEdit.toLocaleString()}
+                      color="#645A59"
+                    />
                   </Grid>
-                </Grid>
-              </ListItem>
-              <ListItem>
-                <Grid container sx={{ flexGrow: 1 }}>
-                  <GridItemWithTypography
-                    xs={5}
-                    content={item.faction.name}
-                    color="white"
-                  />
-                  <GridItemWithTypography
-                    xs={3}
-                    content={`Rating ${item.rating}`}
-                    color="white"
-                  />
-                  <GridItemWithTypography
-                    xs={4}
-                    content={item.timeSinceLastEdit.toLocaleString()}
-                    color="#645A59"
-                  />
-                </Grid>
-              </ListItem>
-              <Divider color="black" />
-            </Box>
-          ))}
+                </ListItem>
+                <Divider color="black" />
+              </Box>
+            )}
+          />
         </List>
       </Box>
     </Container>

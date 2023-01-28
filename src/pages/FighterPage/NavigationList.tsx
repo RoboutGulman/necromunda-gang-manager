@@ -10,6 +10,7 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 import { NavigationInfo } from "../../model/Dto/FighterPageInfo";
+import ItemsList from "../../components/ItemsList";
 
 interface NavigationListProps {
   navigationInfo: NavigationInfo;
@@ -37,16 +38,19 @@ export default function NavigationList({
             <ListItemText primary={navigationInfo.teamName} />
           </ListItemButton>
         </ListItem>
-        {navigationInfo.otherFighters.map((info, index) => (
-          <div key={index}>
-            <Divider />
-            <ListItem disablePadding>
-              <ListItemButton component={Link} to={`/fighter/${info.id}`}>
-                <ListItemText primary={info.name} />
-              </ListItemButton>
-            </ListItem>
-          </div>
-        ))}
+        <ItemsList
+          items={navigationInfo.otherFighters}
+          renderItem={(item, index) => (
+            <div key={index}>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to={`/fighter/${item.id}`}>
+                  <ListItemText primary={item.name} />
+                </ListItemButton>
+              </ListItem>
+            </div>
+          )}
+        />
       </List>
     </Box>
   );

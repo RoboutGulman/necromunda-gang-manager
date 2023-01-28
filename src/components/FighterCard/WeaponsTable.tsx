@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { Weapon, WeaponProfile, WeaponUpgrade } from "../../model/Types";
+import ItemsList from "../ItemsList";
 import { StyledTable } from "./StyledTable";
 
 interface WeaponsTableProps {
@@ -54,9 +55,12 @@ export default function WeaponsTable({ weapons }: WeaponsTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {weapons.map((weapon: Weapon, index: number) => (
-            <WeaponInfo key={index} weapon={weapon} index={index} />
-          ))}
+          <ItemsList
+            items={weapons}
+            renderItem={(item: Weapon, index: number) => (
+              <WeaponInfo key={index} weapon={item} index={index} />
+            )}
+          />
         </TableBody>
       </StyledTable>
     </TableContainer>
@@ -131,25 +135,27 @@ function WeaponRow({ weaponProfiles, index, name }: WeaponRowProps) {
           isHeader={true}
         />
       )}
-      {weaponProfiles.map((weaponProfile: WeaponProfile, keyIndex: number) => (
-        <Stroke
-          key={keyIndex}
-          items={[
-            weaponProfile.name ?? "",
-            weaponProfile.sr ?? "-",
-            weaponProfile.lr ?? "-",
-            weaponProfile.sm ?? "-",
-            weaponProfile.lm ?? "-",
-            weaponProfile.s ?? "-",
-            weaponProfile.ap ?? "-",
-            weaponProfile.d ?? "-",
-            weaponProfile.am ?? "-",
-            weaponProfile.traits.map((trait) => trait.name).join(","),
-          ]}
-          index={index}
-          isHeader={name === undefined ? true : false}
-        />
-      ))}
+      <ItemsList
+        items={weaponProfiles}
+        renderItem={(item: WeaponProfile) => (
+          <Stroke
+            items={[
+              item.name ?? "",
+              item.sr ?? "-",
+              item.lr ?? "-",
+              item.sm ?? "-",
+              item.lm ?? "-",
+              item.s ?? "-",
+              item.ap ?? "-",
+              item.d ?? "-",
+              item.am ?? "-",
+              item.traits.map((trait) => trait.name).join(","),
+            ]}
+            index={index}
+            isHeader={name === undefined ? true : false}
+          />
+        )}
+      />
     </>
   );
 }

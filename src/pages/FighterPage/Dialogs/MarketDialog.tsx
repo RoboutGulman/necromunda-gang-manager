@@ -19,6 +19,7 @@ import { Category, Market } from "../../../model/Dto/MarketDto";
 import marketJson from "../../../model/FakeData/TradingPostExample.json";
 import { plainToClass } from "class-transformer";
 import { blue } from "@mui/material/colors";
+import ItemsList from "../../../components/ItemsList";
 
 export interface MarketDialogProps {
   open: boolean;
@@ -112,14 +113,17 @@ function CategoryTable({ category }: CategoryTableProps) {
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         <MarketTable>
           <TableBody>
-            {category.items.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.cost}</TableCell>
-                <TableCell>{item.rarity ?? "common"}</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            ))}
+            <ItemsList
+              items={category.items}
+              renderItem={(item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.cost}</TableCell>
+                  <TableCell>{item.rarity ?? "common"}</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              )}
+            />
           </TableBody>
         </MarketTable>
       </Collapse>

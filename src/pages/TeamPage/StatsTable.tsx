@@ -1,7 +1,6 @@
 import {
   ListItem,
   styled,
-  Table,
   TableBody,
   TableCell,
   TableContainer,
@@ -9,6 +8,7 @@ import {
 } from "@mui/material";
 import StatsTableHeader from "../../components/FighterCard/StatsTableHeader";
 import { StyledTable } from "../../components/FighterCard/StyledTable";
+import ItemsList from "../../components/ItemsList";
 import { Characteristics } from "../../model/Characteristics";
 
 interface StatsTableProps {
@@ -53,15 +53,18 @@ export default function StatsTable(props: StatsTableProps) {
           <StatsTableHeader></StatsTableHeader>
           <TableBody>
             <TableRow>
-              {GetCharacteristicView(
-                props.characteristics,
-                props.xp,
-                props.lvl
-              ).map((stat, index) => (
-                <CellWithNoBorder key={index} align="center">
-                  {stat}
-                </CellWithNoBorder>
-              ))}
+              <ItemsList
+                items={GetCharacteristicView(
+                  props.characteristics,
+                  props.xp,
+                  props.lvl
+                )}
+                renderItem={(item: string) => (
+                  <CellWithNoBorder key={item} align="center">
+                    {item}
+                  </CellWithNoBorder>
+                )}
+              />
             </TableRow>
           </TableBody>
         </StyledTable>

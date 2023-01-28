@@ -54,6 +54,7 @@ import {
 import Dialogs from "./Dialogs/Dialogs";
 import { Territory } from "../../model/Types";
 import { StyledTable } from "../../components/FighterCard/StyledTable";
+import ItemsList from "../../components/ItemsList";
 
 interface TeamPageProps {
   window?: () => Window;
@@ -470,12 +471,15 @@ function FighterRangsTable({ rangStatistics }: FighterRangsTableProps) {
     <TableContainer>
       <Table size="small">
         <TableBody>
-          {rangStatistics?.rangs.map((value: RangCount, index) => (
-            <StyledTableRow key={index}>
-              <TableCell>{value.name}</TableCell>
-              <TableCell>x{value.count}</TableCell>
-            </StyledTableRow>
-          ))}
+          <ItemsList
+            items={rangStatistics?.rangs}
+            renderItem={(item: RangCount) => (
+              <StyledTableRow key={item.name}>
+                <TableCell>{item.name}</TableCell>
+                <TableCell>x{item.count}</TableCell>
+              </StyledTableRow>
+            )}
+          />
           <TableRow>
             <TableCell align="right" sx={{ fontWeight: "600" }}>
               Total
@@ -497,16 +501,19 @@ function TerritoriesTable({ territories }: TerritoriesTableProps) {
     <TableContainer>
       <StyledTable size="small">
         <TableBody>
-          {territories?.map((territory: Territory, index: number) => (
-            <StyledTableRow key={index}>
-              <TableCell>{territory.name}</TableCell>
-              <TableCell>
-                <IconButton>
-                  <CloseIcon />
-                </IconButton>
-              </TableCell>
-            </StyledTableRow>
-          ))}
+          <ItemsList
+            items={territories}
+            renderItem={(item: Territory) => (
+              <StyledTableRow key={item.name}>
+                <TableCell>{item.name}</TableCell>
+                <TableCell>
+                  <IconButton>
+                    <CloseIcon />
+                  </IconButton>
+                </TableCell>
+              </StyledTableRow>
+            )}
+          />
         </TableBody>
       </StyledTable>
     </TableContainer>

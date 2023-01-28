@@ -7,13 +7,14 @@ import {
 } from "@mui/material";
 import React from "react";
 import { CharacteristicsNames } from "../../model/Characteristics";
+import ItemsList from "../ItemsList";
 
 interface StatsTableHeaderProps {
   children?: React.ReactNode;
 }
 
 function StatsTableHeader({ children }: StatsTableHeaderProps) {
-  const StyledCell = styled(TableCell)(({theme}) => ({
+  const StyledCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       fontWeight: "600",
       borderColor: "#ba000d",
@@ -24,11 +25,14 @@ function StatsTableHeader({ children }: StatsTableHeaderProps) {
   return (
     <TableHead>
       <TableRow>
-        {CharacteristicsNames.map((value, index) => (
-          <StyledCell key={index} align="center">
-            {value}
-          </StyledCell>
-        ))}
+        <ItemsList
+          items={CharacteristicsNames}
+          renderItem={(item: string) => (
+            <StyledCell key={item} align="center">
+              {item}
+            </StyledCell>
+          )}
+        />
         {children && <StyledCell>{children}</StyledCell>}
       </TableRow>
     </TableHead>

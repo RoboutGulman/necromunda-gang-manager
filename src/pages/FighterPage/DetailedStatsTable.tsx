@@ -13,6 +13,7 @@ import { Characteristics } from "../../model/Characteristics";
 import StatsTableHeader from "../../components/FighterCard/StatsTableHeader";
 import { StyledTable } from "../../components/FighterCard/StyledTable";
 import { blue, green, red } from "@mui/material/colors";
+import ItemsList from "../../components/ItemsList";
 
 interface DetailedStatsTableProps {
   baseCharacteristics: Characteristics;
@@ -58,6 +59,14 @@ export default function DetailedStatsTable(props: DetailedStatsTableProps) {
   );
   baseView[0] += '"';
 
+  const items = [
+    { title: "", values: totalCharsView, color: null },
+    { title: "Advances", values: advansesView, color: green[200] },
+    { title: "Injuries", values: injuriesView, color: red[200] },
+    { title: "Your modificators", values: injuriesView, color: blue[200] },
+    { title: "Base", values: baseView, color: null },
+  ];
+
   return (
     <Collapse in={open} collapsedSize={65} sx={{ width: "100%" }}>
       <TableContainer sx={{ background: "transparent" }}>
@@ -71,49 +80,33 @@ export default function DetailedStatsTable(props: DetailedStatsTableProps) {
             </IconButton>
           </StatsTableHeader>
           <TableBody>
-            <TableRow>
-              {totalCharsView.map((value, index) => (
-                <TableCell key={index} align="center">
-                  {value}
-                </TableCell>
-              ))}
-              <TableCell colSpan={1} />
-            </TableRow>
-            <TableRow sx={{ backgroundColor: green[200] }}>
-              {advansesView.map((value, index) => (
-                <TableCell key={index} align="center">
-                  {value}
-                </TableCell>
-              ))}
-              <TableCell colSpan={3}>Advances</TableCell>
-            </TableRow>
-            <TableRow sx={{ backgroundColor: red[200] }}>
-              {injuriesView.map((value, index) => (
-                <TableCell key={index} align="center">
-                  {value}
-                </TableCell>
-              ))}
-              <TableCell colSpan={3}>Injuries</TableCell>
-            </TableRow>
-            <TableRow sx={{ backgroundColor: blue[200] }}>
-              {injuriesView.map((value, index) => (
-                <TableCell key={index} align="center">
-                  {value}
-                </TableCell>
-              ))}
-              <TableCell colSpan={3}>Your modificators</TableCell>
-            </TableRow>
-            <TableRow>
-              {baseView.map((value, index) => (
-                <TableCell key={index} align="center">
-                  {value}
-                </TableCell>
-              ))}
-              <TableCell colSpan={3}>Base</TableCell>
-            </TableRow>
+            <SplitedStatsTable items={items} />
           </TableBody>
         </StyledTable>
       </TableContainer>
     </Collapse>
+  );
+}
+
+interface SplitedStatsTableProps {
+  items: { title: string; values: string[]; color?: any }[];
+}
+
+function SplitedStatsTable({ items }: SplitedStatsTableProps) {
+  return (
+    <ItemsList
+      items={items}
+      renderItem={(item) => (
+        <TableRow sx={{ backgroundColor: item.color ?? "transparent" }}>
+          <ItemsList
+            items={item.values}
+            renderItem={(item: string) => (
+              <TableCell align="center">{item}</TableCell>
+            )}
+          />
+          <TableCell colSpan={3}>{item.title}</TableCell>
+        </TableRow>
+      )}
+    />
   );
 }

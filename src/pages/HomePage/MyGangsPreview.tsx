@@ -8,6 +8,7 @@ import CreateGangDialog from "./CreateGangDialog";
 import { useUserState } from "../../providers/UserProvider";
 import { useAuthDialogsDispatch } from "../../providers/AuthDialogsProvider";
 import { makeStyles } from "@material-ui/styles";
+import ItemsList from "../../components/ItemsList";
 
 const MTPrewier = MyTeamPreviewExample.map((prewiew, index) => {
   return {
@@ -76,22 +77,25 @@ export default function MyGangsPreview() {
             Create new roster
           </Button>
           <List sx={{ padding: 0, width: "100%" }}>
-            {MTPrewier.map((item, index: number) => (
-              <RouterLink key={index} to="/roster/1">
-                <Box maxWidth={350} className={classes.gangPreviewContainer}>
-                  <Box
-                    className={classes.gangBackground}
-                    sx={{
-                      backgroundImage: `url('${item.background}')`,
-                    }}></Box>
-                  <Box className={classes.gangNameArea}>
-                    <Typography color="white" variant="h5">
-                      {item.name}
-                    </Typography>
+            <ItemsList
+              items={MTPrewier}
+              renderItem={(item, index) => (
+                <RouterLink key={index} to="/roster/1">
+                  <Box maxWidth={350} className={classes.gangPreviewContainer}>
+                    <Box
+                      className={classes.gangBackground}
+                      sx={{
+                        backgroundImage: `url('${item.background}')`,
+                      }}></Box>
+                    <Box className={classes.gangNameArea}>
+                      <Typography color="white" variant="h5">
+                        {item.name}
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
-              </RouterLink>
-            ))}
+                </RouterLink>
+              )}
+            />
           </List>
           <CreateGangDialog
             open={isCreateGangDialogOpen}

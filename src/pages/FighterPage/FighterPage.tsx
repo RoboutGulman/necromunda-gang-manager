@@ -23,6 +23,8 @@ import cardNameBackground from "../../backgrounds/card_name_background.png";
 import { FighterPageInfo } from "../../model/Dto/FighterPageInfo";
 import { Fighter } from "../../model/Dto/Fighter";
 import Dialogs, { FighterPageDialogType } from "./Dialogs/Dialogs";
+import ItemsList from "../../components/ItemsList";
+import { Equipment, Injury, Skill, Weapon } from "../../model/Types";
 
 /*TODO:: 
 таблица адвансов
@@ -74,12 +76,30 @@ export default function FighterPage() {
             </FighterCard>
             <Grid container>
               <StyledList
+                header="Weapons"
+                onClick={() => {
+                  setDialogOpen("market");
+                }}
+                items={fighterPageInfo?.fighter.weapons}
+                renderItem={(item: Weapon) => (
+                  <ListItem>
+                    <ListItemText primary={item.name} />
+                    <Chip
+                      size="small"
+                      sx={{ backgroundColor: "#6c757d", color: "white" }}
+                      label={item.cost}
+                    />
+                  </ListItem>
+                )}
+              />
+              <StyledList
                 header="Equipment"
                 onClick={() => {
                   setDialogOpen("market");
-                }}>
-                {fighterPageInfo?.fighter.weapons.map((item, index) => (
-                  <ListItem key={index}>
+                }}
+                items={fighterPageInfo?.fighter.equipment}
+                renderItem={(item: Equipment) => (
+                  <ListItem>
                     <ListItemText primary={item.name} />
                     <Chip
                       size="small"
@@ -87,40 +107,32 @@ export default function FighterPage() {
                       label={item.cost}
                     />
                   </ListItem>
-                ))}
-                {fighterPageInfo?.fighter.equipment.map((item, index) => (
-                  <ListItem key={index}>
-                    <ListItemText primary={item.name} />
-                    <Chip
-                      size="small"
-                      sx={{ backgroundColor: "#6c757d", color: "white" }}
-                      label={item.cost}
-                    />
-                  </ListItem>
-                ))}
-              </StyledList>
+                )}
+              />
               <StyledList
                 header="Skills"
                 onClick={() => {
                   setDialogOpen("skill");
-                }}>
-                {fighterPageInfo?.fighter.skills.map((item, index) => (
+                }}
+                items={fighterPageInfo?.fighter.skills}
+                renderItem={(item: Skill, index: number) => (
                   <ListItem key={index}>
                     <ListItemText primary={item.name} />
                   </ListItem>
-                ))}
-              </StyledList>
+                )}
+              />
               <StyledList
                 header="Injuries"
                 onClick={() => {
                   setDialogOpen("injury");
-                }}>
-                {fighterPageInfo?.fighter.injuries.map((item, index) => (
+                }}
+                items={fighterPageInfo?.fighter.injuries}
+                renderItem={(item: Injury, index: number) => (
                   <ListItem key={index}>
                     <ListItemText primary={item.name} />
                   </ListItem>
-                ))}
-              </StyledList>
+                )}
+              />
             </Grid>
           </Stack>
         </Grid>
@@ -165,13 +177,19 @@ function FighterCardContent({ fighterInfo }: FighterCardContentProps) {
   );
 }
 
-interface StyledListProps {
+interface StyledListProps<T> {
   header: string;
   onClick: () => void;
-  children: React.ReactNode;
+  items: T[] | undefined;
+  renderItem: (item: T, index: number) => React.ReactNode;
 }
 
-function StyledList({ header, onClick, children }: StyledListProps) {
+function StyledList<T>({
+  header,
+  onClick,
+  items,
+  renderItem,
+}: StyledListProps<T>) {
   return (
     <Grid item xs={6} lg={3}>
       <Stack alignItems="center" sx={{ padding: "3px" }}>
@@ -213,8 +231,8 @@ function StyledList({ header, onClick, children }: StyledListProps) {
                 </IconButton>
               </ListSubheader>
             }>
-            {React.Children.count(children) > 0 ? (
-              children
+            {items !== undefined && items.length > 0 ? (
+              <ItemsList items={items} renderItem={renderItem} />
             ) : (
               <ListItem>
                 <ListItemText primary="None" />

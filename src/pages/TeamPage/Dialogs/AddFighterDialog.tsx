@@ -1,18 +1,15 @@
 import {
   Button,
-  Checkbox,
   DialogActions,
   DialogContent,
   DialogTitle,
   FormControl,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import React from "react";
 import CheckboxWithText from "../../../components/CheckboxWithText";
