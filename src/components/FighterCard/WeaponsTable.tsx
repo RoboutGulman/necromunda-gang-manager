@@ -137,8 +137,9 @@ function WeaponRow({ weaponProfiles, index, name }: WeaponRowProps) {
       )}
       <ItemsList
         items={weaponProfiles}
-        renderItem={(item: WeaponProfile) => (
+        renderItem={(item: WeaponProfile, keyIndex: number) => (
           <Stroke
+            key={keyIndex}
             items={[
               item.name ?? "",
               item.sr ?? "-",

@@ -59,8 +59,8 @@ export default function StatsTable(props: StatsTableProps) {
                   props.xp,
                   props.lvl
                 )}
-                renderItem={(item: string) => (
-                  <CellWithNoBorder key={item} align="center">
+                renderItem={(item: string, index: number) => (
+                  <CellWithNoBorder key={index} align="center">
                     {item}
                   </CellWithNoBorder>
                 )}

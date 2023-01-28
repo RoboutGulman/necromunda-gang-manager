@@ -27,8 +27,8 @@ function StatsTableHeader({ children }: StatsTableHeaderProps) {
       <TableRow>
         <ItemsList
           items={CharacteristicsNames}
-          renderItem={(item: string) => (
-            <StyledCell key={item} align="center">
+          renderItem={(item: string, index: number) => (
+            <StyledCell key={index} align="center">
               {item}
             </StyledCell>
           )}

@@ -473,8 +473,8 @@ function FighterRangsTable({ rangStatistics }: FighterRangsTableProps) {
         <TableBody>
           <ItemsList
             items={rangStatistics?.rangs}
-            renderItem={(item: RangCount) => (
-              <StyledTableRow key={item.name}>
+            renderItem={(item: RangCount, index: number) => (
+              <StyledTableRow key={index}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>x{item.count}</TableCell>
               </StyledTableRow>
@@ -503,8 +503,8 @@ function TerritoriesTable({ territories }: TerritoriesTableProps) {
         <TableBody>
           <ItemsList
             items={territories}
-            renderItem={(item: Territory) => (
-              <StyledTableRow key={item.name}>
+            renderItem={(item: Territory, index: number) => (
+              <StyledTableRow key={index}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>
                   <IconButton>

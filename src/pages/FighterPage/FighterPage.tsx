@@ -23,8 +23,6 @@ import cardNameBackground from "../../backgrounds/card_name_background.png";
 import { FighterPageInfo } from "../../model/Dto/FighterPageInfo";
 import { Fighter } from "../../model/Dto/Fighter";
 import Dialogs, { FighterPageDialogType } from "./Dialogs/Dialogs";
-import ItemsList from "../../components/ItemsList";
-import { Equipment, Injury, Skill, Weapon } from "../../model/Types";
 
 /*TODO:: 
 таблица адвансов

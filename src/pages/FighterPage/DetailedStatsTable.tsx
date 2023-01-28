@@ -96,12 +96,16 @@ function SplitedStatsTable({ items }: SplitedStatsTableProps) {
   return (
     <ItemsList
       items={items}
-      renderItem={(item) => (
-        <TableRow sx={{ backgroundColor: item.color ?? "transparent" }}>
+      renderItem={(item, index) => (
+        <TableRow
+          key={index}
+          sx={{ backgroundColor: item.color ?? "transparent" }}>
           <ItemsList
             items={item.values}
-            renderItem={(item: string) => (
-              <TableCell align="center">{item}</TableCell>
+            renderItem={(item: string, index: number) => (
+              <TableCell key={index} align="center">
+                {item}
+              </TableCell>
             )}
           />
           <TableCell colSpan={3}>{item.title}</TableCell>
