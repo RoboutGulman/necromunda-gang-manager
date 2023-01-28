@@ -76,30 +76,12 @@ export default function FighterPage() {
             </FighterCard>
             <Grid container>
               <StyledList
-                header="Weapons"
-                onClick={() => {
-                  setDialogOpen("market");
-                }}
-                items={fighterPageInfo?.fighter.weapons}
-                renderItem={(item: Weapon) => (
-                  <ListItem>
-                    <ListItemText primary={item.name} />
-                    <Chip
-                      size="small"
-                      sx={{ backgroundColor: "#6c757d", color: "white" }}
-                      label={item.cost}
-                    />
-                  </ListItem>
-                )}
-              />
-              <StyledList
                 header="Equipment"
                 onClick={() => {
                   setDialogOpen("market");
-                }}
-                items={fighterPageInfo?.fighter.equipment}
-                renderItem={(item: Equipment) => (
-                  <ListItem>
+                }}>
+                {fighterPageInfo?.fighter.weapons.map((item, index) => (
+                  <ListItem key={index}>
                     <ListItemText primary={item.name} />
                     <Chip
                       size="small"
@@ -107,32 +89,40 @@ export default function FighterPage() {
                       label={item.cost}
                     />
                   </ListItem>
-                )}
-              />
+                ))}
+                {fighterPageInfo?.fighter.equipment.map((item, index) => (
+                  <ListItem key={index}>
+                    <ListItemText primary={item.name} />
+                    <Chip
+                      size="small"
+                      sx={{ backgroundColor: "#6c757d", color: "white" }}
+                      label={item.cost}
+                    />
+                  </ListItem>
+                ))}
+              </StyledList>
               <StyledList
                 header="Skills"
                 onClick={() => {
                   setDialogOpen("skill");
-                }}
-                items={fighterPageInfo?.fighter.skills}
-                renderItem={(item: Skill, index: number) => (
+                }}>
+                {fighterPageInfo?.fighter.skills.map((item, index) => (
                   <ListItem key={index}>
                     <ListItemText primary={item.name} />
                   </ListItem>
-                )}
-              />
+                ))}
+              </StyledList>
               <StyledList
                 header="Injuries"
                 onClick={() => {
                   setDialogOpen("injury");
-                }}
-                items={fighterPageInfo?.fighter.injuries}
-                renderItem={(item: Injury, index: number) => (
+                }}>
+                {fighterPageInfo?.fighter.injuries.map((item, index) => (
                   <ListItem key={index}>
                     <ListItemText primary={item.name} />
                   </ListItem>
-                )}
-              />
+                ))}
+              </StyledList>
             </Grid>
           </Stack>
         </Grid>
@@ -180,16 +170,10 @@ function FighterCardContent({ fighterInfo }: FighterCardContentProps) {
 interface StyledListProps<T> {
   header: string;
   onClick: () => void;
-  items: T[] | undefined;
-  renderItem: (item: T, index: number) => React.ReactNode;
+  children: React.ReactNode;
 }
 
-function StyledList<T>({
-  header,
-  onClick,
-  items,
-  renderItem,
-}: StyledListProps<T>) {
+function StyledList<T>({ header, onClick, children }: StyledListProps<T>) {
   return (
     <Grid item xs={6} lg={3}>
       <Stack alignItems="center" sx={{ padding: "3px" }}>
@@ -231,8 +215,8 @@ function StyledList<T>({
                 </IconButton>
               </ListSubheader>
             }>
-            {items !== undefined && items.length > 0 ? (
-              <ItemsList items={items} renderItem={renderItem} />
+            {React.Children.count(children) > 0 ? (
+              children
             ) : (
               <ListItem>
                 <ListItemText primary="None" />
