@@ -3,6 +3,7 @@ import AddFighterDialog from "./AddFighterDialog";
 import { TeamPageDialogType } from "../TeamPage";
 import EditTeamInfoDialog from "./EditGangInfoDialog";
 import { TeamInfo } from "../../../model/Dto/TeamView";
+import SelectRandomFightersDialog from "./SelectRandomFightersDialog";
 
 export interface SimpleDialogProps {
   teamInfo: TeamInfo;
@@ -32,6 +33,9 @@ export default function Dialogs({
         open={dialogType === "edit-gang-info"}
         onClose={onClose}
       />
+      <SelectRandomFightersDialog 
+        open={dialogType === "select-random-fighter"}
+        onClose={onClose}/>
     </>
   );
 }
