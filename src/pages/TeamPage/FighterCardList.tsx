@@ -73,7 +73,7 @@ export default function FighterCardList({ teamView }: Props) {
           (fighterView, index) =>
             fighterView && (
               <ListItem key={index}>
-                <FighterCard isSelected={isFighterSelected(fighterView.id)}>
+                <FighterCard>
                   <FighterCardHeader
                     name={fighterView.name}
                     rang={fighterView.rang}
