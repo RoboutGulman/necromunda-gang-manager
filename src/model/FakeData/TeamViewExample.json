@@ -212,6 +212,119 @@
       "totalCost": 250,
       "xp": 12,
       "lvl": 3
+    },
+    {
+      "id": 14,
+      "name": "Bobik",
+      "rang": "leader",
+      "totalCharacteristics": {
+        "m": 6,
+        "ws": 3,
+        "bs": 3,
+        "s": 3,
+        "t": 4,
+        "w": 2,
+        "i": 4,
+        "a": 2,
+        "ld": 5,
+        "cl": 6,
+        "wp": 6,
+        "int": 6
+      },
+      "weapons": [
+        {
+          "id": 0,
+          "name": "Plasma Pistol",
+          "profiles": [
+            {
+              "name": "low",
+              "sr": "12\"",
+              "lr": "24\"",
+              "sm": "+1",
+              "lm": null,
+              "s": "5",
+              "ap": "-1",
+              "d": "1",
+              "am": "5+",
+              "traits": []
+            },
+            {
+              "name": "max",
+              "sr": "12\"",
+              "lr": "24\"",
+              "sm": "+1",
+              "lm": null,
+              "s": "6",
+              "ap": "-2",
+              "d": "2",
+              "am": "5+",
+              "traits": [
+                {
+                  "id": 1,
+                  "name": "Unstable"
+                },
+                {
+                  "id": 2,
+                  "name": "Rapid Fire"
+                }
+              ]
+            }
+          ],
+          "upgrades": [
+            {
+              "id": 1,
+              "name": "Telescopic sight"
+            },
+            {
+              "id": 1,
+              "name": "Suspensors"
+            },
+            {
+              "id": 1,
+              "name": "Infra-sight"
+            }
+          ],
+          "cost": 25,
+          "rarity": null,
+          "availibleOnTraidingPost": true
+        },
+        {
+          "id": 8,
+          "name": "Fighting Knife",
+          "profiles": [
+            {
+              "name": "Fighting Knife",
+              "sr": null,
+              "lr": null,
+              "sm": null,
+              "lm": null,
+              "s": "S",
+              "ap": "-1",
+              "d": 1,
+              "am": null,
+              "traits": []
+            }
+          ],
+          "upgrades": [],
+          "cost": 25,
+          "rarity": null,
+          "availibleOnTraidingPost": true
+        }
+      ],
+      "equipment": [
+        {
+          "name": "Mesh armour"
+        }
+      ],
+      "skills": [
+        {
+          "name": "Nerves of Steel"
+        }
+      ],
+      "status": 1,
+      "totalCost": 250,
+      "xp": 12,
+      "lvl": 3
     }
   ]
 }

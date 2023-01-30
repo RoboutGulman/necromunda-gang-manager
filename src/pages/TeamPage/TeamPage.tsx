@@ -62,7 +62,7 @@ interface TeamPageProps {
   window?: () => Window;
 }
 
-export type TeamPageDialogType = "none" | "add-fighter" | "edit-gang-info";
+export type TeamPageDialogType = "none" | "add-fighter" | "edit-gang-info"| "select-random-fighter";
 
 export default function TeamPage(props: TeamPageProps) {
   const { window } = props;
@@ -265,9 +265,9 @@ function TeamMenu({ teamInfo }: TeamMenuProps) {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={()=>setDialogOpen("select-random-fighter")}>
               <ListItemIcon>
-                <CasinoIcon />
+                <CasinoIcon/>
               </ListItemIcon>
               <ListItemText primary="Select random fighters" />
             </ListItemButton>

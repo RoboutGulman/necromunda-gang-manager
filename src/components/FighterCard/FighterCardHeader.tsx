@@ -55,7 +55,7 @@ export default function FighterCardHeader({
               color="secondary"
               checked={isSelected}
               onChange={onClick}
-              inputProps={{ "aria-label": "controlled" }}
+              inputProps={{ "aria-label": "select" }}
             />
           )}
           {totalCost && <CreditsCostContainer cost={totalCost} />}

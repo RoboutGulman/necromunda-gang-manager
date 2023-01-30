@@ -72,13 +72,6 @@ export default function AddFighterDialog({
       });
     };
 
-  const handleCheckboxChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setFighterInfo({
-        ...fighterInfo,
-        [prop]: event.target.checked,
-      });
-    };
 
   const handleClose = () => {
     onClose();
@@ -112,7 +105,10 @@ export default function AddFighterDialog({
           />
           <CheckboxWithText
             checked={fighterInfo.showOnlyFactionFighterTypes}
-            onChange={() => handleCheckboxChange("showOnlyFactionFighterTypes")}
+            onChange={() =>  setFighterInfo({
+              ...fighterInfo,
+              showOnlyFactionFighterTypes: !fighterInfo.showOnlyFactionFighterTypes,
+            })}
             text="Show only faction fighters?"
           />
           <FormControl variant="filled" sx={{ mt: 2, minWidth: 120 }}>
@@ -131,7 +127,10 @@ export default function AddFighterDialog({
           </FormControl>
           <CheckboxWithText
             checked={fighterInfo.purchaseWithCredits}
-            onChange={() => handleCheckboxChange("purchaseWithCredits")}
+            onChange={() => setFighterInfo({
+              ...fighterInfo,
+              purchaseWithCredits: !fighterInfo.purchaseWithCredits,
+            })}
             text="Purchase with credits?"
           />
         </Stack>
