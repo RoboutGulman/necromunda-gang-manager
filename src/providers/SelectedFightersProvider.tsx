@@ -1,17 +1,15 @@
 import * as React from "react";
 
 type Action =
-  | { type: "select"; id: number; cost: number }
-  | { type: "delete"; id: number; cost: number }
+  | { type: "select"; id: number }
+  | { type: "delete"; id: number }
   | {
       type: "update";
-      newState: { id: number; isSelected: boolean }[];
-      newCost: number;
+      newState: State;
     };
 type Dispatch = (action: Action) => void;
 type State = {
-  fighters: { id: number; isSelected: boolean }[];
-  totalCost: number;
+  fighters: { id: number; isSelected: boolean; cost: number }[];
 };
 type SelectedFightersProviderProps = { children: React.ReactNode };
 
@@ -29,9 +27,8 @@ function SelectedFightersReducer(state: State, action: Action): State {
         fighters: state.fighters.map((fighterSelection) =>
           fighterSelection.id !== action.id
             ? fighterSelection
-            : { id: action.id, isSelected: true }
+            : { id: action.id, isSelected: true, cost: fighterSelection.cost }
         ),
-        totalCost: state.totalCost + action.cost,
       };
     }
     case "delete": {
@@ -39,16 +36,12 @@ function SelectedFightersReducer(state: State, action: Action): State {
         fighters: state.fighters.map((fighterSelection) =>
           fighterSelection.id !== action.id
             ? fighterSelection
-            : { id: action.id, isSelected: false }
+            : { id: action.id, isSelected: false, cost: fighterSelection.cost }
         ),
-        totalCost: state.totalCost - action.cost,
       };
     }
     case "update": {
-      return {
-        fighters: action.newState,
-        totalCost: action.newCost,
-      };
+      return action.newState;
     }
     default: {
       throw new Error(`Unhandled action type: ${action}`);
@@ -59,7 +52,6 @@ function SelectedFightersReducer(state: State, action: Action): State {
 function SelectedFightersProvider({ children }: SelectedFightersProviderProps) {
   const [state, dispatch] = React.useReducer(SelectedFightersReducer, {
     fighters: [],
-    totalCost: 0,
   });
   return (
     <SelectedFightersStateContext.Provider value={state}>

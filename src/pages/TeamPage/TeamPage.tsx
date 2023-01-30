@@ -68,7 +68,10 @@ export default function TeamPage(props: TeamPageProps) {
   const { window } = props;
   const mobileOpen = useDrawerState();
   const setMobileOpen = useDrawerDispatch();
-  const selectedFightersCost = useSelectedFightersState().totalCost;
+  const selectedFightersCost = useSelectedFightersState().fighters.reduce(
+    (partialSum, a) => partialSum + (a.isSelected ? a.cost : 0),
+    0
+  );
 
   const [teamView, setTeamView] = useState<TeamView>();
 

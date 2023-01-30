@@ -20,34 +20,36 @@ interface Props {
 }
 
 export default function FighterCardList({ teamView }: Props) {
-  const fighters = useSelectedFightersState().fighters;
+  const fightersSelectionInfo = useSelectedFightersState().fighters;
   const selectedFightersReducer = useSelectedFightersDispatch();
 
   useEffect(() => {
     if (teamView !== undefined) {
       selectedFightersReducer({
         type: "update",
-        newState: teamView.fighters.map((fighter) => ({
-          id: fighter.id,
-          isSelected: false,
-        })),
-        newCost: 0,
+        newState: {
+          fighters: teamView.fighters.map((fighter) => ({
+            id: fighter.id,
+            isSelected: false,
+            cost: fighter.totalCost,
+          })),
+        },
       });
     }
   }, [teamView]);
 
   const isFighterSelected = (index: number): boolean => {
-    return fighters
+    return fightersSelectionInfo
       .filter((f) => f.isSelected)
       .map((f) => f.id)
       .includes(index);
   };
 
-  const onCardClick = (index: number, cost: number): void => {
+  const onCardClick = (index: number): void => {
     if (isFighterSelected(index)) {
-      selectedFightersReducer({ type: "delete", id: index, cost: cost });
+      selectedFightersReducer({ type: "delete", id: index });
     } else {
-      selectedFightersReducer({ type: "select", id: index, cost: cost });
+      selectedFightersReducer({ type: "select", id: index });
     }
   };
 
@@ -57,12 +59,12 @@ export default function FighterCardList({ teamView }: Props) {
         <></>
       ) : (
         [
-          ...fighters
+          ...fightersSelectionInfo
             .filter((fighter) => fighter.isSelected)
             .map(({ id }) =>
               teamView.fighters.find((fighter) => fighter.id === id)
             ),
-          ...fighters
+          ...fightersSelectionInfo
             .filter((fighter) => !fighter.isSelected)
             .map(({ id }) =>
               teamView.fighters.find((fighter) => fighter.id === id)
@@ -77,9 +79,7 @@ export default function FighterCardList({ teamView }: Props) {
                     rang={fighterView.rang}
                     totalCost={fighterView.totalCost}
                     isSelected={isFighterSelected(fighterView.id)}
-                    onClick={() =>
-                      onCardClick(fighterView.id, fighterView.totalCost)
-                    }
+                    onClick={() => onCardClick(fighterView.id)}
                   />
                   <StatsTable
                     characteristics={fighterView.totalCharacteristics}
