@@ -1,5 +1,5 @@
 import { Box, Fab, Grid, ListItem, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -16,6 +16,18 @@ interface Props {
 }
 
 export default function FighterCardList({ teamView }: Props) {
+  const [selectedCardsId, setSelectedCardsId] = useState<number[]>([]);
+
+  const onCardClick = (index: number): void => {
+    if (selectedCardsId.includes(index)) {
+      setSelectedCardsId(
+        selectedCardsId.filter((mappedId) => mappedId !== index)
+      );
+    } else {
+      setSelectedCardsId([...selectedCardsId, index]);
+    }
+  };
+
   return (
     <>
       {teamView === undefined ? (
@@ -23,7 +35,9 @@ export default function FighterCardList({ teamView }: Props) {
       ) : (
         teamView.fighters.map((fighterView, index) => (
           <ListItem key={index}>
-            <FighterCard>
+            <FighterCard
+              onClick={() => onCardClick(fighterView.id)}
+              isSelected={selectedCardsId.includes(fighterView.id)}>
               <FighterCardHeader
                 name={fighterView.name}
                 rang={fighterView.rang}
@@ -86,12 +100,12 @@ function GridStroke({ name, items }: GridStrokeProps) {
     <>
       {items.length > 0 ? (
         <>
-          <Grid item xs={6} md={2}>
+          <Grid item xs={6} sm={2}>
             <Typography component={"span"} variant="body1">
               {name}
             </Typography>
           </Grid>
-          <Grid item xs={6} md={10}>
+          <Grid item xs={6} sm={10}>
             <Typography component={"span"} variant="body1">
               {items.join(", ")}
             </Typography>

@@ -48,7 +48,7 @@
   },
   "fighters": [
     {
-      "id": "312",
+      "id": 312,
       "name": "Bob",
       "rang": "ganger",
       "totalCharacteristics": {
