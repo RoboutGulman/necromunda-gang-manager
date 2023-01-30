@@ -18,14 +18,14 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import UserDialog from "../UserDialog";
-import { getCurrentUser, useUserDispatch } from "../../providers/UserProvider";
+import UserDialog from "../../UserDialog";
+import { getCurrentUser, useUserDispatch } from "../../../providers/UserProvider";
 import { blue } from "@mui/material/colors";
-import { Api } from "../../request/api/api";
+import { Api } from "../../../request/api/api";
 import {
   useAuthDialogsDispatch,
   useAuthDialogsState,
-} from "../../providers/AuthDialogsProvider";
+} from "../../../providers/AuthDialogsProvider";
 
 interface State {
   nickname: string;

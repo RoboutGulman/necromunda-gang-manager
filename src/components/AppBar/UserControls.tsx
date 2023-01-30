@@ -45,7 +45,6 @@ function UserControls() {
           </Typography>
         </div>
       </Button>
-
       <Popover
         id={id}
         open={open}

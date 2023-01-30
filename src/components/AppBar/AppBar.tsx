@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
-import UserAuthorizationDialog from "./UserAuthorizationDialog";
+import UserAuthorizationDialog from "./Authorization/UserAuthorizationDialog";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link as RouterLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -8,11 +8,11 @@ import { useDrawerDispatch } from "../../providers/DrawerControlProvider";
 import { useUserState } from "../../providers/UserProvider";
 import UserControls from "./UserControls";
 import { useAuthDialogsDispatch } from "../../providers/AuthDialogsProvider";
+import Authorization from "./Authorization/Authorization";
 
 export default function AppBarEnterScreen() {
   const user = useUserState();
   const drawerDispatch = useDrawerDispatch();
-  const setDialogOpen = useAuthDialogsDispatch();
 
   return (
     <Box
@@ -54,28 +54,7 @@ export default function AppBarEnterScreen() {
             }}>
             Necromunda Gang Manager
           </Typography>
-          {user.authorized ? (
-            <UserControls />
-          ) : (
-            <>
-              <Box mr={3}>
-                <Button
-                  color="inherit"
-                  variant="outlined"
-                  onClick={() => setDialogOpen({ type: "open-login" })}>
-                  Log In
-                </Button>
-                <UserAuthorizationDialog variant="Login" />
-                <UserAuthorizationDialog variant="Register" />
-              </Box>
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={() => setDialogOpen({ type: "open-register" })}>
-                Sign Up
-              </Button>
-            </>
-          )}
+          {user.authorized ? <UserControls /> : <Authorization />}
         </Toolbar>
       </AppBar>
     </Box>
