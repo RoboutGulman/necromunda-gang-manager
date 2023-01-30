@@ -1,5 +1,4 @@
-import { Box, ListItem, Paper, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { Box, Checkbox, ListItem, Paper, Typography } from "@mui/material";
 import React from "react";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
 
@@ -7,12 +6,16 @@ interface FighterCardHeaderProps {
   name: string;
   rang: string;
   totalCost?: number;
+  isSelected?: boolean;
+  onClick?: () => void;
 }
 
 export default function FighterCardHeader({
   name,
   rang,
   totalCost,
+  isSelected,
+  onClick,
 }: FighterCardHeaderProps) {
   return (
     <ListItem disablePadding sx={{ mb: "10px" }}>
@@ -46,6 +49,15 @@ export default function FighterCardHeader({
             sx={{ ml: "10px", textTransform: "capitalize" }}>
             {rang}
           </Typography>
+          {isSelected !== undefined && onClick !== undefined && (
+            <Checkbox
+              sx={{ color: "rgba(240, 244, 228, 0.7)" }}
+              color="secondary"
+              checked={isSelected}
+              onChange={onClick}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          )}
           {totalCost && <CreditsCostContainer cost={totalCost} />}
         </Box>
       </Paper>

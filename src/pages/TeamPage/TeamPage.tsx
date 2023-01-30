@@ -55,6 +55,8 @@ import Dialogs from "./Dialogs/Dialogs";
 import { Territory } from "../../model/Types";
 import { StyledTable } from "../../components/FighterCard/StyledTable";
 import ItemsList from "../../components/ItemsList";
+import CasinoIcon from "@mui/icons-material/Casino";
+import { useSelectedFightersState } from "../../providers/SelectedFightersProvider";
 
 interface TeamPageProps {
   window?: () => Window;
@@ -66,6 +68,7 @@ export default function TeamPage(props: TeamPageProps) {
   const { window } = props;
   const mobileOpen = useDrawerState();
   const setMobileOpen = useDrawerDispatch();
+  const selectedFightersCost = useSelectedFightersState().totalCost;
 
   const [teamView, setTeamView] = useState<TeamView>();
 
@@ -86,6 +89,13 @@ export default function TeamPage(props: TeamPageProps) {
         <Grid item xs={12} lg={8}>
           <Box component="main">
             <List>
+              <ListItem>
+                <ListItemText>
+                  <Typography sx={{ color: "white" }}>
+                    Total Cost {selectedFightersCost}
+                  </Typography>
+                </ListItemText>
+              </ListItem>
               <FighterCardList teamView={teamView} />
             </List>
           </Box>
@@ -249,6 +259,14 @@ function TeamMenu({ teamInfo }: TeamMenuProps) {
                 <AddIcon />
               </ListItemIcon>
               <ListItemText primary="Add fighter" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <CasinoIcon />
+              </ListItemIcon>
+              <ListItemText primary="Select random fighters" />
             </ListItemButton>
           </ListItem>
           <ListItem

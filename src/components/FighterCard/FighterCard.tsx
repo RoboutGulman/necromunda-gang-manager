@@ -12,25 +12,21 @@ import React from "react";
 import cardBackground from "../../backgrounds/card_background.jpg";
 
 interface FighterCardProps {
-  onClick?: () => void;
   isSelected?: boolean;
   children: React.ReactNode;
 }
 
 export default function FighterCard({
-  onClick,
   isSelected,
   children,
 }: FighterCardProps) {
   return (
     <StyledCard isSelected={isSelected}>
-      <CardActionArea onClick={onClick}>
-        <CardContent sx={{ padding: { xs: "8px", lg: "16px" } }}>
-          <Box sx={{ padding: "8px" }}>
-            <StyledList>{children}</StyledList>
-          </Box>
-        </CardContent>
-      </CardActionArea>
+      <CardContent sx={{ padding: { xs: "8px", lg: "16px" } }}>
+        <Box sx={{ padding: "8px" }}>
+          <StyledList>{children}</StyledList>
+        </Box>
+      </CardContent>
     </StyledCard>
   );
 }

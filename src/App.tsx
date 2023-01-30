@@ -5,11 +5,8 @@ import Layout from "./components/Layout";
 import TeamPage from "./pages/TeamPage/TeamPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import FighterPage from "./pages/FighterPage/FighterPage";
-import {
-  getCurrentUser,
-  useUserDispatch,
-} from "./providers/UserProvider";
-
+import { getCurrentUser, useUserDispatch } from "./providers/UserProvider";
+import { SelectedFightersProvider } from "./providers/SelectedFightersProvider";
 
 export default function App() {
   const userDispatch = useUserDispatch();
@@ -17,14 +14,23 @@ export default function App() {
   useEffect(() => {
     // Опционально: добавить прелоадер на весь экран, пока идет получение текущего пользователя
     // чтобы избежать моргания после подгрузки данных пользователя
-    getCurrentUser(userDispatch).then(() => console.log('getCurrentUser in useEffect completed'));
+    getCurrentUser(userDispatch).then(() =>
+      console.log("getCurrentUser in useEffect completed")
+    );
   }, [userDispatch]);
 
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="roster/:id" element={<TeamPage />} />
+        <Route
+          path="roster/:id"
+          element={
+            <SelectedFightersProvider>
+              <TeamPage />
+            </SelectedFightersProvider>
+          }
+        />
         <Route path="fighter/:id" element={<FighterPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

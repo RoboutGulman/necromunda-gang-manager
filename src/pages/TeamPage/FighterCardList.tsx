@@ -1,5 +1,4 @@
 import { Box, Fab, Grid, ListItem, Typography } from "@mui/material";
-import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -10,21 +9,45 @@ import FighterCard from "../../components/FighterCard/FighterCard";
 import WeaponsTable from "../../components/FighterCard/WeaponsTable";
 
 import FighterCardHeader from "../../components/FighterCard/FighterCardHeader";
+import {
+  useSelectedFightersDispatch,
+  useSelectedFightersState,
+} from "../../providers/SelectedFightersProvider";
+import { useEffect } from "react";
 
 interface Props {
   teamView: TeamView | undefined;
 }
 
 export default function FighterCardList({ teamView }: Props) {
-  const [selectedCardsId, setSelectedCardsId] = useState<number[]>([]);
+  const fighters = useSelectedFightersState().fighters;
+  const selectedFightersReducer = useSelectedFightersDispatch();
 
-  const onCardClick = (index: number): void => {
-    if (selectedCardsId.includes(index)) {
-      setSelectedCardsId(
-        selectedCardsId.filter((mappedId) => mappedId !== index)
-      );
+  useEffect(() => {
+    if (teamView !== undefined) {
+      selectedFightersReducer({
+        type: "update",
+        newState: teamView.fighters.map((fighter) => ({
+          id: fighter.id,
+          isSelected: false,
+        })),
+        newCost: 0,
+      });
+    }
+  }, [teamView]);
+
+  const isFighterSelected = (index: number): boolean => {
+    return fighters
+      .filter((f) => f.isSelected)
+      .map((f) => f.id)
+      .includes(index);
+  };
+
+  const onCardClick = (index: number, cost: number): void => {
+    if (isFighterSelected(index)) {
+      selectedFightersReducer({ type: "delete", id: index, cost: cost });
     } else {
-      setSelectedCardsId([...selectedCardsId, index]);
+      selectedFightersReducer({ type: "select", id: index, cost: cost });
     }
   };
 
@@ -33,58 +56,74 @@ export default function FighterCardList({ teamView }: Props) {
       {teamView === undefined ? (
         <></>
       ) : (
-        teamView.fighters.map((fighterView, index) => (
-          <ListItem key={index}>
-            <FighterCard
-              onClick={() => onCardClick(fighterView.id)}
-              isSelected={selectedCardsId.includes(fighterView.id)}>
-              <FighterCardHeader
-                name={fighterView.name}
-                rang={fighterView.rang}
-                totalCost={fighterView.totalCost}
-              />
-              <StatsTable
-                characteristics={fighterView.totalCharacteristics}
-                xp={fighterView.xp}
-                lvl={fighterView.lvl}
-              />
-              <ListItem disablePadding sx={{ mb: "10px" }}>
-                <WeaponsTable weapons={fighterView.weapons} />
-              </ListItem>
-              <ListItem disablePadding>
-                <Grid container spacing={1}>
-                  <GridStroke
-                    name="EQUIPMENT"
-                    items={fighterView.equipment.map(
-                      (equipment) => equipment.name
-                    )}
+        [
+          ...fighters
+            .filter((fighter) => fighter.isSelected)
+            .map(({ id }) =>
+              teamView.fighters.find((fighter) => fighter.id === id)
+            ),
+          ...fighters
+            .filter((fighter) => !fighter.isSelected)
+            .map(({ id }) =>
+              teamView.fighters.find((fighter) => fighter.id === id)
+            ),
+        ].map(
+          (fighterView, index) =>
+            fighterView && (
+              <ListItem key={index}>
+                <FighterCard isSelected={isFighterSelected(fighterView.id)}>
+                  <FighterCardHeader
+                    name={fighterView.name}
+                    rang={fighterView.rang}
+                    totalCost={fighterView.totalCost}
+                    isSelected={isFighterSelected(fighterView.id)}
+                    onClick={() =>
+                      onCardClick(fighterView.id, fighterView.totalCost)
+                    }
                   />
-                  <GridStroke
-                    name="SKILLS"
-                    items={fighterView.skills.map(
-                      (equipment) => equipment.name
-                    )}
+                  <StatsTable
+                    characteristics={fighterView.totalCharacteristics}
+                    xp={fighterView.xp}
+                    lvl={fighterView.lvl}
                   />
-                </Grid>
+                  <ListItem disablePadding sx={{ mb: "10px" }}>
+                    <WeaponsTable weapons={fighterView.weapons} />
+                  </ListItem>
+                  <ListItem disablePadding>
+                    <Grid container spacing={1}>
+                      <GridStroke
+                        name="EQUIPMENT"
+                        items={fighterView.equipment.map(
+                          (equipment) => equipment.name
+                        )}
+                      />
+                      <GridStroke
+                        name="SKILLS"
+                        items={fighterView.skills.map(
+                          (equipment) => equipment.name
+                        )}
+                      />
+                    </Grid>
+                  </ListItem>
+                  <RouterLink to="/fighter/1">
+                    <Box
+                      sx={{
+                        backgroundColor: "#343a40",
+                        position: "absolute",
+                        right: "-15px",
+                        bottom: "-15px",
+                        borderRadius: "50%",
+                        border: "2px solid #747474",
+                      }}>
+                      <Fab size="medium" aria-label="add">
+                        <EditIcon />
+                      </Fab>
+                    </Box>
+                  </RouterLink>
+                </FighterCard>
               </ListItem>
-              <RouterLink to="/fighter/1">
-                <Box
-                  sx={{
-                    backgroundColor: "#343a40",
-                    position: "absolute",
-                    right: "-21px",
-                    bottom: "-28px",
-                    borderRadius: "50%",
-                    border: "2px solid #747474",
-                  }}>
-                  <Fab size="medium" aria-label="add">
-                    <EditIcon />
-                  </Fab>
-                </Box>
-              </RouterLink>
-            </FighterCard>
-          </ListItem>
-        ))
+            )
+        )
       )}
     </>
   );
