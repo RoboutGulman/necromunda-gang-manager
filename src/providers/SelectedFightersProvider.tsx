@@ -3,6 +3,7 @@ import * as React from "react";
 type Action =
   | { type: "select"; id: number }
   | { type: "delete"; id: number }
+  | { type: "delete all" }
   | {
       type: "update";
       newState: State;
@@ -27,7 +28,7 @@ function SelectedFightersReducer(state: State, action: Action): State {
         fighters: state.fighters.map((fighterSelection) =>
           fighterSelection.id !== action.id
             ? fighterSelection
-            : { id: action.id, isSelected: true, cost: fighterSelection.cost }
+            : { ...fighterSelection, isSelected: true}
         ),
       };
     }
@@ -36,7 +37,14 @@ function SelectedFightersReducer(state: State, action: Action): State {
         fighters: state.fighters.map((fighterSelection) =>
           fighterSelection.id !== action.id
             ? fighterSelection
-            : { id: action.id, isSelected: false, cost: fighterSelection.cost }
+            : { ...fighterSelection, isSelected: false }
+        ),
+      };
+    }
+    case "delete all": {
+      return {
+        fighters: state.fighters.map((fighterSelection) =>
+            ({...fighterSelection, isSelected: false }) 
         ),
       };
     }
