@@ -1,11 +1,18 @@
-import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar as MuiBar,
+  Box,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link as RouterLink } from "react-router-dom";
 import { useUserState } from "../../providers/UserProvider";
 import UserControls from "./UserControls";
 import Authorization from "./Authorization/Authorization";
+import { memo } from "react";
 
-export default function AppBarEnterScreen() {
+export const AppBar = memo(() => {
   const user = useUserState();
 
   return (
@@ -13,7 +20,7 @@ export default function AppBarEnterScreen() {
       sx={{
         flexGrow: 1,
       }}>
-      <AppBar position="static">
+      <MuiBar position="static">
         <Toolbar>
           <IconButton
             size="large"
@@ -37,7 +44,7 @@ export default function AppBarEnterScreen() {
           </Typography>
           {user.authorized ? <UserControls /> : <Authorization />}
         </Toolbar>
-      </AppBar>
+      </MuiBar>
     </Box>
   );
-}
+});

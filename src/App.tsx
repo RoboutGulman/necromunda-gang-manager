@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import Layout from "./components/Layout";
-import TeamPage from "./pages/TeamPage/TeamPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import FighterPage from "./pages/FighterPage/FighterPage";
 import { getCurrentUser, useUserDispatch } from "./providers/UserProvider";
 import { SelectedFightersProvider } from "./providers/SelectedFightersProvider";
 import { DrawerControlProvider } from "./providers/DrawerControlProvider";
+import { TeamPage } from "./pages/TeamPage/TeamPage";
 
 export default function App() {
   const userDispatch = useUserDispatch();

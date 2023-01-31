@@ -1,5 +1,5 @@
 import { Box, Checkbox, ListItem, Paper, Typography } from "@mui/material";
-import React from "react";
+import React, { FC, memo } from "react";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
 
 interface FighterCardHeaderProps {
@@ -10,60 +10,56 @@ interface FighterCardHeaderProps {
   onClick?: () => void;
 }
 
-export default function FighterCardHeader({
-  name,
-  rang,
-  totalCost,
-  isSelected,
-  onClick,
-}: FighterCardHeaderProps) {
-  return (
-    <ListItem disablePadding sx={{ mb: "10px" }}>
-      <Paper
-        sx={{
-          width: "100%",
-          backgroundColor: "transparent",
-          backgroundImage: `url('${cardNameBackground}')`,
-          backgroundPosition: "center",
-          backgroundSize: "120% 120%",
-          pt: "8px",
-        }}>
-        <Box
+export const FighterCardHeader: FC<FighterCardHeaderProps> = memo(
+  ({ name, rang, totalCost, isSelected, onClick }) => {
+    return (
+      <ListItem disablePadding sx={{ mb: "10px" }}>
+        <Paper
           sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            letterSpacing: "1px",
+            width: "100%",
+            backgroundColor: "transparent",
+            backgroundImage: `url('${cardNameBackground}')`,
+            backgroundPosition: "center",
+            backgroundSize: "120% 120%",
+            pt: "8px",
           }}>
-          <Typography
-            component={"span"}
-            variant="h6"
-            color="secondary"
-            sx={{ ml: "10px" }}>
-            {name}
-          </Typography>
-          <Typography
-            component={"span"}
-            variant="body1"
-            color="secondary"
-            sx={{ ml: "10px", textTransform: "capitalize" }}>
-            {rang}
-          </Typography>
-          {isSelected !== undefined && onClick !== undefined && (
-            <Checkbox
-              sx={{ color: "rgba(240, 244, 228, 0.7)" }}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              letterSpacing: "1px",
+            }}>
+            <Typography
+              component={"span"}
+              variant="h6"
               color="secondary"
-              checked={isSelected}
-              onChange={onClick}
-              inputProps={{ "aria-label": "select" }}
-            />
-          )}
-          {totalCost && <CreditsCostContainer cost={totalCost} />}
-        </Box>
-      </Paper>
-    </ListItem>
-  );
-}
+              sx={{ ml: "10px" }}>
+              {name}
+            </Typography>
+            <Typography
+              component={"span"}
+              variant="body1"
+              color="secondary"
+              sx={{ ml: "10px", textTransform: "capitalize" }}>
+              {rang}
+            </Typography>
+            {isSelected !== undefined && onClick !== undefined && (
+              <Checkbox
+                sx={{ color: "rgba(240, 244, 228, 0.7)" }}
+                color="secondary"
+                checked={isSelected}
+                onChange={onClick}
+                inputProps={{ "aria-label": "select" }}
+              />
+            )}
+            {totalCost && <CreditsCostContainer cost={totalCost} />}
+          </Box>
+        </Paper>
+      </ListItem>
+    );
+  }
+);
 
 interface CreditsCostContainerProps {
   cost: number;

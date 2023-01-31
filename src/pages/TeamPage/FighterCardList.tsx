@@ -4,16 +4,16 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { TeamView } from "../../model/Dto/TeamView";
 
-import StatsTable from "./StatsTable";
-import FighterCard from "../../components/FighterCard/FighterCard";
-import WeaponsTable from "../../components/FighterCard/WeaponsTable";
-
-import FighterCardHeader from "../../components/FighterCard/FighterCardHeader";
 import {
   useSelectedFightersDispatch,
   useSelectedFightersState,
 } from "../../providers/SelectedFightersProvider";
-import { useEffect } from "react";
+import { FC, memo, useEffect, useMemo } from "react";
+import { FighterView } from "../../model/Types";
+import { StatsTable } from "./StatsTable";
+import { WeaponsTable } from "../../components/FighterCard/WeaponsTable";
+import { FighterCardHeader } from "../../components/FighterCard/FighterCardHeader";
+import { FighterCard } from "../../components/FighterCard/FighterCard";
 
 interface Props {
   teamView: TeamView | undefined;
@@ -38,103 +38,112 @@ export default function FighterCardList({ teamView }: Props) {
     }
   }, [teamView]);
 
-  const isFighterSelected = (index: number): boolean => {
+  const selectedFightersIds = useMemo(() => {
     return fightersSelectionInfo
-      .filter((f) => f.isSelected)
-      .map((f) => f.id)
-      .includes(index);
-  };
-
-  const onCardClick = (index: number): void => {
-    if (isFighterSelected(index)) {
-      selectedFightersReducer({ type: "delete", id: index });
-    } else {
-      selectedFightersReducer({ type: "select", id: index });
-    }
-  };
+      .filter((fighter) => fighter.isSelected)
+      .map((info) => info.id);
+  }, [fightersSelectionInfo]);
 
   return (
     <>
-      {teamView === undefined ? (
-        <></>
-      ) : (
-        [
-          ...fightersSelectionInfo
-            .filter((fighter) => fighter.isSelected)
-            .map(({ id }) =>
-              teamView.fighters.find((fighter) => fighter.id === id)
-            ),
-          ...fightersSelectionInfo
-            .filter((fighter) => !fighter.isSelected)
-            .map(({ id }) =>
-              teamView.fighters.find((fighter) => fighter.id === id)
-            ),
-        ].map(
-          (fighterView, index) =>
-            fighterView && (
-              <ListItem key={index}>
-                <FighterCard>
-                  <FighterCardHeader
-                    name={fighterView.name}
-                    rang={fighterView.rang}
-                    totalCost={fighterView.totalCost}
-                    isSelected={isFighterSelected(fighterView.id)}
-                    onClick={() => onCardClick(fighterView.id)}
-                  />
-                  <StatsTable
-                    characteristics={fighterView.totalCharacteristics}
-                    xp={fighterView.xp}
-                    lvl={fighterView.lvl}
-                  />
-                  <ListItem disablePadding sx={{ mb: "10px" }}>
-                    <WeaponsTable weapons={fighterView.weapons} />
-                  </ListItem>
-                  <ListItem disablePadding>
-                    <Grid container spacing={1}>
-                      <GridStroke
-                        name="EQUIPMENT"
-                        items={fighterView.equipment.map(
-                          (equipment) => equipment.name
-                        )}
-                      />
-                      <GridStroke
-                        name="SKILLS"
-                        items={fighterView.skills.map(
-                          (equipment) => equipment.name
-                        )}
-                      />
-                    </Grid>
-                  </ListItem>
-                  <RouterLink to="/fighter/1">
-                    <Box
-                      sx={{
-                        backgroundColor: "#343a40",
-                        position: "absolute",
-                        right: "-15px",
-                        bottom: "-15px",
-                        borderRadius: "50%",
-                        border: "2px solid #747474",
-                      }}>
-                      <Fab size="medium" aria-label="add">
-                        <EditIcon />
-                      </Fab>
-                    </Box>
-                  </RouterLink>
-                </FighterCard>
-              </ListItem>
-            )
-        )
-      )}
+      {fightersSelectionInfo.length &&
+        teamView &&
+        teamView.fighters
+          .filter((fighter) => selectedFightersIds.includes(fighter.id))
+          .map((fighterView) => (
+            <FighterCardItem
+              key={fighterView.id}
+              fighterView={fighterView}
+              isSelected={true}
+            />
+          ))}
+      {fightersSelectionInfo.length &&
+        teamView &&
+        teamView.fighters
+          .filter((fighter) => !selectedFightersIds.includes(fighter.id))
+          .map((fighterView) => (
+            <FighterCardItem
+              key={fighterView.id}
+              fighterView={fighterView}
+              isSelected={false}
+            />
+          ))}
     </>
   );
 }
+
+interface FighterCardItemProps {
+  fighterView: FighterView;
+  isSelected: boolean;
+}
+
+const FighterCardItem: FC<FighterCardItemProps> = memo(
+  ({ fighterView, isSelected }) => {
+    
+    const selectedFightersReducer = useSelectedFightersDispatch();
+
+    return (
+      <ListItem>
+        <FighterCard>
+          <FighterCardHeader
+            name={fighterView.name}
+            rang={fighterView.rang}
+            totalCost={fighterView.totalCost}
+            isSelected={isSelected}
+            onClick={() =>
+              selectedFightersReducer({
+                type: isSelected ? "delete" : "select",
+                id: fighterView.id,
+              })
+            }
+          />
+          <StatsTable
+            characteristics={fighterView.totalCharacteristics}
+            xp={fighterView.xp}
+            lvl={fighterView.lvl}
+          />
+          <ListItem disablePadding sx={{ mb: "10px" }}>
+            <WeaponsTable weapons={fighterView.weapons} />
+          </ListItem>
+          <ListItem disablePadding>
+            <Grid container spacing={1}>
+              <GridStroke
+                name="EQUIPMENT"
+                items={fighterView.equipment.map((equipment) => equipment.name)}
+              />
+              <GridStroke
+                name="SKILLS"
+                items={fighterView.skills.map((equipment) => equipment.name)}
+              />
+            </Grid>
+          </ListItem>
+          <RouterLink to="/fighter/1">
+            <Box
+              sx={{
+                backgroundColor: "#343a40",
+                position: "absolute",
+                right: "-15px",
+                bottom: "-15px",
+                borderRadius: "50%",
+                border: "2px solid #747474",
+              }}>
+              <Fab size="medium" aria-label="add">
+                <EditIcon />
+              </Fab>
+            </Box>
+          </RouterLink>
+        </FighterCard>
+      </ListItem>
+    );
+  }
+);
 
 interface GridStrokeProps {
   name: string;
   items: string[];
 }
 
-function GridStroke({ name, items }: GridStrokeProps) {
+const GridStroke: FC<GridStrokeProps> = memo(({ name, items }) => {
   return (
     <>
       {items.length > 0 ? (
@@ -155,4 +164,4 @@ function GridStroke({ name, items }: GridStrokeProps) {
       )}
     </>
   );
-}
+});

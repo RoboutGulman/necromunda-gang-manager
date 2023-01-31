@@ -10,19 +10,19 @@ import {
   Stack,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import FighterCard from "../../components/FighterCard/FighterCard";
 import NavigationList from "./NavigationList";
 import DetailedStatsTable from "./DetailedStatsTable";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { plainToClass } from "class-transformer";
 import fighterPageInfoExampleJson from "../../model/FakeData/FighterPageInfoExample.json";
-import FighterCardHeader from "../../components/FighterCard/FighterCardHeader";
 import cardBackground from "../../backgrounds/card_background.jpg";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
 import { FighterPageInfo } from "../../model/Dto/FighterPageInfo";
 import { Fighter } from "../../model/Dto/Fighter";
 import Dialogs, { FighterPageDialogType } from "./Dialogs/Dialogs";
+import { FighterCardHeader } from "../../components/FighterCard/FighterCardHeader";
+import { FighterCard } from "../../components/FighterCard/FighterCard";
 
 /*TODO:: 
 таблица адвансов

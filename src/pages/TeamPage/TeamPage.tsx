@@ -28,7 +28,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { FC, memo, useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
 import AddIcon from "@mui/icons-material/Add";
@@ -71,8 +71,7 @@ export type TeamPageDialogType =
   | "edit-gang-info"
   | "select-random-fighter";
 
-export default function TeamPage(props: TeamPageProps) {
-  const { window } = props;
+export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
   const mobileOpen = useDrawerState();
   const setMobileOpen = useDrawerDispatch();
   const selectedFightersCost = useSelectedFightersState().fighters.reduce(
@@ -159,13 +158,13 @@ export default function TeamPage(props: TeamPageProps) {
       </Box>
     </>
   );
-}
+});
 
 interface TeamMenuProps {
   teamInfo: TeamInfo | undefined;
 }
 
-function TeamMenu({ teamInfo }: TeamMenuProps) {
+const TeamMenu: FC<TeamMenuProps> = memo(({ teamInfo }) => {
   const [activeTab, setActiveTab] = React.useState(0);
 
   const [whichDialogIsOpen, setDialogOpen] =
@@ -317,7 +316,7 @@ function TeamMenu({ teamInfo }: TeamMenuProps) {
       )}
     </Box>
   );
-}
+});
 
 interface MenuTeamInfoProps {
   info: TeamInfo | undefined;

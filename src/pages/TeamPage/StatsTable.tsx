@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableRow,
 } from "@mui/material";
+import { FC, memo } from "react";
 import StatsTableHeader from "../../components/FighterCard/StatsTableHeader";
 import { StyledTable } from "../../components/FighterCard/StyledTable";
 import ItemsList from "../../components/ItemsList";
@@ -45,7 +46,7 @@ const CellWithNoBorder = styled(TableCell)(({ theme }) => ({
   borderWidth: 0,
 }));
 
-export default function StatsTable(props: StatsTableProps) {
+export const StatsTable: FC<StatsTableProps> = memo((props) => {
   return (
     <ListItem disablePadding>
       <TableContainer>
@@ -71,4 +72,4 @@ export default function StatsTable(props: StatsTableProps) {
       </TableContainer>
     </ListItem>
   );
-}
+});

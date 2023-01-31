@@ -7,6 +7,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { FC, memo } from "react";
 import { Weapon, WeaponProfile, WeaponUpgrade } from "../../model/Types";
 import ItemsList from "../ItemsList";
 import { StyledTable } from "./StyledTable";
@@ -15,7 +16,7 @@ interface WeaponsTableProps {
   weapons: Weapon[];
 }
 
-export default function WeaponsTable({ weapons }: WeaponsTableProps) {
+export const WeaponsTable: FC<WeaponsTableProps> = memo(({ weapons }) => {
   return (
     <TableContainer>
       <StyledTable size="small">
@@ -65,7 +66,7 @@ export default function WeaponsTable({ weapons }: WeaponsTableProps) {
       </StyledTable>
     </TableContainer>
   );
-}
+});
 
 interface WeaponInfoProps {
   weapon: Weapon;
