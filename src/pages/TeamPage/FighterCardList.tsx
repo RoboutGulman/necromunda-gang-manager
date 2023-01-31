@@ -1,10 +1,10 @@
 import {
   Box,
+  Button,
   Fab,
   Grid,
   List,
   ListItem,
-  Paper,
   Typography,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
@@ -22,6 +22,7 @@ import { StatsTable } from "./StatsTable";
 import { WeaponsTable } from "../../components/FighterCard/WeaponsTable";
 import { FighterCardHeader } from "../../components/FighterCard/FighterCardHeader";
 import { FighterCard } from "../../components/FighterCard/FighterCard";
+import cardBackground from "../../backgrounds/card_background.jpg";
 
 interface Props {
   teamView: TeamView | undefined;
@@ -59,16 +60,12 @@ export default function FighterCardList({ teamView }: Props) {
   return (
     <List>
       {selectedFightersIds.length && (
-        <ListItem sx={{ justifyContent: "center", maxWidth: 900 }}>
-          <Paper
-            sx={{ borderRadius: "10px", paddingX: "10px", paddingY: "4px" }}>
-            <Typography>
-              {selectedFightersIds.length} fighter
-              {selectedFightersIds.length > 1 ? "s" : ""} selected. Sum cost is
-              {" " + selectedFightersCost}
-            </Typography>
-          </Paper>
-        </ListItem>
+        <FighterCountButton
+          content={`${selectedFightersIds.length} fighter${
+            selectedFightersIds.length > 1 ? "s" : ""
+          } selected. Sum cost is ${selectedFightersCost}. Click to unselect all.`}
+          onClick={() => selectedFightersReducer({ type: "delete all" })}
+        />
       )}
       {fightersSelectionInfo.length &&
         teamView &&
@@ -84,12 +81,10 @@ export default function FighterCardList({ teamView }: Props) {
       {teamView &&
         selectedFightersIds.length &&
         selectedFightersIds.length < teamView.fighters.length && (
-          <ListItem sx={{ justifyContent: "center", maxWidth: 900 }}>
-            <Paper
-              sx={{ borderRadius: "10px", paddingX: "10px", paddingY: "4px" }}>
-              <Typography>Unselected fighters</Typography>
-            </Paper>
-          </ListItem>
+          <FighterCountButton
+            content="Unselected fighters. Click to unselect all."
+            onClick={() => selectedFightersReducer({ type: "delete all" })}
+          />
         )}
       {fightersSelectionInfo.length &&
         teamView &&
@@ -105,6 +100,36 @@ export default function FighterCardList({ teamView }: Props) {
     </List>
   );
 }
+
+interface FighterCountButtonProps {
+  content: string;
+  onClick: () => void;
+}
+
+const FighterCountButton: FC<FighterCountButtonProps> = ({
+  content,
+  onClick,
+}) => {
+  return (
+    <ListItem sx={{ justifyContent: "center", maxWidth: 900 }}>
+      <Button
+        onClick={onClick}
+        variant="outlined"
+        style={{ backgroundColor: "white", textTransform: "none" }}
+        sx={{
+          backgroundImage: `url('${cardBackground}')`,
+          backgroundRepeat: "repeat-y",
+          boxShadow:
+            "2px 2px 5px 3px rgb(0 0 0 / 50%), -2px -2px 5px 3px rgb(0 0 0 / 50%)",
+          borderRadius: "10px",
+          paddingX: "10px",
+          paddingY: "4px",
+        }}>
+        <Typography>{content}</Typography>
+      </Button>
+    </ListItem>
+  );
+};
 
 interface FighterCardItemProps {
   fighterView: FighterView;
