@@ -80,20 +80,23 @@ export default function MyGangsPreview() {
             <ItemsList
               items={MTPrewier}
               renderItem={(item, index) => (
-                <RouterLink key={index} to="/roster/1">
-                  <Box maxWidth={350} className={classes.gangPreviewContainer}>
+                <Box maxWidth={350} className={classes.gangPreviewContainer}>
+                  <RouterLink key={index} to="/roster/1">
                     <Box
                       className={classes.gangBackground}
                       sx={{
                         backgroundImage: `url('${item.background}')`,
                       }}></Box>
                     <Box className={classes.gangNameArea}>
-                      <Typography color="white" variant="h5">
+                      <Typography
+                        color="white"
+                        variant="h5"
+                        sx={{ userSelect: "none" }}>
                         {item.name}
                       </Typography>
                     </Box>
-                  </Box>
-                </RouterLink>
+                  </RouterLink>
+                </Box>
               )}
             />
           </List>
