@@ -7,6 +7,7 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import FighterPage from "./pages/FighterPage/FighterPage";
 import { getCurrentUser, useUserDispatch } from "./providers/UserProvider";
 import { SelectedFightersProvider } from "./providers/SelectedFightersProvider";
+import { DrawerControlProvider } from "./providers/DrawerControlProvider";
 
 export default function App() {
   const userDispatch = useUserDispatch();
@@ -26,9 +27,11 @@ export default function App() {
         <Route
           path="roster/:id"
           element={
-            <SelectedFightersProvider>
-              <TeamPage />
-            </SelectedFightersProvider>
+            <DrawerControlProvider>
+              <SelectedFightersProvider>
+                <TeamPage />
+              </SelectedFightersProvider>
+            </DrawerControlProvider>
           }
         />
         <Route path="fighter/:id" element={<FighterPage />} />

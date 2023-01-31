@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Drawer,
+  Fab,
   Grid,
   IconButton,
   List,
@@ -57,12 +58,18 @@ import { StyledTable } from "../../components/FighterCard/StyledTable";
 import ItemsList from "../../components/ItemsList";
 import CasinoIcon from "@mui/icons-material/Casino";
 import { useSelectedFightersState } from "../../providers/SelectedFightersProvider";
+import MenuIcon from "@mui/icons-material/Menu";
+import { blue } from "@mui/material/colors";
 
 interface TeamPageProps {
   window?: () => Window;
 }
 
-export type TeamPageDialogType = "none" | "add-fighter" | "edit-gang-info"| "select-random-fighter";
+export type TeamPageDialogType =
+  | "none"
+  | "add-fighter"
+  | "edit-gang-info"
+  | "select-random-fighter";
 
 export default function TeamPage(props: TeamPageProps) {
   const { window } = props;
@@ -87,10 +94,26 @@ export default function TeamPage(props: TeamPageProps) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} lg={8}>
-          <Box component="main">
+    <>
+      <Box
+        sx={{
+          position: "sticky",
+          top: "40px",
+          marginLeft: "0px",
+          zIndex: "20",
+          display: { lg: "none" },
+        }}>
+        <Fab
+          onClick={handleDrawerToggle}
+          color="secondary"
+          size="medium"
+          aria-label="add">
+          <MenuIcon />
+        </Fab>
+      </Box>
+      <Box sx={{ display: "flex" }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} lg={8}>
             <List>
               <ListItem>
                 <ListItemText>
@@ -101,40 +124,40 @@ export default function TeamPage(props: TeamPageProps) {
               </ListItem>
               <FighterCardList teamView={teamView} />
             </List>
-          </Box>
+          </Grid>
+          <Grid item xs={12} lg={4}>
+            <Paper
+              sx={{
+                display: { xs: "none", lg: "block" },
+                position: "sticky",
+                top: "15%",
+                marginRight: "15px",
+              }}>
+              <TeamMenu teamInfo={teamView?.info} />
+            </Paper>
+          </Grid>
         </Grid>
-        <Grid item xs={12} lg={4}>
-          <Paper
+        <Box component="nav" aria-label="team menu">
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen.isOpen}
+            onClose={handleDrawerToggle}
             sx={{
-              display: { xs: "none", lg: "block" },
-              position: "sticky",
-              top: "15%",
-              marginRight: "15px",
+              "& .MuiDrawer-paper": {
+                backgroundImage: `url('${cardBackground}')`,
+                width: { xs: "270px", sm: "350px", md: "450px", lg: "100%" },
+                maxWidth: "500px",
+              },
+            }}
+            ModalProps={{
+              keepMounted: true,
             }}>
             <TeamMenu teamInfo={teamView?.info} />
-          </Paper>
-        </Grid>
-      </Grid>
-      <Box component="nav" aria-label="team menu">
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen.isOpen}
-          onClose={handleDrawerToggle}
-          sx={{
-            "& .MuiDrawer-paper": {
-              backgroundImage: `url('${cardBackground}')`,
-              width: { xs: "270px", sm: "350px", md: "450px", lg: "100%" },
-              maxWidth: "500px",
-            },
-          }}
-          ModalProps={{
-            keepMounted: true,
-          }}>
-          <TeamMenu teamInfo={teamView?.info} />
-        </Drawer>
+          </Drawer>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 
@@ -265,9 +288,10 @@ function TeamMenu({ teamInfo }: TeamMenuProps) {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton onClick={()=>setDialogOpen("select-random-fighter")}>
+            <ListItemButton
+              onClick={() => setDialogOpen("select-random-fighter")}>
               <ListItemIcon>
-                <CasinoIcon/>
+                <CasinoIcon />
               </ListItemIcon>
               <ListItemText primary="Select random fighters" />
             </ListItemButton>

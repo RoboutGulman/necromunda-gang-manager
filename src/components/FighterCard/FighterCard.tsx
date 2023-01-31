@@ -35,8 +35,6 @@ const StyledCard = styled(Card)(() => ({
   boxShadow:
     "2px 2px 5px 3px rgb(0 0 0 / 50%), -2px -2px 5px 3px rgb(0 0 0 / 50%)",
   borderRadius: "15px",
-  border: "3px solid",
-
 }));
 
 const StyledList = styled(List)<{ component?: React.ElementType }>({
