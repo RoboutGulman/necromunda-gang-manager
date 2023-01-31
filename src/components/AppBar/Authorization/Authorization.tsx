@@ -31,7 +31,7 @@ const Authorization = () => {
         aria-label="login"
         color="secondary"
         onClick={() => setDialogOpen({ type: "open-login" })}>
-        <AccountCircleIcon />
+        <AccountCircleIcon fontSize="inherit" />
       </IconButton>
       <UserAuthorizationDialog variant="Login" />
       <UserAuthorizationDialog variant="Register" />
