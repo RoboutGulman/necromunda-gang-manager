@@ -57,9 +57,7 @@ import { Territory } from "../../model/Types";
 import { StyledTable } from "../../components/FighterCard/StyledTable";
 import ItemsList from "../../components/ItemsList";
 import CasinoIcon from "@mui/icons-material/Casino";
-import { useSelectedFightersState } from "../../providers/SelectedFightersProvider";
 import MenuIcon from "@mui/icons-material/Menu";
-import { blue } from "@mui/material/colors";
 
 interface TeamPageProps {
   window?: () => Window;
@@ -74,10 +72,6 @@ export type TeamPageDialogType =
 export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
   const mobileOpen = useDrawerState();
   const setMobileOpen = useDrawerDispatch();
-  const selectedFightersCost = useSelectedFightersState().fighters.reduce(
-    (partialSum, a) => partialSum + (a.isSelected ? a.cost : 0),
-    0
-  );
 
   const [teamView, setTeamView] = useState<TeamView>();
 
@@ -96,9 +90,8 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
     <>
       <Box
         sx={{
-          position: "sticky",
-          top: "40px",
-          marginLeft: "0px",
+          position: "absolute",
+          top: "90px",
           zIndex: "20",
           display: { lg: "none" },
         }}>
@@ -113,16 +106,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
       <Box sx={{ display: "flex" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} lg={8}>
-            <List>
-              <ListItem>
-                <ListItemText>
-                  <Typography sx={{ color: "white" }}>
-                    Total Cost {selectedFightersCost}
-                  </Typography>
-                </ListItemText>
-              </ListItem>
-              <FighterCardList teamView={teamView} />
-            </List>
+            <FighterCardList teamView={teamView} />
           </Grid>
           <Grid item xs={12} lg={4}>
             <Paper

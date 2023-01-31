@@ -1,4 +1,12 @@
-import { Box, Fab, Grid, ListItem, Typography } from "@mui/material";
+import {
+  Box,
+  Fab,
+  Grid,
+  List,
+  ListItem,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -22,6 +30,10 @@ interface Props {
 export default function FighterCardList({ teamView }: Props) {
   const fightersSelectionInfo = useSelectedFightersState().fighters;
   const selectedFightersReducer = useSelectedFightersDispatch();
+  const selectedFightersCost = fightersSelectionInfo.reduce(
+    (partialSum, a) => partialSum + (a.isSelected ? a.cost : 0),
+    0
+  );
 
   useEffect(() => {
     if (teamView !== undefined) {
@@ -45,7 +57,19 @@ export default function FighterCardList({ teamView }: Props) {
   }, [fightersSelectionInfo]);
 
   return (
-    <>
+    <List>
+      {selectedFightersIds.length && (
+        <ListItem sx={{ justifyContent: "center", maxWidth: 900 }}>
+          <Paper
+            sx={{ borderRadius: "10px", paddingX: "10px", paddingY: "4px" }}>
+            <Typography>
+              {selectedFightersIds.length} fighter
+              {selectedFightersIds.length > 1 ? "s" : ""} selected. Sum cost is
+              {" " + selectedFightersCost}
+            </Typography>
+          </Paper>
+        </ListItem>
+      )}
       {fightersSelectionInfo.length &&
         teamView &&
         teamView.fighters
@@ -57,6 +81,16 @@ export default function FighterCardList({ teamView }: Props) {
               isSelected={true}
             />
           ))}
+      {teamView &&
+        selectedFightersIds.length &&
+        selectedFightersIds.length < teamView.fighters.length && (
+          <ListItem sx={{ justifyContent: "center", maxWidth: 900 }}>
+            <Paper
+              sx={{ borderRadius: "10px", paddingX: "10px", paddingY: "4px" }}>
+              <Typography>Unselected fighters</Typography>
+            </Paper>
+          </ListItem>
+        )}
       {fightersSelectionInfo.length &&
         teamView &&
         teamView.fighters
@@ -68,7 +102,7 @@ export default function FighterCardList({ teamView }: Props) {
               isSelected={false}
             />
           ))}
-    </>
+    </List>
   );
 }
 
@@ -79,7 +113,6 @@ interface FighterCardItemProps {
 
 const FighterCardItem: FC<FighterCardItemProps> = memo(
   ({ fighterView, isSelected }) => {
-    
     const selectedFightersReducer = useSelectedFightersDispatch();
 
     return (
