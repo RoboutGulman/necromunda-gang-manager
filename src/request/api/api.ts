@@ -1,3 +1,4 @@
+import { getAllFactions } from "./faction/getAllFactions";
 import { getCurrentUser } from "./user/getCurrentUser";
 import { login } from "./user/login";
 import { logout } from "./user/logout";
@@ -8,4 +9,5 @@ export const Api = {
   login: login,
   logout: logout,
   register: register,
+  getAllFactions: getAllFactions,
 };
