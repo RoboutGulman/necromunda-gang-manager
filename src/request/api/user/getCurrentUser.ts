@@ -19,9 +19,10 @@ export async function getCurrentUser(): Promise<AuthorizeResult> {
     user:
       response.data["authorized"] === true
         ? {
-            id: response.data["id"],
-            name: response.data["username"],
-            registrationDate: response.data["registration_date"]["date"],
+            id: response.data["user"]["id"],
+            name: response.data["user"]["username"],
+            registrationDate:
+              response.data["user"]["registration_date"]["date"],
           }
         : undefined,
   };
