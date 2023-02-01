@@ -5,7 +5,8 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  Table,
+  Stack,
+  styled,
   TableBody,
   TableCell,
   TableHead,
@@ -18,8 +19,9 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Category, Market } from "../../../model/Dto/MarketDto";
 import marketJson from "../../../model/FakeData/TradingPostExample.json";
 import { plainToClass } from "class-transformer";
-import { blue } from "@mui/material/colors";
+import { blue, grey } from "@mui/material/colors";
 import ItemsList from "../../../components/ItemsList";
+import { StyledTable } from "../../../components/FighterCard/StyledTable";
 
 export interface MarketDialogProps {
   open: boolean;
@@ -49,8 +51,8 @@ export default function MarketDialog({ onClose, open }: MarketDialogProps) {
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
-                  <TableCell>Cost</TableCell>
-                  <TableCell>Rarity</TableCell>
+                  <TableCell align="center">Cost</TableCell>
+                  <TableCell align="center">Rarity</TableCell>
                   <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
@@ -69,13 +71,22 @@ export default function MarketDialog({ onClose, open }: MarketDialogProps) {
   );
 }
 
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
+
 interface MarketTableProps {
   children: React.ReactNode;
 }
 
 function MarketTable({ children }: MarketTableProps) {
   return (
-    <Table>
+    <StyledTable size="small">
       <colgroup>
         <col style={{ width: "40%" }} />
         <col style={{ width: "15%" }} />
@@ -83,7 +94,7 @@ function MarketTable({ children }: MarketTableProps) {
         <col style={{ width: "30%" }} />
       </colgroup>
       {children}
-    </Table>
+    </StyledTable>
   );
 }
 
@@ -97,13 +108,12 @@ function CategoryTable({ category }: CategoryTableProps) {
     <>
       <MarketTable>
         <TableBody>
-          <TableRow sx={{ backgroundColor: blue[200] }}>
+          <TableRow
+            onClick={() => setOpen(!isOpen)}
+            sx={{ backgroundColor: blue[200], cursor: "pointer" }}>
             <TableCell colSpan={3}>{category.name}</TableCell>
             <TableCell>
-              <IconButton
-                onClick={() => setOpen(!isOpen)}
-                aria-label="expand"
-                size="small">
+              <IconButton aria-label="expand" size="small">
                 {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
               </IconButton>
             </TableCell>
@@ -116,12 +126,37 @@ function CategoryTable({ category }: CategoryTableProps) {
             <ItemsList
               items={category.items}
               renderItem={(item, index) => (
-                <TableRow key={index}>
+                <StyledTableRow key={index}>
                   <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.cost}</TableCell>
-                  <TableCell>{item.rarity ?? "common"}</TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
+                  <TableCell align="center">{item.cost}</TableCell>
+                  <TableCell align="center">
+                    {item.rarity ?? "common"}
+                  </TableCell>
+                  <TableCell>
+                    <Stack direction="row" spacing={2}>
+                      <Button
+                        style={{ backgroundColor: "rgba(200, 200, 200, 0.8)" }}
+                        size="small"
+                        variant="contained"
+                        sx={{
+                          textTransform: "none",
+                          color: "rgba(0, 0, 0, 0.87)",
+                        }}>
+                        add
+                      </Button>
+                      <Button
+                        style={{ backgroundColor: "rgba(200, 200, 200, 0.8)" }}
+                        size="small"
+                        variant="contained"
+                        sx={{
+                          textTransform: "none",
+                          color: "rgba(0, 0, 0, 0.87)",
+                        }}>
+                        buy
+                      </Button>
+                    </Stack>
+                  </TableCell>
+                </StyledTableRow>
               )}
             />
           </TableBody>
