@@ -1,5 +1,6 @@
 import { getAllFactions } from "./faction/getAllFactions";
 import { getCurrentUser } from "./user/getCurrentUser";
+import { getUserTeams } from "./user/getUserTeams";
 import { login } from "./user/login";
 import { logout } from "./user/logout";
 import { register } from "./user/register";
@@ -10,4 +11,5 @@ export const Api = {
   logout: logout,
   register: register,
   getAllFactions: getAllFactions,
+  getUserTeams: getUserTeams,
 };

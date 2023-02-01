@@ -1,5 +1,5 @@
-import { Box, Button, Container, List, Stack, Typography } from "@mui/material";
-import React from "react";
+import { Box, Button, CircularProgress, Container, List, Stack, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import LockIcon from "@mui/icons-material/Lock";
 import { MyTeamPreviewExample } from "../../model/FakeData/FakeData";
@@ -9,6 +9,8 @@ import { useUserState } from "../../providers/UserProvider";
 import { useAuthDialogsDispatch } from "../../providers/AuthDialogsProvider";
 import { makeStyles } from "@material-ui/styles";
 import ItemsList from "../../components/ItemsList";
+import { GetUserTeamsResult } from "../../request/api/user/getUserTeams";
+import { Api } from "../../request/api/api";
 
 const MTPrewier = MyTeamPreviewExample.map((prewiew, index) => {
   return {
@@ -50,6 +52,15 @@ export default function MyGangsPreview() {
     React.useState(false);
   const user = useUserState();
   const setLoginDialogOpen = useAuthDialogsDispatch();
+  const currentUserData = useUserState().user;
+  const [userTeams, setUserTeams] = useState<GetUserTeamsResult | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    currentUserData &&
+      Api.getUserTeams(currentUserData.id).then((teams) => setUserTeams(teams));
+  }, [currentUserData]);
 
   return (
     <Container>
@@ -76,33 +87,38 @@ export default function MyGangsPreview() {
             color="secondary">
             Create new roster
           </Button>
-          <List sx={{ padding: 0, width: "100%" }}>
-            <ItemsList
-              items={MTPrewier}
-              renderItem={(item, index) => (
-                <Box
-                  key={index}
-                  maxWidth={350}
-                  className={classes.gangPreviewContainer}>
-                  <RouterLink to="/roster/1">
-                    <Box
-                      className={classes.gangBackground}
-                      sx={{
-                        backgroundImage: `url('${item.background}')`,
-                      }}></Box>
-                    <Box className={classes.gangNameArea}>
-                      <Typography
-                        color="white"
-                        variant="h5"
-                        sx={{ userSelect: "none" }}>
-                        {item.name}
-                      </Typography>
-                    </Box>
-                  </RouterLink>
-                </Box>
-              )}
-            />
-          </List>
+          {!userTeams ? (
+            <CircularProgress />
+          ) : (
+            <List sx={{ padding: 0, width: "100%" }}>
+              <ItemsList
+                items={userTeams}
+                renderItem={(item, index) => (
+                  <Box
+                    key={index}
+                    maxWidth={350}
+                    className={classes.gangPreviewContainer}>
+                    <RouterLink to="/roster/1">
+                      <Box
+                        className={classes.gangBackground}
+                        sx={{
+                          backgroundImage: `url('${item.imageUrl}')`,
+                        }}></Box>
+                      <Box className={classes.gangNameArea}>
+                        <Typography
+                          color="white"
+                          variant="h5"
+                          sx={{ userSelect: "none" }}>
+                          {item.name}
+                        </Typography>
+                      </Box>
+                    </RouterLink>
+                  </Box>
+                )}
+              />
+            </List>
+          )}
+
           <CreateGangDialog
             open={isCreateGangDialogOpen}
             setOpen={setCreateGangDialogOpen}
