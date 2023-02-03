@@ -23,6 +23,7 @@ import { useEffect } from "react";
 import { Api } from "../../request/api/api";
 import { useUserState } from "../../providers/UserProvider";
 import { blue } from "@mui/material/colors";
+import { useFieldChange } from "../../userHooks/useFieldChange";
 
 interface State {
   name: string;
@@ -46,6 +47,7 @@ export default function CreateGangDialog({
     factionId: "1",
     startCredits: 1200,
   });
+  const handleChange = useFieldChange(gangInfo, setGangInfo);
   const [loading, setLoading] = React.useState(false);
   const [inputError, setInputError] = React.useState<
     false | "name" | "startCredits" | "server" | "other"
@@ -77,14 +79,6 @@ export default function CreateGangDialog({
 
     return true;
   };
-
-  const handleChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setGangInfo({
-        ...gangInfo,
-        [prop]: event.target.value,
-      });
-    };
 
   const handleClose = () => {
     setOpen(false);

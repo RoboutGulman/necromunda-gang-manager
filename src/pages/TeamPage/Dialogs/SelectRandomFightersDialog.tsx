@@ -15,6 +15,7 @@ import {
   useSelectedFightersState,
   useSelectedFightersDispatch,
 } from "../../../providers/SelectedFightersProvider";
+import { useFieldChange } from "../../../userHooks/useFieldChange";
 
 interface State {
   numberOfFighters: number;
@@ -35,6 +36,7 @@ export default function SelectRandomFightersDialog({
     onlySelectedFighters: false,
   });
   const [inputError, setInputError] = React.useState(false);
+  const handleChange = useFieldChange(info, setInfo);
   const fightersSelectionInfo = useSelectedFightersState().fighters;
   const selectedFightersReducer = useSelectedFightersDispatch();
 
@@ -79,14 +81,6 @@ export default function SelectRandomFightersDialog({
     }
   };
 
-  const handleChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setInfo({
-        ...info,
-        [prop]: event.target.value,
-      });
-    };
-
   const onCheckboxClick = () => {
     setInfo({
       ...info,
@@ -94,12 +88,8 @@ export default function SelectRandomFightersDialog({
     });
   };
 
-  const handleClose = () => {
-    onClose();
-  };
-
   return (
-    <UserDialog handleClose={handleClose} open={open}>
+    <UserDialog handleClose={onClose} open={open}>
       <DialogTitle>Select random fighters</DialogTitle>
       <DialogContent
         sx={{
@@ -130,7 +120,7 @@ export default function SelectRandomFightersDialog({
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Back</Button>
+        <Button onClick={onClose}>Back</Button>
         <Button onClick={handleSelect}>Select</Button>
       </DialogActions>
     </UserDialog>

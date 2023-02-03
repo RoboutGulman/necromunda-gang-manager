@@ -19,13 +19,17 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import UserDialog from "../../UserDialog";
-import { getCurrentUser, useUserDispatch } from "../../../providers/UserProvider";
+import {
+  getCurrentUser,
+  useUserDispatch,
+} from "../../../providers/UserProvider";
 import { blue } from "@mui/material/colors";
 import { Api } from "../../../request/api/api";
 import {
   useAuthDialogsDispatch,
   useAuthDialogsState,
 } from "../../../providers/AuthDialogsProvider";
+import { useFieldChange } from "../../../userHooks/useFieldChange";
 
 interface State {
   nickname: string;
@@ -45,6 +49,7 @@ export default function UserAuthorizationDialog({
     password: "",
     showPassword: false,
   });
+  const onChange = useFieldChange(userInfo, setUserInfo);
 
   const [inputError, setInputError] = React.useState<{
     isError: boolean;
@@ -56,14 +61,6 @@ export default function UserAuthorizationDialog({
 
   const open = useAuthDialogsState().whichDialogIsOpen === variant;
   const setOpen = useAuthDialogsDispatch();
-
-  const onChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setUserInfo({
-        ...userInfo,
-        [prop]: event.target.value,
-      });
-    };
 
   const clickShowPassword = () => {
     setUserInfo({

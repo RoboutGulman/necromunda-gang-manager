@@ -14,6 +14,7 @@ import {
 import React from "react";
 import CheckboxWithText from "../../../components/CheckboxWithText";
 import UserDialog from "../../../components/UserDialog";
+import { useFieldChange } from "../../../userHooks/useFieldChange";
 
 interface State {
   name: string;
@@ -39,6 +40,7 @@ export default function AddFighterDialog({
     fighterTypeId: "1",
     purchaseWithCredits: true,
   });
+  const handleChange = useFieldChange(fighterInfo, setFighterInfo);
   const [inputError, setInputError] = React.useState(false);
 
   const fighterInfoIsCorrect = () => {
@@ -56,14 +58,6 @@ export default function AddFighterDialog({
     }
   };
 
-  const handleChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setFighterInfo({
-        ...fighterInfo,
-        [prop]: event.target.value,
-      });
-    };
-
   const handleTypeChange =
     (prop: keyof State) => (event: SelectChangeEvent) => {
       setFighterInfo({
@@ -71,11 +65,6 @@ export default function AddFighterDialog({
         [prop]: event.target.value as string,
       });
     };
-
-
-  const handleClose = () => {
-    onClose();
-  };
 
   const fighterTypes = [
     { id: "1", name: "leader", cost: "100" },
@@ -91,7 +80,7 @@ export default function AddFighterDialog({
   ));
 
   return (
-    <UserDialog handleClose={handleClose} open={open}>
+    <UserDialog handleClose={onClose} open={open}>
       <DialogTitle>Add new fighter to your gang</DialogTitle>
       <DialogContent sx={{ minHeight: "200px" }}>
         <Stack spacing={2}>
@@ -105,10 +94,13 @@ export default function AddFighterDialog({
           />
           <CheckboxWithText
             checked={fighterInfo.showOnlyFactionFighterTypes}
-            onChange={() =>  setFighterInfo({
-              ...fighterInfo,
-              showOnlyFactionFighterTypes: !fighterInfo.showOnlyFactionFighterTypes,
-            })}
+            onChange={() =>
+              setFighterInfo({
+                ...fighterInfo,
+                showOnlyFactionFighterTypes:
+                  !fighterInfo.showOnlyFactionFighterTypes,
+              })
+            }
             text="Show only faction fighters?"
           />
           <FormControl variant="filled" sx={{ mt: 2, minWidth: 120 }}>
@@ -127,16 +119,18 @@ export default function AddFighterDialog({
           </FormControl>
           <CheckboxWithText
             checked={fighterInfo.purchaseWithCredits}
-            onChange={() => setFighterInfo({
-              ...fighterInfo,
-              purchaseWithCredits: !fighterInfo.purchaseWithCredits,
-            })}
+            onChange={() =>
+              setFighterInfo({
+                ...fighterInfo,
+                purchaseWithCredits: !fighterInfo.purchaseWithCredits,
+              })
+            }
             text="Purchase with credits?"
           />
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Back</Button>
+        <Button onClick={onClose}>Back</Button>
         <Button onClick={handleAdd}>Add</Button>
       </DialogActions>
     </UserDialog>

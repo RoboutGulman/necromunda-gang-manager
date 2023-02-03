@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import UserDialog from "../../../components/UserDialog";
+import { useFieldChange } from "../../../userHooks/useFieldChange";
 
 interface State {
   name: string;
@@ -31,6 +32,7 @@ export default function EditTeamInfoDialog({
   open,
 }: EditTeamInfoDialogProps) {
   const [teamInfo, setTeamInfo] = React.useState<State>(initState);
+  const handleChange = useFieldChange(teamInfo, setTeamInfo);
   const [inputError, setInputError] = React.useState(false);
 
   const fighterInfoIsCorrect = () => {
@@ -48,20 +50,8 @@ export default function EditTeamInfoDialog({
     }
   };
 
-  const handleChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setTeamInfo({
-        ...teamInfo,
-        [prop]: event.target.value,
-      });
-    };
-
-  const handleClose = () => {
-    onClose();
-  };
-
   return (
-    <UserDialog handleClose={handleClose} open={open}>
+    <UserDialog handleClose={onClose} open={open}>
       <DialogTitle>Add new fighter to your gang</DialogTitle>
       <DialogContent sx={{ minHeight: "200px" }}>
         <Stack spacing={2}>
@@ -115,7 +105,7 @@ export default function EditTeamInfoDialog({
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Back</Button>
+        <Button onClick={onClose}>Back</Button>
         <Button onClick={handleAdd}>Save</Button>
       </DialogActions>
     </UserDialog>
