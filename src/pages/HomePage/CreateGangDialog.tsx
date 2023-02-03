@@ -13,12 +13,16 @@ import {
   MenuItem,
   SelectChangeEvent,
   CircularProgress,
+  Typography,
+  Alert,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import UserDialog from "../../components/UserDialog";
 import { GetAllFactionsResult } from "../../request/api/faction/getAllFactions";
 import { useEffect } from "react";
 import { Api } from "../../request/api/api";
+import { useUserState } from "../../providers/UserProvider";
+import { blue } from "@mui/material/colors";
 
 interface State {
   name: string;
@@ -36,13 +40,17 @@ export default function CreateGangDialog({
   setOpen,
 }: CreateGangDialogProps) {
   const navigate = useNavigate();
+  const currentUserId = useUserState().user?.id;
   const [gangInfo, setGangInfo] = React.useState<State>({
     name: "",
     factionId: "1",
     startCredits: 1200,
   });
+  const [loading, setLoading] = React.useState(false);
+  const [inputError, setInputError] = React.useState<
+    false | "name" | "startCredits" | "server" | "other"
+  >(false);
 
-  const [inputError, setInputError] = React.useState(false);
   const [factions, setFactions] = React.useState<
     GetAllFactionsResult | undefined
   >(undefined);
@@ -52,12 +60,22 @@ export default function CreateGangDialog({
   }, []);
 
   const gangInfoIsCorrect = () => {
-    let result = gangInfo.name !== "";
-    if (!result) {
-      setInputError(true);
+    if (gangInfo.name.length === 0) {
+      setInputError("name");
+      return false;
     }
 
-    return result;
+    if (!gangInfo.startCredits || isNaN(+gangInfo.startCredits)) {
+      setInputError("startCredits");
+      return false;
+    }
+
+    if (isNaN(+gangInfo.factionId) || currentUserId == undefined) {
+      setInputError("other");
+      return false;
+    }
+
+    return true;
   };
 
   const handleChange =
@@ -72,10 +90,25 @@ export default function CreateGangDialog({
     setOpen(false);
   };
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (gangInfoIsCorrect()) {
-      setOpen(false);
-      navigate("/roster/1");
+      setLoading(true);
+
+      let createTeamResult = await Api.createTeam({
+        name: gangInfo.name,
+        startingCredits: +gangInfo.startCredits,
+        factionId: +gangInfo.factionId,
+        userId: +currentUserId!,
+      });
+
+      setLoading(false);
+
+      if (createTeamResult.isSuccess) {
+        setOpen(false);
+        navigate(`/roster/${createTeamResult.createdTeamId}`);
+      } else {
+        setInputError("server");
+      }
     }
   };
 
@@ -89,14 +122,27 @@ export default function CreateGangDialog({
 
   return (
     <UserDialog open={open} handleClose={handleClose}>
-      <DialogTitle>{"Create new gang"}</DialogTitle>
+      <DialogTitle>
+        <Stack direction="row" alignItems="center">
+          <Typography>Create new gang</Typography>
+          {loading && (
+            <CircularProgress
+              size={24}
+              sx={{
+                color: blue[500],
+                marginLeft: "12px",
+              }}
+            />
+          )}
+        </Stack>
+      </DialogTitle>
       <DialogContent>
         {!factions ? (
           <CircularProgress />
         ) : (
           <Stack spacing={2}>
             <TextField
-              error={inputError}
+              error={inputError === "name"}
               value={gangInfo.name}
               onChange={handleChange("name")}
               id="filled-basic"
@@ -131,11 +177,18 @@ export default function CreateGangDialog({
               </InputLabel>
               <FilledInput
                 value={gangInfo.startCredits}
+                error={inputError === "startCredits"}
                 type="number"
                 onChange={handleChange("startCredits")}
                 id="filled-basic"
               />
             </FormControl>
+            {inputError === "server" && (
+              <Alert severity="error">Server error</Alert>
+            )}
+            {inputError === "other" && (
+              <Alert severity="error">Unhandled error</Alert>
+            )}
           </Stack>
         )}
       </DialogContent>

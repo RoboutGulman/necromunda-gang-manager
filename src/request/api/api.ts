@@ -1,4 +1,5 @@
 import { getAllFactions } from "./faction/getAllFactions";
+import { createTeam } from "./team/createTeam";
 import { getCurrentUser } from "./user/getCurrentUser";
 import { getUserTeams } from "./user/getUserTeams";
 import { login } from "./user/login";
@@ -12,4 +13,5 @@ export const Api = {
   register: register,
   getAllFactions: getAllFactions,
   getUserTeams: getUserTeams,
+  createTeam: createTeam,
 };

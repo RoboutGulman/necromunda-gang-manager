@@ -1,9 +1,15 @@
-import { Box, Button, CircularProgress, Container, List, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  List,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import LockIcon from "@mui/icons-material/Lock";
-import { MyTeamPreviewExample } from "../../model/FakeData/FakeData";
-import { getRosterBackground } from "../../backgrounds/RosterPreview/GetRosterBackground";
 import CreateGangDialog from "./CreateGangDialog";
 import { useUserState } from "../../providers/UserProvider";
 import { useAuthDialogsDispatch } from "../../providers/AuthDialogsProvider";
@@ -11,13 +17,6 @@ import { makeStyles } from "@material-ui/styles";
 import ItemsList from "../../components/ItemsList";
 import { GetUserTeamsResult } from "../../request/api/user/getUserTeams";
 import { Api } from "../../request/api/api";
-
-const MTPrewier = MyTeamPreviewExample.map((prewiew, index) => {
-  return {
-    name: prewiew.name,
-    background: getRosterBackground(prewiew.faction),
-  };
-});
 
 const useStyles = makeStyles({
   gangPreviewContainer: {
@@ -88,7 +87,7 @@ export default function MyGangsPreview() {
             Create new roster
           </Button>
           {!userTeams ? (
-            <CircularProgress />
+            <CircularProgress color="secondary" />
           ) : (
             <List sx={{ padding: 0, width: "100%" }}>
               <ItemsList
