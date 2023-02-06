@@ -17,6 +17,7 @@ import { makeStyles } from "@material-ui/styles";
 import ItemsList from "../../components/ItemsList";
 import { GetUserTeamsResult } from "../../request/api/user/getUserTeams";
 import { Api } from "../../request/api/api";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles({
   gangPreviewContainer: {
@@ -46,6 +47,7 @@ const useStyles = makeStyles({
 });
 
 export default function MyGangsPreview() {
+  const { t } = useTranslation();
   const classes = useStyles();
   const [isCreateGangDialogOpen, setCreateGangDialogOpen] =
     React.useState(false);
@@ -69,7 +71,7 @@ export default function MyGangsPreview() {
         variant="h5"
         color="secondary"
         gutterBottom>
-        MY GANGS
+        {t("myGangs", {ns: ['home']})}
       </Typography>
 
       {user.authorized ? (
