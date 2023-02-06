@@ -17,18 +17,18 @@ export class Characteristics {
   }
 
   add(value: Characteristics): void {
-    if (value.m != undefined) this.m += value.m;
-    if (value.ws != undefined) this.ws += value.ws;
-    if (value.bs != undefined) this.bs += value.bs;
-    if (value.s != undefined) this.s += value.s;
-    if (value.t != undefined) this.t += value.t;
-    if (value.w != undefined) this.w += value.w;
-    if (value.i != undefined) this.i += value.i;
-    if (value.a != undefined) this.a += value.a;
-    if (value.ld != undefined) this.ld += value.ld;
-    if (value.cl != undefined) this.cl += value.cl;
-    if (value.wp != undefined) this.wp += value.wp;
-    if (value.int != undefined) this.int += value.int;
+    if (value.m !== undefined) this.m += value.m;
+    if (value.ws !== undefined) this.ws += value.ws;
+    if (value.bs !== undefined) this.bs += value.bs;
+    if (value.s !== undefined) this.s += value.s;
+    if (value.t !== undefined) this.t += value.t;
+    if (value.w !== undefined) this.w += value.w;
+    if (value.i !== undefined) this.i += value.i;
+    if (value.a !== undefined) this.a += value.a;
+    if (value.ld !== undefined) this.ld += value.ld;
+    if (value.cl !== undefined) this.cl += value.cl;
+    if (value.wp !== undefined) this.wp += value.wp;
+    if (value.int !== undefined) this.int += value.int;
   }
 }
 

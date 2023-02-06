@@ -1,5 +1,4 @@
 import React from "react";
-import { TeamInfo } from "../../../model/Dto/TeamView";
 import MarketDialog from "./MarketDialog";
 
 interface DialogsProps {

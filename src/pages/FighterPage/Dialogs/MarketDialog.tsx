@@ -19,7 +19,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Category, Market } from "../../../model/Dto/MarketDto";
 import marketJson from "../../../model/FakeData/TradingPostExample.json";
 import { plainToClass } from "class-transformer";
-import { blue, grey } from "@mui/material/colors";
+import { blue } from "@mui/material/colors";
 import ItemsList from "../../../components/ItemsList";
 import { StyledTable } from "../../../components/FighterCard/StyledTable";
 

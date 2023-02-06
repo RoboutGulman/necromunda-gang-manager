@@ -37,8 +37,8 @@ export function GetCharacteristicView(
     chars.wp + "+",
     chars.int + "+",
   ];
-  if (xp != undefined) result.push(xp + "");
-  if (lvl != undefined) result.push(lvl + "");
+  if (xp !== undefined) result.push(xp + "");
+  if (lvl !== undefined) result.push(lvl + "");
   return result;
 }
 
