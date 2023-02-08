@@ -1,3 +1,8 @@
 {
-    "myGangs": "МОИ БАНДЫ"
+    "myGangs": "МОИ БАНДЫ",
+    "createRoster": "Создать новый ростер",
+    "loginOrRegister": "Войдите в аккаунт, чтобы создать ростер",
+    "loginOrRegisterButton": "Войти в аккаунт \\ Зарегистрироваться",
+    "recentGangsTitle": "Последние обновлённые банды",
+    "recentGangsCounting": "всего загружено {{number}} банд"
 }

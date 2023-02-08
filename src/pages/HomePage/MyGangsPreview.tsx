@@ -71,7 +71,7 @@ export default function MyGangsPreview() {
         variant="h5"
         color="secondary"
         gutterBottom>
-        {t("myGangs", {ns: ['home']})}
+        {t("myGangs", { ns: ["home"] })}
       </Typography>
 
       {user.authorized ? (
@@ -86,7 +86,7 @@ export default function MyGangsPreview() {
             sx={{ mb: "5px" }}
             variant="text"
             color="secondary">
-            Create new roster
+            {t("createRoster", { ns: ["home"] })}
           </Button>
           {!userTeams ? (
             <CircularProgress color="secondary" />
@@ -128,7 +128,7 @@ export default function MyGangsPreview() {
       ) : (
         <Box sx={{ margin: "auto", mb: "10px" }}>
           <Typography align="center" variant="body1" color="white" gutterBottom>
-            Login or Register to create roster
+            {t("loginOrRegister", { ns: ["home"] })}
           </Typography>
           <Stack>
             <Button
@@ -136,7 +136,7 @@ export default function MyGangsPreview() {
               color="secondary"
               onClick={() => setLoginDialogOpen({ type: "open-login" })}
               startIcon={<LockIcon />}>
-              Login \ Register
+              {t("loginOrRegisterButton", { ns: ["home"] })}
             </Button>
           </Stack>
         </Box>

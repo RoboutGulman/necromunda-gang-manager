@@ -16,8 +16,10 @@ import { RecentTeam, RecentTeams } from "../../model/Dto/ResentTeams";
 import resentTeamsJson from "../../model/FakeData/ResentTeams.json";
 import { plainToClass } from "class-transformer";
 import ItemsList from "../../components/ItemsList";
+import { useTranslation } from "react-i18next";
 
 export default function ResentGangs() {
+  const { t } = useTranslation();
   const [resentTeams, setResentTeams] = useState<RecentTeams>();
 
   useEffect(() => {
@@ -34,10 +36,13 @@ export default function ResentGangs() {
         variant="h5"
         color="secondary"
         gutterBottom>
-        RECENT COMMUNITY GANGS
+        {t("recentGangsTitle", { ns: ["home"] })}
       </Typography>
       <Typography align="center" variant="body1" color="white" gutterBottom>
-        {`${resentTeams?.totalTeamsNumber} gangs and counting...`}
+        {t("recentGangsCounting", {
+          number: `${resentTeams?.totalTeamsNumber}`,
+          ns: ["home"],
+        })}
       </Typography>
       <Box
         sx={{

@@ -1,3 +1,8 @@
 {
-    "myGangs": "MY GANGS"
+    "myGangs": "MY GANGS",
+    "createRoster": "Create new roster",
+    "loginOrRegister": "Login or Register to create roster",
+    "loginOrRegisterButton": "Login \\ Register",
+    "recentGangsTitle": "RECENT COMMUNITY GANGS",
+    "recentGangsCounting": "{{number}} gangs and counting..."
 }
