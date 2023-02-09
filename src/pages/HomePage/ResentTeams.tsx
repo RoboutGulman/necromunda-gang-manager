@@ -94,6 +94,7 @@ const getDate = (date: Date): string => {
 };
 
 function gangPrewiew(index: number, item: RecentTeam) {
+  const { t } = useTranslation();
   const date = new Date(item.lastEditTime * 1000);
   return (
     <Box key={index}>
@@ -126,7 +127,10 @@ function gangPrewiew(index: number, item: RecentTeam) {
           />
           <GridItemWithTypography
             xs={3}
-            content={`Rating ${item.rating}`}
+            content={t("rating", {
+              number: `${item.rating}`,
+              ns: ["home"],
+            })}
             color="white"
           />
           <GridItemWithTypography

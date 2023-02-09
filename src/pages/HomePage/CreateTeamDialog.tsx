@@ -24,6 +24,7 @@ import { Api } from "../../request/api/api";
 import { useUserState } from "../../providers/UserProvider";
 import { blue } from "@mui/material/colors";
 import { useFieldChange } from "../../userHooks/useFieldChange";
+import { useTranslation } from "react-i18next";
 
 interface State {
   name: string;
@@ -40,6 +41,7 @@ export default function CreateTeamDialog({
   open,
   setOpen,
 }: CreateTeamDialogProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const currentUserId = useUserState().user?.id;
   const [teamInfo, setTeamInfo] = React.useState<State>({
@@ -118,7 +120,7 @@ export default function CreateTeamDialog({
     <UserDialog open={open} handleClose={handleClose}>
       <DialogTitle>
         <Stack direction="row" alignItems="center">
-          <Typography>Create new gang</Typography>
+          <Typography>{t("createRoster", { ns: ["home"] })}</Typography>
           {loading && (
             <CircularProgress
               size={24}
@@ -140,11 +142,13 @@ export default function CreateTeamDialog({
               value={teamInfo.name}
               onChange={handleChange("name")}
               id="filled-basic"
-              label="name"
+              label= {t("createGangDialog.name", { ns: ["home"] })}
               variant="filled"
             />
             <FormControl variant="filled" sx={{ mt: 2, minWidth: 120 }}>
-              <InputLabel>Faction</InputLabel>
+              <InputLabel>
+                {t("createGangDialog.faction", { ns: ["home"] })}
+              </InputLabel>
               <Select
                 autoFocus
                 value={teamInfo.factionId.toString()}
@@ -167,7 +171,7 @@ export default function CreateTeamDialog({
               }}
               variant="filled">
               <InputLabel htmlFor="filled-adornment-password">
-                Start credits
+                {t("createGangDialog.startCredits", { ns: ["home"] })}
               </InputLabel>
               <FilledInput
                 value={teamInfo.startCredits}
@@ -178,17 +182,25 @@ export default function CreateTeamDialog({
               />
             </FormControl>
             {inputError === "server" && (
-              <Alert severity="error">Server error</Alert>
+              <Alert severity="error">
+                {t("createGangDialog.serverError", { ns: ["home"] })}
+              </Alert>
             )}
             {inputError === "other" && (
-              <Alert severity="error">Unhandled error</Alert>
+              <Alert severity="error">
+                {t("createGangDialog.unhandledError", { ns: ["home"] })}
+              </Alert>
             )}
           </Stack>
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Back</Button>
-        <Button onClick={handleCreate}>Create</Button>
+        <Button onClick={handleClose}>
+          {t("createGangDialog.back", { ns: ["home"] })}
+        </Button>
+        <Button onClick={handleCreate}>
+          {t("createGangDialog.create", { ns: ["home"] })}
+        </Button>
       </DialogActions>
     </UserDialog>
   );

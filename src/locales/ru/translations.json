@@ -1,8 +1,18 @@
 {
-    "myGangs": "МОИ БАНДЫ",
-    "createRoster": "Создать новый ростер",
-    "loginOrRegister": "Войдите в аккаунт, чтобы создать ростер",
-    "loginOrRegisterButton": "Войти в аккаунт \\ Зарегистрироваться",
-    "recentGangsTitle": "Последние обновлённые банды",
-    "recentGangsCounting": "всего загружено {{number}} банд"
+  "myGangs": "МОИ БАНДЫ",
+  "createRoster": "Создать новый ростер",
+  "loginOrRegister": "Войдите в аккаунт, чтобы создать ростер",
+  "loginOrRegisterButton": "Войти в аккаунт \\ Зарегистрироваться",
+  "recentGangsTitle": "Последние обновлённые банды",
+  "recentGangsCounting": "всего загружено {{number}} банд",
+  "rating": "Рейтинг {{number}}",
+  "createGangDialog": {
+    "faction": "Фракция",
+    "startCredits": "Кредиты на старте",
+    "serverError": "Ошибка сервера, пожалуйста, повторите позже.",
+    "unhandledError": "Неизвестная ошибка",
+    "back": "Назад",
+    "create": "Создать",
+    "name": "имя"
+  }
 }

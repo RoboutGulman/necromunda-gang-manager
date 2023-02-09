@@ -1,8 +1,18 @@
 {
-    "myGangs": "MY GANGS",
-    "createRoster": "Create new roster",
-    "loginOrRegister": "Login or Register to create roster",
-    "loginOrRegisterButton": "Login \\ Register",
-    "recentGangsTitle": "RECENT COMMUNITY GANGS",
-    "recentGangsCounting": "{{number}} gangs and counting..."
+  "myGangs": "MY GANGS",
+  "createRoster": "Create new roster",
+  "loginOrRegister": "Login or Register to create roster",
+  "loginOrRegisterButton": "Login \\ Register",
+  "recentGangsTitle": "RECENT COMMUNITY GANGS",
+  "recentGangsCounting": "{{number}} gangs and counting...",
+  "rating": "Rating {{number}}",
+  "createGangDialog": {
+    "faction": "Faction",
+    "startCredits": "Start credits",
+    "serverError": "Server error. Please retry later",
+    "unhandledError": "Unhandled error",
+    "back": "Back",
+    "create": "Create",
+    "name": "name"
+  }
 }
