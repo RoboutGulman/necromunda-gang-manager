@@ -101,7 +101,12 @@ export default function MyTeamsPreview() {
             {t("createRoster", { ns: ["home"] })}
           </Button>
           {!userTeams ? (
-            <CircularProgress color="secondary" />
+            <Stack
+              sx={{ height: "300px" }}
+              alignItems="center"
+              justifyContent="center">
+              <CircularProgress color="secondary" />
+            </Stack>
           ) : (
             <List sx={{ padding: 0, width: "100%" }}>
               <ItemsList

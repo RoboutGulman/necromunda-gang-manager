@@ -18,7 +18,7 @@
   "deleteGangDialog": {
     "title": "Delete gang",
     "content": "Are you sure you want to remove the \"{{name}}\" gang?",
-    "ok": "OK",
+    "delete": "Delete",
     "back": "Back"
   }
 }

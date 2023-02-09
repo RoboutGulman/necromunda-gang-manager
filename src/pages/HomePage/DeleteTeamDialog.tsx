@@ -54,7 +54,7 @@ export default function DeleteTeamDialog({
           {t("deleteGangDialog.back", { ns: ["home"] })}
         </Button>
         <Button onClick={deleteTeam}>
-          {t("deleteGangDialog.ok", { ns: ["home"] })}
+          {t("deleteGangDialog.delete", { ns: ["home"] })}
         </Button>
       </DialogActions>
     </UserDialog>

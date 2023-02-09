@@ -1,12 +1,14 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Divider,
   Grid,
   Link,
   List,
   ListItem,
+  Stack,
   Typography,
 } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -25,9 +27,7 @@ export default function ResentTeams() {
     Api.getResentTeams().then((result) => setResentTeams(result));
   }, []);
 
-  return resentTeams === undefined ? (
-    <></>
-  ) : (
+  return (
     <Container fixed>
       <Typography
         align="center"
@@ -37,29 +37,41 @@ export default function ResentTeams() {
         gutterBottom>
         {t("recentGangsTitle", { ns: ["home"] })}
       </Typography>
-      <Typography align="center" variant="body1" color="white" gutterBottom>
-        {t("recentGangsCounting", {
-          number: `${resentTeams?.totalTeamsNumber}`,
-          ns: ["home"],
-        })}
-      </Typography>
-      <Box
-        sx={{
-          margin: "auto",
-          border: "solid",
-          width: "100%",
-          maxWidth: 500,
-          background: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))",
-        }}>
-        <List sx={{ padding: 0 }}>
-          <ItemsList
-            items={resentTeams?.teams}
-            renderItem={(item: RecentTeam, index: number) =>
-              gangPrewiew(index, item)
-            }
-          />
-        </List>
-      </Box>
+      {!resentTeams ? (
+        <Stack
+          sx={{ height: "400px" }}
+          alignItems="center"
+          justifyContent="center">
+          <CircularProgress color="secondary" />
+        </Stack>
+      ) : (
+        <>
+          <Typography align="center" variant="body1" color="white" gutterBottom>
+            {t("recentGangsCounting", {
+              number: `${resentTeams?.totalTeamsNumber}`,
+              ns: ["home"],
+            })}
+          </Typography>
+          <Box
+            sx={{
+              margin: "auto",
+              border: "solid",
+              width: "100%",
+              maxWidth: 500,
+              background:
+                "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))",
+            }}>
+            <List sx={{ padding: 0 }}>
+              <ItemsList
+                items={resentTeams?.teams}
+                renderItem={(item: RecentTeam, index: number) =>
+                  gangPrewiew(index, item)
+                }
+              />
+            </List>
+          </Box>
+        </>
+      )}
     </Container>
   );
 }
