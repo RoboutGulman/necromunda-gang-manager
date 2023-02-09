@@ -31,23 +31,23 @@ interface State {
   factionId: string;
 }
 
-interface CreateGangDialogProps {
+interface CreateTeamDialogProps {
   open: boolean;
   setOpen: (isDialogOpen: boolean) => void;
 }
 
-export default function CreateGangDialog({
+export default function CreateTeamDialog({
   open,
   setOpen,
-}: CreateGangDialogProps) {
+}: CreateTeamDialogProps) {
   const navigate = useNavigate();
   const currentUserId = useUserState().user?.id;
-  const [gangInfo, setGangInfo] = React.useState<State>({
+  const [teamInfo, setTeamInfo] = React.useState<State>({
     name: "",
     factionId: "1",
     startCredits: 1200,
   });
-  const handleChange = useFieldChange(gangInfo, setGangInfo);
+  const handleChange = useFieldChange(teamInfo, setTeamInfo);
   const [loading, setLoading] = React.useState(false);
   const [inputError, setInputError] = React.useState<
     false | "name" | "startCredits" | "server" | "other"
@@ -61,18 +61,18 @@ export default function CreateGangDialog({
     Api.getAllFactions().then((result) => setFactions(result));
   }, []);
 
-  const gangInfoIsCorrect = () => {
-    if (gangInfo.name.length === 0) {
+  const teamInfoIsCorrect = () => {
+    if (teamInfo.name.length === 0) {
       setInputError("name");
       return false;
     }
 
-    if (!gangInfo.startCredits || isNaN(+gangInfo.startCredits)) {
+    if (!teamInfo.startCredits || isNaN(+teamInfo.startCredits)) {
       setInputError("startCredits");
       return false;
     }
 
-    if (isNaN(+gangInfo.factionId) || currentUserId == undefined) {
+    if (isNaN(+teamInfo.factionId) || currentUserId == undefined) {
       setInputError("other");
       return false;
     }
@@ -85,13 +85,13 @@ export default function CreateGangDialog({
   };
 
   const handleCreate = async () => {
-    if (gangInfoIsCorrect()) {
+    if (teamInfoIsCorrect()) {
       setLoading(true);
 
       let createTeamResult = await Api.createTeam({
-        name: gangInfo.name,
-        startingCredits: +gangInfo.startCredits,
-        factionId: +gangInfo.factionId,
+        name: teamInfo.name,
+        startingCredits: +teamInfo.startCredits,
+        factionId: +teamInfo.factionId,
         userId: +currentUserId!,
       });
 
@@ -108,8 +108,8 @@ export default function CreateGangDialog({
 
   const handleTypeChange =
     (prop: keyof State) => (event: SelectChangeEvent) => {
-      setGangInfo({
-        ...gangInfo,
+      setTeamInfo({
+        ...teamInfo,
         [prop]: event.target.value as string,
       });
     };
@@ -137,7 +137,7 @@ export default function CreateGangDialog({
           <Stack spacing={2}>
             <TextField
               error={inputError === "name"}
-              value={gangInfo.name}
+              value={teamInfo.name}
               onChange={handleChange("name")}
               id="filled-basic"
               label="name"
@@ -147,7 +147,7 @@ export default function CreateGangDialog({
               <InputLabel>Faction</InputLabel>
               <Select
                 autoFocus
-                value={gangInfo.factionId.toString()}
+                value={teamInfo.factionId.toString()}
                 onChange={handleTypeChange("factionId")}
                 label="Faction"
                 inputProps={{
@@ -170,7 +170,7 @@ export default function CreateGangDialog({
                 Start credits
               </InputLabel>
               <FilledInput
-                value={gangInfo.startCredits}
+                value={teamInfo.startCredits}
                 error={inputError === "startCredits"}
                 type="number"
                 onChange={handleChange("startCredits")}

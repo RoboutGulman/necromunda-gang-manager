@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import LockIcon from "@mui/icons-material/Lock";
-import CreateGangDialog from "./CreateGangDialog";
+import CreateTeamDialog from "./CreateTeamDialog";
 import { useUserState } from "../../providers/UserProvider";
 import { useAuthDialogsDispatch } from "../../providers/AuthDialogsProvider";
 import { makeStyles } from "@material-ui/styles";
@@ -20,7 +20,7 @@ import { Api } from "../../request/api/api";
 import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles({
-  gangPreviewContainer: {
+  teamPreviewContainer: {
     margin: "auto",
     height: "100px",
     width: "100%",
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     overflow: "hidden",
     marginBottom: "20px",
   },
-  gangBackground: {
+  teamBackground: {
     position: "absolute",
     width: "100%",
     height: "200px",
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
   },
-  gangNameArea: {
+  teamNameArea: {
     position: "absolute",
     background: "rgba(0,0,0,0.6)",
     padding: "0.2rem 1rem 0 1rem",
@@ -46,10 +46,10 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MyGangsPreview() {
+export default function MyTeamsPreview() {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [isCreateGangDialogOpen, setCreateGangDialogOpen] =
+  const [isCreateteamDialogOpen, setCreateteamDialogOpen] =
     React.useState(false);
   const user = useUserState();
   const setLoginDialogOpen = useAuthDialogsDispatch();
@@ -82,7 +82,7 @@ export default function MyGangsPreview() {
             alignItems: "center",
           }}>
           <Button
-            onClick={() => setCreateGangDialogOpen(true)}
+            onClick={() => setCreateteamDialogOpen(true)}
             sx={{ mb: "5px" }}
             variant="text"
             color="secondary">
@@ -98,14 +98,14 @@ export default function MyGangsPreview() {
                   <Box
                     key={index}
                     maxWidth={350}
-                    className={classes.gangPreviewContainer}>
+                    className={classes.teamPreviewContainer}>
                     <RouterLink to="/roster/1">
                       <Box
-                        className={classes.gangBackground}
+                        className={classes.teamBackground}
                         sx={{
                           backgroundImage: `url('${item.imageUrl}')`,
                         }}></Box>
-                      <Box className={classes.gangNameArea}>
+                      <Box className={classes.teamNameArea}>
                         <Typography
                           color="white"
                           variant="h5"
@@ -120,9 +120,9 @@ export default function MyGangsPreview() {
             </List>
           )}
 
-          <CreateGangDialog
-            open={isCreateGangDialogOpen}
-            setOpen={setCreateGangDialogOpen}
+          <CreateTeamDialog
+            open={isCreateteamDialogOpen}
+            setOpen={setCreateteamDialogOpen}
           />
         </Box>
       ) : (

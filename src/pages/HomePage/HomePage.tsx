@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/material";
 import React from "react";
-import ResentGangs from "./ResentGangs";
-import MyGangsPreview from "./MyGangsPreview";
+import ResentTeams from "./ResentTeams";
+import MyTeamsPreview from "./MyTeamsPreview";
 
 export default function HomePage({}) {
   return (
@@ -12,8 +12,8 @@ export default function HomePage({}) {
           flexDirection: { xs: "column", lg: "row" },
           width: "90%",
         }}>
-        <MyGangsPreview />
-        <ResentGangs />
+        <MyTeamsPreview />
+        <ResentTeams />
       </Box>
     </Container>
   );
