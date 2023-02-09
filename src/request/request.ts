@@ -1,6 +1,7 @@
 export enum RequestMethod {
   GET = "GET",
   POST = "POST",
+  DELETE = "DELETE",
 }
 
 export class ApiRequest {
@@ -40,7 +41,10 @@ export class ApiRequest {
 
     return {
       status: response.status,
-      data: await response.json()
+      data:
+        this._method !== RequestMethod.DELETE
+          ? await response.json()
+          : undefined,
     };
   }
 }

@@ -34,12 +34,12 @@ interface State {
 
 interface CreateTeamDialogProps {
   open: boolean;
-  setOpen: (isDialogOpen: boolean) => void;
+  onClose: () => void;
 }
 
 export default function CreateTeamDialog({
   open,
-  setOpen,
+  onClose,
 }: CreateTeamDialogProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -81,11 +81,6 @@ export default function CreateTeamDialog({
 
     return true;
   };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const handleCreate = async () => {
     if (teamInfoIsCorrect()) {
       setLoading(true);
@@ -100,7 +95,7 @@ export default function CreateTeamDialog({
       setLoading(false);
 
       if (createTeamResult.isSuccess) {
-        setOpen(false);
+        onClose();
         navigate(`/roster/${createTeamResult.createdTeamId}`);
       } else {
         setInputError("server");
@@ -117,7 +112,7 @@ export default function CreateTeamDialog({
     };
 
   return (
-    <UserDialog open={open} handleClose={handleClose}>
+    <UserDialog open={open} handleClose={onClose}>
       <DialogTitle>
         <Stack direction="row" alignItems="center">
           <Typography>{t("createRoster", { ns: ["home"] })}</Typography>
@@ -142,7 +137,7 @@ export default function CreateTeamDialog({
               value={teamInfo.name}
               onChange={handleChange("name")}
               id="filled-basic"
-              label= {t("createGangDialog.name", { ns: ["home"] })}
+              label={t("createGangDialog.name", { ns: ["home"] })}
               variant="filled"
             />
             <FormControl variant="filled" sx={{ mt: 2, minWidth: 120 }}>
@@ -195,7 +190,7 @@ export default function CreateTeamDialog({
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>
+        <Button onClick={onClose}>
           {t("createGangDialog.back", { ns: ["home"] })}
         </Button>
         <Button onClick={handleCreate}>

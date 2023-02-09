@@ -14,5 +14,11 @@
     "back": "Back",
     "create": "Create",
     "name": "name"
+  },
+  "deleteGangDialog": {
+    "title": "Delete gang",
+    "content": "Are you sure you want to remove the \"{{name}}\" gang?",
+    "ok": "OK",
+    "back": "Back"
   }
 }
