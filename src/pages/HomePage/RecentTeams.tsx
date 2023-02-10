@@ -14,17 +14,17 @@ import {
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { Link as RouterLink } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { RecentTeam, RecentTeams } from "../../model/Dto/ResentTeams";
+import { RecentTeam, RecentTeamsDto } from "../../model/Dto/ReсentTeamsDto";
 import ItemsList from "../../components/ItemsList";
 import { useTranslation } from "react-i18next";
 import { Api } from "../../request/api/api";
 
-export default function ResentTeams() {
+export default function RecentTeams() {
   const { t } = useTranslation();
-  const [resentTeams, setResentTeams] = useState<RecentTeams>();
+  const [recentTeams, setRecentTeams] = useState<RecentTeamsDto>();
 
   useEffect(() => {
-    Api.getResentTeams().then((result) => setResentTeams(result));
+    Api.getRecentTeams().then((result) => setRecentTeams(result));
   }, []);
 
   return (
@@ -37,7 +37,7 @@ export default function ResentTeams() {
         gutterBottom>
         {t("recentGangsTitle", { ns: ["home"] })}
       </Typography>
-      {!resentTeams ? (
+      {!recentTeams ? (
         <Stack
           sx={{ height: "400px" }}
           alignItems="center"
@@ -48,7 +48,7 @@ export default function ResentTeams() {
         <>
           <Typography align="center" variant="body1" color="white" gutterBottom>
             {t("recentGangsCounting", {
-              number: `${resentTeams?.totalTeamsNumber}`,
+              number: `${recentTeams?.totalTeamsNumber}`,
               ns: ["home"],
             })}
           </Typography>
@@ -63,7 +63,7 @@ export default function ResentTeams() {
             }}>
             <List sx={{ padding: 0 }}>
               <ItemsList
-                items={resentTeams?.teams}
+                items={recentTeams?.teams}
                 renderItem={(item: RecentTeam, index: number) =>
                   gangPrewiew(index, item)
                 }

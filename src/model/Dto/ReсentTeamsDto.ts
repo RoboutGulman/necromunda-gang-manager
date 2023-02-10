@@ -1,6 +1,6 @@
 import { User } from "../Types";
 
-export class RecentTeams {
+export class RecentTeamsDto {
   totalTeamsNumber!: number;
   teams!: RecentTeam[];
 }

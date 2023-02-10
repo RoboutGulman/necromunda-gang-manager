@@ -1,6 +1,6 @@
 import { Box, Container } from "@mui/material";
 import React from "react";
-import ResentTeams from "./ResentTeams";
+import RecentTeams from "./RecentTeams";
 import MyTeamsPreview from "./MyTeamsPreview";
 
 export default function HomePage({}) {
@@ -13,7 +13,7 @@ export default function HomePage({}) {
           width: "90%",
         }}>
         <MyTeamsPreview />
-        <ResentTeams />
+        <RecentTeams />
       </Box>
     </Container>
   );
