@@ -40,13 +40,12 @@ import cardBackground from "../../backgrounds/card_background.jpg";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 
 import {
+  getTeamInfo,
   RangCount,
   RangStatistics,
   TeamInfo,
   TeamView,
 } from "../../model/Dto/TeamView";
-import TeamViewJson from "../../model/FakeData/TeamViewExample.json";
-import { plainToClass } from "class-transformer";
 import FighterCardList from "./FighterCardList";
 import {
   useDrawerDispatch,
@@ -58,6 +57,8 @@ import { StyledTable } from "../../components/FighterCard/StyledTable";
 import ItemsList from "../../components/ItemsList";
 import CasinoIcon from "@mui/icons-material/Casino";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Api } from "../../request/api/api";
+import { useParams } from "react-router-dom";
 
 interface TeamPageProps {
   window?: () => Window;
@@ -74,13 +75,16 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
   const setMobileOpen = useDrawerDispatch();
 
   const [teamView, setTeamView] = useState<TeamView>();
+  const teamInfo: TeamInfo | undefined = teamView && getTeamInfo(teamView);
+  //TODO: надо обрабатывать ошибки с неправильным айдишником
+  const id: number = +(useParams().id ?? "0");
 
   const handleDrawerToggle = () => {
     setMobileOpen({ type: "change" });
   };
-
+  //TODO: если бойцов 0, надо показывать сообщение "добавьте бойца"
   useEffect(() => {
-    setTeamView(plainToClass(TeamView, TeamViewJson));
+    Api.getTeam(id).then((result) => setTeamView(result));
   }, []);
 
   const container =
@@ -116,7 +120,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
                 top: "15%",
                 marginRight: "15px",
               }}>
-              <TeamMenu teamInfo={teamView?.info} />
+              <TeamMenu teamInfo={teamInfo} />
             </Paper>
           </Grid>
         </Grid>
@@ -136,7 +140,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
             ModalProps={{
               keepMounted: true,
             }}>
-            <TeamMenu teamInfo={teamView?.info} />
+            <TeamMenu teamInfo={teamInfo} />
           </Drawer>
         </Box>
       </Box>

@@ -2,6 +2,7 @@ import { getAllFactions } from "./faction/getAllFactions";
 import { createTeam } from "./team/createTeam";
 import { deleteTeam } from "./team/deleteTeam";
 import { getRecentTeams as getRecentTeams } from "./team/getRecentTeams";
+import { getTeam } from "./team/getTeam";
 import { getCurrentUser } from "./user/getCurrentUser";
 import { getUserTeams } from "./user/getUserTeams";
 import { login } from "./user/login";
@@ -18,4 +19,5 @@ export const Api = {
   createTeam: createTeam,
   getRecentTeams: getRecentTeams,
   deleteTeam: deleteTeam,
+  getTeam: getTeam,
 };
