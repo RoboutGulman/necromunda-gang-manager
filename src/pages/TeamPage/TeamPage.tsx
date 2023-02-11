@@ -58,7 +58,8 @@ import ItemsList from "../../components/ItemsList";
 import CasinoIcon from "@mui/icons-material/Casino";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Api } from "../../request/api/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import ContainerWithCircularProgress from "../../components/ContainerWithCircularProgress";
 
 interface TeamPageProps {
   window?: () => Window;
@@ -73,19 +74,29 @@ export type TeamPageDialogType =
 export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
   const mobileOpen = useDrawerState();
   const setMobileOpen = useDrawerDispatch();
+  const navigate = useNavigate();
 
   const [teamView, setTeamView] = useState<TeamView>();
   const teamInfo: TeamInfo | undefined = teamView && getTeamInfo(teamView);
-  //TODO: надо обрабатывать ошибки с неправильным айдишником
-  const id: number = +(useParams().id ?? "0");
+  const { id } = useParams();
 
   const handleDrawerToggle = () => {
     setMobileOpen({ type: "change" });
   };
   //TODO: если бойцов 0, надо показывать сообщение "добавьте бойца"
   useEffect(() => {
-    Api.getTeam(id).then((result) => setTeamView(result));
-  }, []);
+    if (!id || isNaN(+id)) {
+      navigate("/notFound");
+      return;
+    }
+    Api.getTeam(+id).then((result) => {
+      if (result.success) {
+        setTeamView(result.teamView!);
+        return;
+      }
+      navigate("/notFound");
+    });
+  }, [id]);
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -113,15 +124,19 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
             <FighterCardList teamView={teamView} />
           </Grid>
           <Grid item xs={12} lg={4}>
-            <Paper
-              sx={{
-                display: { xs: "none", lg: "block" },
-                position: "sticky",
-                top: "15%",
-                marginRight: "15px",
-              }}>
-              <TeamMenu teamInfo={teamInfo} />
-            </Paper>
+            {!teamInfo ? (
+              <ContainerWithCircularProgress height="400px" />
+            ) : (
+              <Paper
+                sx={{
+                  display: { xs: "none", lg: "block" },
+                  position: "sticky",
+                  top: "15%",
+                  marginRight: "15px",
+                }}>
+                <TeamMenu teamInfo={teamInfo} />
+              </Paper>
+            )}
           </Grid>
         </Grid>
         <Box component="nav" aria-label="team menu">
@@ -140,7 +155,11 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
             ModalProps={{
               keepMounted: true,
             }}>
-            <TeamMenu teamInfo={teamInfo} />
+            {teamInfo ? (
+              <TeamMenu teamInfo={teamInfo} />
+            ) : (
+              <ContainerWithCircularProgress height="400px" />
+            )}
           </Drawer>
         </Box>
       </Box>
@@ -149,7 +168,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
 });
 
 interface TeamMenuProps {
-  teamInfo: TeamInfo | undefined;
+  teamInfo: TeamInfo;
 }
 
 const TeamMenu: FC<TeamMenuProps> = memo(({ teamInfo }) => {

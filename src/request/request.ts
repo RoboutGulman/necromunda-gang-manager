@@ -42,7 +42,7 @@ export class ApiRequest {
     return {
       status: response.status,
       data:
-        this._method !== RequestMethod.DELETE
+        this._method !== RequestMethod.DELETE && response.status === 200
           ? await response.json()
           : undefined,
     };

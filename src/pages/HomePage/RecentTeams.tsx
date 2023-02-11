@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  CircularProgress,
   Container,
   Divider,
   Grid,
@@ -18,6 +17,7 @@ import { RecentTeam, RecentTeamsDto } from "../../model/Dto/ReсentTeamsDto";
 import ItemsList from "../../components/ItemsList";
 import { useTranslation } from "react-i18next";
 import { Api } from "../../request/api/api";
+import ContainerWithCircularProgress from "../../components/ContainerWithCircularProgress";
 
 export default function RecentTeams() {
   const { t } = useTranslation();
@@ -38,12 +38,7 @@ export default function RecentTeams() {
         {t("recentGangsTitle", { ns: ["home"] })}
       </Typography>
       {!recentTeams ? (
-        <Stack
-          sx={{ height: "400px" }}
-          alignItems="center"
-          justifyContent="center">
-          <CircularProgress color="secondary" />
-        </Stack>
+        <ContainerWithCircularProgress height="400px" />
       ) : (
         <>
           <Typography align="center" variant="body1" color="white" gutterBottom>

@@ -2,7 +2,12 @@ import { plainToClass } from "class-transformer";
 import { TeamView } from "../../../model/Dto/TeamView";
 import { ApiRequest, RequestMethod } from "../../request";
 
-export async function getTeam(id: number): Promise<TeamView> {
+export type GetTeamResponse = {
+  success: boolean;
+  teamView: TeamView | undefined;
+};
+
+export async function getTeam(id: number): Promise<GetTeamResponse> {
   const URL = `/api/team/${id}`;
   const apiRequest = new ApiRequest();
   apiRequest.setMethod(RequestMethod.GET);
@@ -10,5 +15,11 @@ export async function getTeam(id: number): Promise<TeamView> {
 
   const response: any = await apiRequest.send();
 
-  return plainToClass(TeamView, response.data);
+  return {
+    success: response.status === 200,
+    teamView:
+      response.status === 200
+        ? plainToClass(TeamView, response.data)
+        : undefined,
+  };
 }

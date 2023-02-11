@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  CircularProgress,
   Container,
   IconButton,
   List,
@@ -21,6 +20,7 @@ import { Api } from "../../request/api/api";
 import { useTranslation } from "react-i18next";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteTeamDialog from "./DeleteTeamDialog";
+import ContainerWithCircularProgress from "../../components/ContainerWithCircularProgress";
 
 const useStyles = makeStyles({
   teamPreviewContainer: {
@@ -101,12 +101,7 @@ export default function MyTeamsPreview() {
             {t("createRoster", { ns: ["home"] })}
           </Button>
           {!userTeams ? (
-            <Stack
-              sx={{ height: "300px" }}
-              alignItems="center"
-              justifyContent="center">
-              <CircularProgress color="secondary" />
-            </Stack>
+            <ContainerWithCircularProgress height="300px" />
           ) : (
             <List sx={{ padding: 0, width: "100%" }}>
               <ItemsList
