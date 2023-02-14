@@ -60,7 +60,10 @@ export default function CreateTeamDialog({
   >(undefined);
 
   useEffect(() => {
-    Api.getAllFactions().then((result) => setFactions(result));
+    Api.getAllFactions().then((result) => {
+      setFactions(result);
+      setTeamInfo({ ...teamInfo, factionId: result[0].id.toString() });
+    });
   }, []);
 
   const teamInfoIsCorrect = () => {
