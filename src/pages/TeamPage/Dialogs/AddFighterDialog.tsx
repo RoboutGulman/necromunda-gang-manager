@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -10,10 +11,14 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
-import React from "react";
+import { blue } from "@mui/material/colors";
+import React, { useEffect, useState } from "react";
 import CheckboxWithText from "../../../components/CheckboxWithText";
 import UserDialog from "../../../components/UserDialog";
+import { FighterType } from "../../../model/Dto/FighterType";
+import { Api } from "../../../request/api/api";
 import { useFieldChange } from "../../../userHooks/useFieldChange";
 
 interface State {
@@ -42,6 +47,30 @@ export default function AddFighterDialog({
   });
   const handleChange = useFieldChange(fighterInfo, setFighterInfo);
   const [inputError, setInputError] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
+  const [fighterTypes, setFighterTypes] = useState<FighterType[] | undefined>(
+    undefined
+  );
+
+  const changeDialogInfo = (result: FighterType[]) => {
+    setLoading(false);
+    setFighterTypes(result);
+    setFighterInfo({
+      ...fighterInfo,
+      fighterTypeId: result[0].id.toString(),
+    });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+
+    if (!fighterInfo.showOnlyFactionFighterTypes) {
+      Api.getFighterTypes().then((result) => changeDialogInfo(result));
+      return;
+    }
+    Api.getFighterTypes(factionId).then((result) => changeDialogInfo(result));
+  }, [factionId, fighterInfo.showOnlyFactionFighterTypes]);
 
   const fighterInfoIsCorrect = () => {
     let result = fighterInfo.name.length >= 3;
@@ -66,22 +95,22 @@ export default function AddFighterDialog({
       });
     };
 
-  const fighterTypes = [
-    { id: "1", name: "leader", cost: "100" },
-    { id: "2", name: "champion", cost: "80" },
-    { id: "3", name: "ganger", cost: "50" },
-    { id: "4", name: "juve", cost: "30" },
-  ];
-
-  const Items = fighterTypes.map((item, number) => (
-    <MenuItem key={number} value={item.id}>
-      {item.name + " (" + item.cost + ")"}
-    </MenuItem>
-  ));
-
   return (
     <UserDialog handleClose={onClose} open={open}>
-      <DialogTitle>Add new fighter to your gang</DialogTitle>
+      <DialogTitle>
+        <Stack direction="row" alignItems="center">
+          <Typography>Add new fighter to your gang</Typography>
+          {loading && (
+            <CircularProgress
+              size={24}
+              sx={{
+                color: blue[500],
+                marginLeft: "12px",
+              }}
+            />
+          )}
+        </Stack>
+      </DialogTitle>
       <DialogContent sx={{ minHeight: "200px" }}>
         <Stack spacing={2}>
           <TextField
@@ -103,20 +132,28 @@ export default function AddFighterDialog({
             }
             text="Show only faction fighters?"
           />
-          <FormControl variant="filled" sx={{ mt: 2, minWidth: 120 }}>
-            <InputLabel>fighter type</InputLabel>
-            <Select
-              autoFocus
-              value={fighterInfo.fighterTypeId.toString()}
-              onChange={handleTypeChange("fighterTypeId")}
-              label="fighter type"
-              inputProps={{
-                name: "fighter type",
-                id: "fighter type",
-              }}>
-              {Items}
-            </Select>
-          </FormControl>
+          {!fighterTypes ? (
+            <></>
+          ) : (
+            <FormControl variant="filled" sx={{ mt: 2, minWidth: 120 }}>
+              <InputLabel>fighter type</InputLabel>
+              <Select
+                autoFocus
+                value={fighterInfo.fighterTypeId.toString()}
+                onChange={handleTypeChange("fighterTypeId")}
+                label="fighter type"
+                inputProps={{
+                  name: "fighter type",
+                  id: "fighter type",
+                }}>
+                {fighterTypes.map((item, number) => (
+                  <MenuItem key={number} value={item.id}>
+                    {item.name + " (" + item.cost + ")"}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
           <CheckboxWithText
             checked={fighterInfo.purchaseWithCredits}
             onChange={() =>
