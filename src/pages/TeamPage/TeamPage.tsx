@@ -80,10 +80,13 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
   const teamInfo: TeamInfo | undefined = teamView && getTeamInfo(teamView);
   const { id } = useParams();
 
+  const [whichDialogIsOpen, setDialogOpen] =
+    useState<TeamPageDialogType>("none");
+
   const handleDrawerToggle = () => {
     setMobileOpen({ type: "change" });
   };
-  //TODO: если бойцов 0, надо показывать сообщение "добавьте бойца"
+
   useEffect(() => {
     if (!id || isNaN(+id)) {
       navigate("/notFound");
@@ -121,7 +124,10 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
       <Box sx={{ display: "flex" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} lg={8}>
-            <FighterCardList teamView={teamView} />
+            <FighterCardList
+              teamView={teamView}
+              openAddFighterDialog={() => setDialogOpen("add-fighter")}
+            />
           </Grid>
           <Grid item xs={12} lg={4}>
             {!teamInfo ? (
@@ -134,7 +140,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
                   top: "15%",
                   marginRight: "15px",
                 }}>
-                <TeamMenu teamInfo={teamInfo} />
+                <TeamMenu teamInfo={teamInfo} setDialogOpen={setDialogOpen} />
               </Paper>
             )}
           </Grid>
@@ -156,12 +162,19 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
               keepMounted: true,
             }}>
             {teamInfo ? (
-              <TeamMenu teamInfo={teamInfo} />
+              <TeamMenu teamInfo={teamInfo} setDialogOpen={setDialogOpen} />
             ) : (
               <ContainerWithCircularProgress height="400px" />
             )}
           </Drawer>
         </Box>
+        {teamInfo !== undefined && (
+          <Dialogs
+            teamInfo={teamInfo}
+            dialogType={whichDialogIsOpen}
+            onClose={() => setDialogOpen("none")}
+          />
+        )}
       </Box>
     </>
   );
@@ -169,15 +182,11 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
 
 interface TeamMenuProps {
   teamInfo: TeamInfo;
+  setDialogOpen: React.Dispatch<React.SetStateAction<TeamPageDialogType>>;
 }
 
-const TeamMenu: FC<TeamMenuProps> = memo(({ teamInfo }) => {
+const TeamMenu: FC<TeamMenuProps> = memo(({ teamInfo, setDialogOpen }) => {
   const [activeTab, setActiveTab] = React.useState(0);
-
-  const [whichDialogIsOpen, setDialogOpen] =
-    useState<TeamPageDialogType>("none");
-
-  const CloseDialog = () => setDialogOpen("none");
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
@@ -314,13 +323,6 @@ const TeamMenu: FC<TeamMenuProps> = memo(({ teamInfo }) => {
           </ListItem>
         </List>
       </TabPanel>
-      {teamInfo !== undefined && (
-        <Dialogs
-          teamInfo={teamInfo}
-          dialogType={whichDialogIsOpen}
-          onClose={CloseDialog}
-        />
-      )}
     </Box>
   );
 });

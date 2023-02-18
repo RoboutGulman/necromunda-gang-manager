@@ -1,10 +1,12 @@
 import {
   Box,
   Button,
+  Container,
   Fab,
   Grid,
   List,
   ListItem,
+  Stack,
   Typography,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
@@ -23,12 +25,17 @@ import { WeaponsTable } from "../../components/FighterCard/WeaponsTable";
 import { FighterCardHeader } from "../../components/FighterCard/FighterCardHeader";
 import { FighterCard } from "../../components/FighterCard/FighterCard";
 import cardBackground from "../../backgrounds/card_background.jpg";
+import AddIcon from "@mui/icons-material/Add";
 
 interface Props {
   teamView: TeamView | undefined;
+  openAddFighterDialog: () => void;
 }
 
-export default function FighterCardList({ teamView }: Props) {
+export default function FighterCardList({
+  teamView,
+  openAddFighterDialog,
+}: Props) {
   const fightersSelectionInfo = useSelectedFightersState().fighters;
   const selectedFightersReducer = useSelectedFightersDispatch();
   const selectedFightersCost = fightersSelectionInfo.reduce(
@@ -59,6 +66,28 @@ export default function FighterCardList({ teamView }: Props) {
 
   return (
     <List>
+      {selectedFightersIds.length === 0 && (
+        <Container>
+          <Box maxWidth={400} sx={{ margin: "auto" }}>
+            <Typography
+              align="center"
+              variant="body1"
+              color="white"
+              gutterBottom>
+              There are no fighters in this gang.
+            </Typography>
+            <Stack>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={openAddFighterDialog}
+                startIcon={<AddIcon />}>
+                Add fighter
+              </Button>
+            </Stack>
+          </Box>
+        </Container>
+      )}
       {selectedFightersIds.length && (
         <FighterCountButton
           content={`${selectedFightersIds.length} fighter${
