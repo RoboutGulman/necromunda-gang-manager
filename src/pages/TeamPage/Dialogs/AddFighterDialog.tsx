@@ -29,14 +29,18 @@ interface State {
 }
 
 export interface AddFighterDialogProps {
+  teamId: number;
   factionId: number;
   open: boolean;
+  fetchData: () => void;
   onClose: () => void;
 }
 
 export default function AddFighterDialog({
+  teamId,
   factionId,
   onClose,
+  fetchData,
   open,
 }: AddFighterDialogProps) {
   const [fighterInfo, setFighterInfo] = React.useState<State>({
@@ -81,9 +85,18 @@ export default function AddFighterDialog({
     return result;
   };
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (fighterInfoIsCorrect()) {
+      setLoading(true);
+      await Api.createFighter({
+        teamId: teamId,
+        name: fighterInfo.name,
+        fighterTypeId: +fighterInfo.fighterTypeId,
+        purchaseWithCredits: fighterInfo.purchaseWithCredits,
+      });
+      setLoading(false);
       onClose();
+      fetchData();
     }
   };
 

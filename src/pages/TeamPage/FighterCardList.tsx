@@ -26,6 +26,7 @@ import { FighterCardHeader } from "../../components/FighterCard/FighterCardHeade
 import { FighterCard } from "../../components/FighterCard/FighterCard";
 import cardBackground from "../../backgrounds/card_background.jpg";
 import AddIcon from "@mui/icons-material/Add";
+import ContainerWithCircularProgress from "../../components/ContainerWithCircularProgress";
 
 interface Props {
   teamView: TeamView | undefined;
@@ -66,7 +67,8 @@ export default function FighterCardList({
 
   return (
     <List>
-      {selectedFightersIds.length === 0 && (
+      {!teamView && <ContainerWithCircularProgress height="400px" />}
+      {teamView && teamView.fighters.length === 0 && (
         <Container>
           <Box maxWidth={400} sx={{ margin: "auto" }}>
             <Typography

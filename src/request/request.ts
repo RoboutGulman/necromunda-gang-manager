@@ -39,12 +39,15 @@ export class ApiRequest {
       body: this._method === RequestMethod.POST ? this._body : undefined,
     });
 
+    let responseJson: any | undefined = undefined;
+
+    try {
+      responseJson = await response.json();
+    } catch {}
+
     return {
       status: response.status,
-      data:
-        this._method !== RequestMethod.DELETE && response.status === 200
-          ? await response.json()
-          : undefined,
+      data: responseJson,
     };
   }
 }

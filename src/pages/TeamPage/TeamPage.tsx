@@ -78,7 +78,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
 
   const [teamView, setTeamView] = useState<TeamView>();
   const teamInfo: TeamInfo | undefined = teamView && getTeamInfo(teamView);
-  const { id } = useParams();
+  const id = useParams().id!;
 
   const [whichDialogIsOpen, setDialogOpen] =
     useState<TeamPageDialogType>("none");
@@ -87,7 +87,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
     setMobileOpen({ type: "change" });
   };
 
-  useEffect(() => {
+  const fetchTeamData = () => {
     if (!id || isNaN(+id)) {
       navigate("/notFound");
       return;
@@ -99,6 +99,10 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
       }
       navigate("/notFound");
     });
+  };
+
+  useEffect(() => {
+    fetchTeamData();
   }, [id]);
 
   const container =
@@ -170,6 +174,8 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
         </Box>
         {teamInfo !== undefined && (
           <Dialogs
+            teamId={+id}
+            fetchData={fetchTeamData}
             teamInfo={teamInfo}
             dialogType={whichDialogIsOpen}
             onClose={() => setDialogOpen("none")}

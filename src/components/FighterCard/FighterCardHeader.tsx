@@ -53,7 +53,9 @@ export const FighterCardHeader: FC<FighterCardHeaderProps> = memo(
                 inputProps={{ "aria-label": "select" }}
               />
             )}
-            {totalCost && <CreditsCostContainer cost={totalCost} />}
+            {totalCost !== undefined && (
+              <CreditsCostContainer cost={totalCost} />
+            )}
           </Box>
         </Paper>
       </ListItem>

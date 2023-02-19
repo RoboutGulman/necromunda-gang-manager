@@ -7,18 +7,24 @@ import SelectRandomFightersDialog from "./SelectRandomFightersDialog";
 
 export interface SimpleDialogProps {
   teamInfo: TeamInfo;
+  fetchData: () => void;
+  teamId: number;
   dialogType: TeamPageDialogType;
   onClose: () => void;
 }
 
 export default function Dialogs({
   teamInfo,
+  fetchData,
+  teamId,
   onClose,
   dialogType,
 }: SimpleDialogProps) {
   return (
     <>
       <AddFighterDialog
+        teamId={teamId}
+        fetchData={fetchData}
         factionId={teamInfo.faction.id}
         open={dialogType === "add-fighter"}
         onClose={onClose}
@@ -33,9 +39,10 @@ export default function Dialogs({
         open={dialogType === "edit-gang-info"}
         onClose={onClose}
       />
-      <SelectRandomFightersDialog 
+      <SelectRandomFightersDialog
         open={dialogType === "select-random-fighter"}
-        onClose={onClose}/>
+        onClose={onClose}
+      />
     </>
   );
 }
