@@ -60,6 +60,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Api } from "../../request/api/api";
 import { useNavigate, useParams } from "react-router-dom";
 import ContainerWithCircularProgress from "../../components/ContainerWithCircularProgress";
+import { useUserState } from "../../providers/UserProvider";
 
 interface TeamPageProps {
   window?: () => Window;
@@ -69,16 +70,18 @@ export type TeamPageDialogType =
   | "none"
   | "add-fighter"
   | "edit-gang-info"
-  | "select-random-fighter";
+  | "select-random-fighter"
+  | "delete-selected-fighters";
 
 export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
   const mobileOpen = useDrawerState();
   const setMobileOpen = useDrawerDispatch();
   const navigate = useNavigate();
+  const currentUser = useUserState().user;
 
   const [teamView, setTeamView] = useState<TeamView>();
   const teamInfo: TeamInfo | undefined = teamView && getTeamInfo(teamView);
-  const id = useParams().id!;
+  const teamId = useParams().id!;
 
   const [whichDialogIsOpen, setDialogOpen] =
     useState<TeamPageDialogType>("none");
@@ -88,11 +91,11 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
   };
 
   const fetchTeamData = () => {
-    if (!id || isNaN(+id)) {
+    if (!teamId || isNaN(+teamId)) {
       navigate("/notFound");
       return;
     }
-    Api.getTeam(+id).then((result) => {
+    Api.getTeam(+teamId).then((result) => {
       if (result.success) {
         setTeamView(result.teamView!);
         return;
@@ -103,7 +106,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
 
   useEffect(() => {
     fetchTeamData();
-  }, [id]);
+  }, [teamId, currentUser]);
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -174,7 +177,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
         </Box>
         {teamInfo !== undefined && (
           <Dialogs
-            teamId={+id}
+            teamId={+teamId}
             fetchData={fetchTeamData}
             teamInfo={teamInfo}
             dialogType={whichDialogIsOpen}
@@ -320,11 +323,12 @@ const TeamMenu: FC<TeamMenuProps> = memo(({ teamInfo, setDialogOpen }) => {
           <ListItem
             disablePadding
             sx={{ color: "white", backgroundColor: "red" }}>
-            <ListItemButton>
+            <ListItemButton
+              onClick={() => setDialogOpen("delete-selected-fighters")}>
               <ListItemIcon sx={{ color: "white" }}>
                 <DeleteIcon />
               </ListItemIcon>
-              <ListItemText primary="Delete Gang" />
+              <ListItemText primary="Delete Selected fighters" />
             </ListItemButton>
           </ListItem>
         </List>

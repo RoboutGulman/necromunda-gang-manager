@@ -1,5 +1,6 @@
 import { getAllFactions } from "./faction/getAllFactions";
 import { createFighter } from "./fighter/createFighter";
+import { deleteFighters } from "./fighter/deleteFighters";
 import { getFighterTypes } from "./fighterType/getFighterTypes";
 import { createTeam } from "./team/createTeam";
 import { deleteTeam } from "./team/deleteTeam";
@@ -24,4 +25,5 @@ export const Api = {
   getTeam: getTeam,
   getFighterTypes: getFighterTypes,
   createFighter: createFighter,
+  deleteFighters: deleteFighters,
 };

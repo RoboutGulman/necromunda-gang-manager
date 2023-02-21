@@ -7,7 +7,7 @@ export enum RequestMethod {
 export class ApiRequest {
   _method: RequestMethod = RequestMethod.GET;
   _url: string = "";
-  _body: string = "";
+  _body: string | undefined = undefined;
 
   setMethod(method: RequestMethod) {
     this._method = method;
@@ -36,7 +36,7 @@ export class ApiRequest {
       headers: {
         "Content-Type": "application/json",
       },
-      body: this._method === RequestMethod.POST ? this._body : undefined,
+      body: this._body,
     });
 
     let responseJson: any | undefined = undefined;

@@ -4,6 +4,7 @@ import { TeamPageDialogType } from "../TeamPage";
 import EditTeamInfoDialog from "./EditGangInfoDialog";
 import { TeamInfo } from "../../../model/Dto/TeamView";
 import SelectRandomFightersDialog from "./SelectRandomFightersDialog";
+import DeleteFightersDialog from "./DeleteFightersDialog";
 
 export interface SimpleDialogProps {
   teamInfo: TeamInfo;
@@ -42,6 +43,11 @@ export default function Dialogs({
       <SelectRandomFightersDialog
         open={dialogType === "select-random-fighter"}
         onClose={onClose}
+      />
+      <DeleteFightersDialog
+        open={dialogType === "delete-selected-fighters"}
+        onClose={onClose}
+        fetchTeam={fetchData}
       />
     </>
   );
