@@ -31,7 +31,7 @@ export class ApiRequest {
   }
 
   async _fetch(): Promise<any> {
-    let response = await fetch(this._url, {
+    let response = await fetch(window.location.origin + this._url, {
       method: this._method,
       headers: {
         "Content-Type": "application/json",
