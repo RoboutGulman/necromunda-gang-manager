@@ -5,7 +5,7 @@ import {
 import { Faction, FighterView, Territory, User } from "../Types";
 
 export class TeamView {
-  availibleForEdit!: boolean;
+  availableForEdit!: boolean;
   name!: string;
   rating!: number;
   cash!: number;
