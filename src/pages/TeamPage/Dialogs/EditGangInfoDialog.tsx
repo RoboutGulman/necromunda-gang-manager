@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -8,32 +9,35 @@ import {
   InputLabel,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
+import { blue } from "@mui/material/colors";
 import React from "react";
+import CheckboxWithText from "../../../components/CheckboxWithText";
 import UserDialog from "../../../components/UserDialog";
+import { Api } from "../../../request/api/api";
+import { EditTeamRequest } from "../../../request/api/team/editTeam";
 import { useFieldChange } from "../../../userHooks/useFieldChange";
 
-interface State {
-  name: string;
-  credits: number;
-  reputation: number;
-  gamesNumber: number;
-}
-
 export interface EditTeamInfoDialogProps {
-  initState: State;
+  teamId: number;
+  initState: EditTeamRequest;
+  fetchData: () => void;
   open: boolean;
   onClose: () => void;
 }
 
 export default function EditTeamInfoDialog({
+  teamId,
   initState,
+  fetchData,
   onClose,
   open,
 }: EditTeamInfoDialogProps) {
-  const [teamInfo, setTeamInfo] = React.useState<State>(initState);
+  const [teamInfo, setTeamInfo] = React.useState<EditTeamRequest>(initState);
   const handleChange = useFieldChange(teamInfo, setTeamInfo);
   const [inputError, setInputError] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const fighterInfoIsCorrect = () => {
     let result = teamInfo.name.length >= 3;
@@ -44,15 +48,37 @@ export default function EditTeamInfoDialog({
     return result;
   };
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (fighterInfoIsCorrect()) {
-      onClose();
+      setLoading(true);
+      const result = await Api.editTeam({
+        teamId: teamId,
+        request: { ...teamInfo },
+      });
+      setLoading(false);
+      if (result) {
+        onClose();
+        fetchData();
+      }
     }
   };
 
   return (
     <UserDialog handleClose={onClose} open={open}>
-      <DialogTitle>Add new fighter to your gang</DialogTitle>
+      <DialogTitle>
+        <Stack direction="row" alignItems="center">
+          <Typography>Add new fighter to your gang</Typography>
+          {loading && (
+            <CircularProgress
+              size={24}
+              sx={{
+                color: blue[500],
+                marginLeft: "12px",
+              }}
+            />
+          )}
+        </Stack>
+      </DialogTitle>
       <DialogContent sx={{ minHeight: "200px" }}>
         <Stack spacing={2}>
           <TextField
@@ -70,9 +96,9 @@ export default function EditTeamInfoDialog({
             variant="filled">
             <InputLabel htmlFor="credits">Credits</InputLabel>
             <FilledInput
-              value={teamInfo.credits}
+              value={teamInfo.cash}
               type="number"
-              onChange={handleChange("credits")}
+              onChange={handleChange("cash")}
               id="filled-basic-credits"
             />
           </FormControl>
@@ -89,19 +115,30 @@ export default function EditTeamInfoDialog({
               id="filled-basic-reputation"
             />
           </FormControl>
-          <FormControl
+          {/* { <FormControl
             sx={{
               m: 1,
             }}
             variant="filled">
             <InputLabel htmlFor="games number">Games number</InputLabel>
-            <FilledInput
+             {<FilledInput
               value={teamInfo.gamesNumber}
               type="number"
               onChange={handleChange("gamesNumber")}
               id="filled-basic-gamesNumber"
-            />
-          </FormControl>
+            />} 
+          </FormControl>} */}
+          <CheckboxWithText
+            checked={teamInfo.isOutlaw}
+            onChange={() =>
+              setTeamInfo({
+                ...teamInfo,
+                isOutlaw: !teamInfo.isOutlaw,
+              })
+            }
+            loading={loading}
+            text="Is outlaw"
+          />
         </Stack>
       </DialogContent>
       <DialogActions>

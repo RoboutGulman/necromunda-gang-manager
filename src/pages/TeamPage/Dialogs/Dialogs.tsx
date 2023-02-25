@@ -33,10 +33,13 @@ export default function Dialogs({
       <EditTeamInfoDialog
         initState={{
           name: teamInfo.name,
-          credits: teamInfo.cash,
+          cash: teamInfo.cash,
           reputation: teamInfo.reputation,
-          gamesNumber: teamInfo.gamesPlayed,
+          description: teamInfo.description,
+          isOutlaw: teamInfo.isOutlaw,
         }}
+        fetchData={fetchData}
+        teamId={teamId}
         open={dialogType === "edit-gang-info"}
         onClose={onClose}
       />

@@ -136,13 +136,14 @@ export default function AddFighterDialog({
           />
           <CheckboxWithText
             checked={fighterInfo.showOnlyFactionFighterTypes}
-            onChange={() =>
+            onChange={() => {
               setFighterInfo({
                 ...fighterInfo,
                 showOnlyFactionFighterTypes:
                   !fighterInfo.showOnlyFactionFighterTypes,
-              })
-            }
+              });
+            }}
+            loading={loading}
             text="Show only faction fighters?"
           />
           {!fighterTypes ? (
@@ -175,6 +176,7 @@ export default function AddFighterDialog({
                 purchaseWithCredits: !fighterInfo.purchaseWithCredits,
               })
             }
+            loading={loading}
             text="Purchase with credits?"
           />
         </Stack>

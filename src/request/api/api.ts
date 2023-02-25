@@ -4,6 +4,7 @@ import { deleteFighters } from "./fighter/deleteFighters";
 import { getFighterTypes } from "./fighterType/getFighterTypes";
 import { createTeam } from "./team/createTeam";
 import { deleteTeam } from "./team/deleteTeam";
+import { editTeam } from "./team/editTeam";
 import { getRecentTeams as getRecentTeams } from "./team/getRecentTeams";
 import { getTeam } from "./team/getTeam";
 import { getCurrentUser } from "./user/getCurrentUser";
@@ -26,4 +27,5 @@ export const Api = {
   getFighterTypes: getFighterTypes,
   createFighter: createFighter,
   deleteFighters: deleteFighters,
+  editTeam: editTeam,
 };
