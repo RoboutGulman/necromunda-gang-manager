@@ -1,15 +1,26 @@
 export class Market {
-  withRarity!: boolean;
-  categories!: Category[];
+  weapons!: {
+    name: string;
+    items: WeaponMarketItem[];
+  }[];
+  equipment!: {
+    name: string;
+    items: EquipmentMarketItem[];
+  }[];
 }
 
-export type Category = {
+export type WeaponMarketItem = {
+  id: number;
   name: string;
-  isEquipment: boolean;
-  items: {
-    id: number;
-    name: string;
-    cost: string;
-    rarity?: number;
-  }[];
+  cost: number;
+  rarity: number;
+  isFactionWeapon: boolean;
+};
+
+export type EquipmentMarketItem = {
+  id: number;
+  name: string;
+  cost: number;
+  rarity: number;
+  isFactionEquipment: boolean;
 };

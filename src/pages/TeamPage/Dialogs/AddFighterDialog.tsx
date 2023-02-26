@@ -88,15 +88,19 @@ export default function AddFighterDialog({
   const handleAdd = async () => {
     if (fighterInfoIsCorrect()) {
       setLoading(true);
-      await Api.createFighter({
+      const result = await Api.createFighter({
         teamId: teamId,
         name: fighterInfo.name,
         fighterTypeId: +fighterInfo.fighterTypeId,
         purchaseWithCredits: fighterInfo.purchaseWithCredits,
       });
       setLoading(false);
-      onClose();
-      fetchData();
+      if (result) {
+        onClose();
+        fetchData();
+      } else {
+        setInputError(true);
+      }
     }
   };
 
