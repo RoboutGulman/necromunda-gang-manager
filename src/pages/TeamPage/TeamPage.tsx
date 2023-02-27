@@ -137,7 +137,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
             />
           </Grid>
           <Grid item xs={12} lg={4}>
-            {!teamInfo ? (
+            {!teamView || !teamInfo ? (
               <ContainerWithCircularProgress height="400px" />
             ) : (
               <Paper
@@ -147,7 +147,11 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
                   top: "15%",
                   marginRight: "15px",
                 }}>
-                <TeamMenu teamInfo={teamInfo} setDialogOpen={setDialogOpen} />
+                <TeamMenu
+                  teamInfo={teamInfo}
+                  setDialogOpen={setDialogOpen}
+                  availibleForEdit={teamView.availableForEdit}
+                />
               </Paper>
             )}
           </Grid>
@@ -168,10 +172,14 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
             ModalProps={{
               keepMounted: true,
             }}>
-            {teamInfo ? (
-              <TeamMenu teamInfo={teamInfo} setDialogOpen={setDialogOpen} />
-            ) : (
+            {!teamView || !teamInfo ? (
               <ContainerWithCircularProgress height="400px" />
+            ) : (
+              <TeamMenu
+                teamInfo={teamInfo}
+                setDialogOpen={setDialogOpen}
+                availibleForEdit={teamView.availableForEdit}
+              />
             )}
           </Drawer>
         </Box>
@@ -192,170 +200,193 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
 interface TeamMenuProps {
   teamInfo: TeamInfo;
   setDialogOpen: React.Dispatch<React.SetStateAction<TeamPageDialogType>>;
+  availibleForEdit: boolean;
 }
 
-const TeamMenu: FC<TeamMenuProps> = memo(({ teamInfo, setDialogOpen }) => {
-  const [activeTab, setActiveTab] = React.useState(0);
+const TeamMenu: FC<TeamMenuProps> = memo(
+  ({ teamInfo, setDialogOpen, availibleForEdit }) => {
+    const [activeTab, setActiveTab] = React.useState(0);
 
-  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
-    setActiveTab(newValue);
-  };
-
-  interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-  }
-
-  function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`menu-tabpanel-${index}`}
-        aria-labelledby={`menu-tab-${index}`}
-        {...other}>
-        {value === index && (
-          <Box sx={{ p: 3 }}>
-            <Typography component={"span"}>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    );
-  }
-
-  function a11yProps(index: number) {
-    return {
-      id: `menu-tab-${index}`,
-      "aria-controls": `menu-tabpanel-${index}`,
+    const handleChange = (_: React.SyntheticEvent, newValue: number) => {
+      setActiveTab(newValue);
     };
-  }
 
-  function AdaptiveLabel({ text }: { text: string }) {
-    return (
+    interface TabPanelProps {
+      children?: React.ReactNode;
+      index: number;
+      value: number;
+    }
+
+    function TabPanel(props: TabPanelProps) {
+      const { children, value, index, ...other } = props;
+
+      return (
+        <div
+          role="tabpanel"
+          hidden={value !== index}
+          id={`menu-tabpanel-${index}`}
+          aria-labelledby={`menu-tab-${index}`}
+          {...other}>
+          {value === index && (
+            <Box sx={{ p: 3 }}>
+              <Typography component={"span"}>{children}</Typography>
+            </Box>
+          )}
+        </div>
+      );
+    }
+
+    const a11yProps = (index: number) => {
+      return {
+        id: `menu-tab-${index}`,
+        "aria-controls": `menu-tabpanel-${index}`,
+      };
+    };
+
+    const AdaptiveLabel = ({ text }: { text: string }) => (
       <Typography sx={{ display: { xs: "none", md: "flex" } }}>
         {text}
       </Typography>
     );
-  }
 
-  return (
-    <Box>
-      <Box
-        sx={{
-          borderBottom: 1,
-          borderColor: "divider",
-        }}>
-        <Tabs
-          value={activeTab}
-          onChange={handleChange}
-          aria-label="menu tabs"
-          centered>
-          <Tab
-            iconPosition="start"
-            icon={<InfoIcon />}
-            label={<AdaptiveLabel text="Info" />}
-            wrapped
-            {...a11yProps(0)}
+    return (
+      <Box>
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: "divider",
+          }}>
+          <Tabs
+            value={activeTab}
+            onChange={handleChange}
+            aria-label="menu tabs"
+            centered>
+            <Tab
+              iconPosition="start"
+              icon={<InfoIcon />}
+              label={<AdaptiveLabel text="Info" />}
+              wrapped
+              {...a11yProps(0)}
+            />
+            <Tab
+              iconPosition="start"
+              icon={<FormatListBulletedIcon />}
+              label={<AdaptiveLabel text="Notes" />}
+              wrapped
+              {...a11yProps(1)}
+            />
+            <Tab
+              iconPosition="start"
+              icon={<AppsIcon />}
+              label={<AdaptiveLabel text="Actions" />}
+              wrapped
+              {...a11yProps(2)}
+            />
+          </Tabs>
+        </Box>
+        <TabPanel value={activeTab} index={0}>
+          <Box sx={{ display: { xs: "none", lg: "flex" } }}>
+            <FullSizeMenuTeamInfo
+              info={teamInfo}
+              setDialogOpen={setDialogOpen}
+              availibleForEdit={availibleForEdit}
+            />
+          </Box>
+          <Box sx={{ display: { lg: "none" } }}>
+            <MobileSizeMenuTeamInfo
+              info={teamInfo}
+              setDialogOpen={setDialogOpen}
+              availibleForEdit={availibleForEdit}
+            />
+          </Box>
+        </TabPanel>
+        <TabPanel value={activeTab} index={1}>
+          <TextField
+            sx={{ width: "100%" }}
+            id="standard-multiline-static"
+            label="Notes"
+            multiline
+            rows={4}
+            value={teamInfo?.description}
+            variant="filled"
           />
-          <Tab
-            iconPosition="start"
-            icon={<FormatListBulletedIcon />}
-            label={<AdaptiveLabel text="Notes" />}
-            wrapped
-            {...a11yProps(1)}
-          />
-          <Tab
-            iconPosition="start"
-            icon={<AppsIcon />}
-            label={<AdaptiveLabel text="Actions" />}
-            wrapped
-            {...a11yProps(2)}
-          />
-        </Tabs>
+          {availibleForEdit ? (
+            <Stack spacing={2} direction="row" justifyContent="flex-end">
+              <Button>Save</Button>
+            </Stack>
+          ) : (
+            <></>
+          )}
+        </TabPanel>
+        <TabPanel value={activeTab} index={2}>
+          {!availibleForEdit ? (
+            <>
+              <Typography>You can't edit this team</Typography>
+            </>
+          ) : (
+            <List sx={{ paddingBottom: "0" }}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <AddIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Add fighter" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => setDialogOpen("select-random-fighter")}>
+                  <ListItemIcon>
+                    <CasinoIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Select random fighters" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem
+                disablePadding
+                sx={{ color: "white", backgroundColor: "red" }}>
+                <ListItemButton
+                  onClick={() => setDialogOpen("delete-selected-fighters")}>
+                  <ListItemIcon sx={{ color: "white" }}>
+                    <DeleteIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Delete Selected fighters" />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          )}
+        </TabPanel>
       </Box>
-      <TabPanel value={activeTab} index={0}>
-        <Box sx={{ display: { xs: "none", lg: "flex" } }}>
-          <FullSizeMenuTeamInfo info={teamInfo} setDialogOpen={setDialogOpen} />
-        </Box>
-        <Box sx={{ display: { lg: "none" } }}>
-          <MobileSizeMenuTeamInfo
-            info={teamInfo}
-            setDialogOpen={setDialogOpen}
-          />
-        </Box>
-      </TabPanel>
-      <TabPanel value={activeTab} index={1}>
-        <TextField
-          sx={{ width: "100%" }}
-          id="standard-multiline-static"
-          label="Notes"
-          multiline
-          rows={4}
-          value={teamInfo?.description}
-          variant="filled"
-        />
-        <Stack spacing={2} direction="row" justifyContent="flex-end">
-          <Button>Save</Button>
-        </Stack>
-      </TabPanel>
-      <TabPanel value={activeTab} index={2}>
-        <List sx={{ paddingBottom: "0" }}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <AddIcon />
-              </ListItemIcon>
-              <ListItemText primary="Add fighter" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton
-              onClick={() => setDialogOpen("select-random-fighter")}>
-              <ListItemIcon>
-                <CasinoIcon />
-              </ListItemIcon>
-              <ListItemText primary="Select random fighters" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ color: "white", backgroundColor: "red" }}>
-            <ListItemButton
-              onClick={() => setDialogOpen("delete-selected-fighters")}>
-              <ListItemIcon sx={{ color: "white" }}>
-                <DeleteIcon />
-              </ListItemIcon>
-              <ListItemText primary="Delete Selected fighters" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </TabPanel>
-    </Box>
-  );
-});
+    );
+  }
+);
 
 interface MenuTeamInfoProps {
   info: TeamInfo | undefined;
   setDialogOpen: React.Dispatch<React.SetStateAction<TeamPageDialogType>>;
+  availibleForEdit: boolean;
 }
 
-function FullSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
+function FullSizeMenuTeamInfo({
+  info,
+  setDialogOpen,
+  availibleForEdit,
+}: MenuTeamInfoProps) {
   interface TableToolbarProps {
     title: string;
     icon: React.ReactNode;
     setDialogOpen: React.Dispatch<React.SetStateAction<TeamPageDialogType>>;
     dialogType: TeamPageDialogType;
+    availibleForEdit: boolean;
   }
 
-  function TableToolbar({
+  const TableToolbar = ({
     title,
     icon,
     setDialogOpen,
     dialogType,
-  }: TableToolbarProps) {
+    availibleForEdit,
+  }: TableToolbarProps) => {
     return (
       <Toolbar
         sx={{
@@ -370,13 +401,17 @@ function FullSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
           {title}
         </Typography>
         <Tooltip title={title}>
-          <IconButton onClick={() => setDialogOpen(dialogType)}>
-            {icon}
-          </IconButton>
+          {availibleForEdit ? (
+            <IconButton onClick={() => setDialogOpen(dialogType)}>
+              {icon}
+            </IconButton>
+          ) : (
+            <></>
+          )}
         </Tooltip>
       </Toolbar>
     );
-  }
+  };
 
   return (
     <Grid container spacing={2}>
@@ -386,6 +421,7 @@ function FullSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
           icon={<EditIcon />}
           setDialogOpen={setDialogOpen}
           dialogType={"edit-gang-info"}
+          availibleForEdit={availibleForEdit}
         />
         <TeamInfoTable info={info} />
         <TableToolbar
@@ -393,8 +429,12 @@ function FullSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
           icon={<AddIcon />}
           setDialogOpen={setDialogOpen}
           dialogType={"add-fighter"}
+          availibleForEdit={availibleForEdit}
         />
-        <TerritoriesTable territories={info?.territories} />
+        <TerritoriesTable
+          territories={info?.territories}
+          availibleForEdit={availibleForEdit}
+        />
       </Grid>
       <Grid item lg={5}>
         <TableToolbar
@@ -402,6 +442,7 @@ function FullSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
           icon={<AddIcon />}
           setDialogOpen={setDialogOpen}
           dialogType={"add-fighter"}
+          availibleForEdit={availibleForEdit}
         />
         <FighterRangsTable rangStatistics={info?.rangStatistics} />
       </Grid>
@@ -409,7 +450,11 @@ function FullSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
   );
 }
 
-function MobileSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
+function MobileSizeMenuTeamInfo({
+  info,
+  setDialogOpen,
+  availibleForEdit,
+}: MenuTeamInfoProps) {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
@@ -431,9 +476,13 @@ function MobileSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
         <AccordionDetails>
           <TeamInfoTable info={info} />
           <Stack spacing={2} direction="row" justifyContent="flex-end">
-            <IconButton onClick={() => setDialogOpen("edit-gang-info")}>
-              <EditIcon />
-            </IconButton>
+            {availibleForEdit ? (
+              <IconButton onClick={() => setDialogOpen("edit-gang-info")}>
+                <EditIcon />
+              </IconButton>
+            ) : (
+              <></>
+            )}
           </Stack>
         </AccordionDetails>
       </Accordion>
@@ -449,9 +498,13 @@ function MobileSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
         <AccordionDetails>
           <FighterRangsTable rangStatistics={info?.rangStatistics} />
           <Stack spacing={2} direction="row" justifyContent="flex-end">
-            <IconButton onClick={() => setDialogOpen("add-fighter")}>
-              <AddIcon />
-            </IconButton>
+            {availibleForEdit ? (
+              <IconButton onClick={() => setDialogOpen("add-fighter")}>
+                <AddIcon />
+              </IconButton>
+            ) : (
+              <></>
+            )}
           </Stack>
         </AccordionDetails>
       </Accordion>
@@ -465,11 +518,18 @@ function MobileSizeMenuTeamInfo({ info, setDialogOpen }: MenuTeamInfoProps) {
           <Typography component={"span"}>{"Territories"}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <TerritoriesTable territories={info?.territories} />
+          <TerritoriesTable
+            territories={info?.territories}
+            availibleForEdit={availibleForEdit}
+          />
           <Stack spacing={2} direction="row" justifyContent="flex-end">
-            <IconButton onClick={() => setDialogOpen("add-fighter")}>
-              <AddIcon />
-            </IconButton>
+            {availibleForEdit ? (
+              <IconButton onClick={() => setDialogOpen("add-fighter")}>
+                <AddIcon />
+              </IconButton>
+            ) : (
+              <></>
+            )}
           </Stack>
         </AccordionDetails>
       </Accordion>
@@ -557,9 +617,13 @@ function FighterRangsTable({ rangStatistics }: FighterRangsTableProps) {
 
 interface TerritoriesTableProps {
   territories: Territory[] | undefined;
+  availibleForEdit: boolean;
 }
 
-function TerritoriesTable({ territories }: TerritoriesTableProps) {
+function TerritoriesTable({
+  territories,
+  availibleForEdit,
+}: TerritoriesTableProps) {
   return (
     <TableContainer>
       <StyledTable size="small">
@@ -570,9 +634,13 @@ function TerritoriesTable({ territories }: TerritoriesTableProps) {
               <StyledTableRow key={index}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>
-                  <IconButton>
-                    <CloseIcon />
-                  </IconButton>
+                  {availibleForEdit ? (
+                    <IconButton>
+                      <CloseIcon />
+                    </IconButton>
+                  ) : (
+                    <></>
+                  )}
                 </TableCell>
               </StyledTableRow>
             )}

@@ -78,15 +78,19 @@ export default function FighterCardList({
               gutterBottom>
               There are no fighters in this gang.
             </Typography>
-            <Stack>
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={openAddFighterDialog}
-                startIcon={<AddIcon />}>
-                Add fighter
-              </Button>
-            </Stack>
+            {teamView.availableForEdit ? (
+              <Stack>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={openAddFighterDialog}
+                  startIcon={<AddIcon />}>
+                  Add fighter
+                </Button>
+              </Stack>
+            ) : (
+              <></>
+            )}
           </Box>
         </Container>
       )}
