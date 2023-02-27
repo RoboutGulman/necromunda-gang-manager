@@ -7,6 +7,7 @@ import {
   SpecialRule,
   Status,
   Weapon,
+  WeaponUpgrade,
 } from "../Types";
 
 export class Fighter {
@@ -27,8 +28,16 @@ export class Fighter {
   userCharacteristicsModificators!: Characteristics;
   injuries!: Injury[];
   advances!: Advance[];
-  weapons!: Weapon[];
+  weapons!: FighterWeapon[];
   equipment!: Equipment[];
   skills!: Skill[];
   //specialRules!: SpecialRule[];
 }
+
+export type FighterWeapon = {
+  id: number;
+  fighterWeaponId: number;
+  name: string;
+  cost: number;
+  upgrades: WeaponUpgrade[];
+};

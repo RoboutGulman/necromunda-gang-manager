@@ -70,6 +70,10 @@ export default function FighterPage() {
     Api.removeEquipment(+fighterId, id, 1).then((_) => fetchFighterData());
   };
 
+  const deleteWeapon = (id: number) => {
+    Api.removeWeapon(+fighterId, id, 1).then((_) => fetchFighterData());
+  };
+
   return (
     <>
       <Grid container spacing={4}>
@@ -106,37 +110,39 @@ export default function FighterPage() {
                     onClick={() => {
                       setDialogOpen("market");
                     }}>
-                    <>
-                      {fighterPageInfo.fighter.weapons.map((item, index) => (
-                        <ListItem key={index}>
-                          <ListItemText primary={item.name} />
-                          <Chip
-                            size="small"
-                            sx={{
-                              backgroundColor: "#6c757d",
-                              color: "white",
-                            }}
-                            label={item.cost}
-                          />
-                        </ListItem>
-                      ))}
-                      {fighterPageInfo.fighter.equipment.map((item, index) => (
-                        <ListItem key={index}>
-                          <ListItemText primary={item.name} />
-                          <IconButton onClick={() => deleteEquipment(item.id)}>
-                            <CloseIcon />
-                          </IconButton>
-                          <Chip
-                            size="small"
-                            sx={{
-                              backgroundColor: "#6c757d",
-                              color: "white",
-                            }}
-                            label={item.cost}
-                          />
-                        </ListItem>
-                      ))}
-                    </>
+                    {fighterPageInfo.fighter.weapons.map((item, index) => (
+                      <ListItem key={index}>
+                        <ListItemText primary={item.name} />
+                        <IconButton
+                          onClick={() => deleteWeapon(item.fighterWeaponId)}>
+                          <CloseIcon />
+                        </IconButton>
+                        <Chip
+                          size="small"
+                          sx={{
+                            backgroundColor: "#6c757d",
+                            color: "white",
+                          }}
+                          label={item.cost}
+                        />
+                      </ListItem>
+                    ))}
+                    {fighterPageInfo.fighter.equipment.map((item, index) => (
+                      <ListItem key={index}>
+                        <ListItemText primary={item.name} />
+                        <IconButton onClick={() => deleteEquipment(item.id)}>
+                          <CloseIcon />
+                        </IconButton>
+                        <Chip
+                          size="small"
+                          sx={{
+                            backgroundColor: "#6c757d",
+                            color: "white",
+                          }}
+                          label={item.cost}
+                        />
+                      </ListItem>
+                    ))}
                   </StyledList>
                   <StyledList
                     header="Skills"

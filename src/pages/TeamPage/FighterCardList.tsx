@@ -107,6 +107,7 @@ export default function FighterCardList({
               key={fighterView.id}
               fighterView={fighterView}
               isSelected={true}
+              availableForEdit={teamView.availableForEdit}
             />
           ))}
       {teamView &&
@@ -126,6 +127,7 @@ export default function FighterCardList({
               key={fighterView.id}
               fighterView={fighterView}
               isSelected={false}
+              availableForEdit={teamView.availableForEdit}
             />
           ))}
     </List>
@@ -165,10 +167,11 @@ const FighterCountButton: FC<FighterCountButtonProps> = ({
 interface FighterCardItemProps {
   fighterView: FighterView;
   isSelected: boolean;
+  availableForEdit: boolean;
 }
 
 const FighterCardItem: FC<FighterCardItemProps> = memo(
-  ({ fighterView, isSelected }) => {
+  ({ fighterView, isSelected, availableForEdit }) => {
     const selectedFightersReducer = useSelectedFightersDispatch();
 
     return (
@@ -206,21 +209,25 @@ const FighterCardItem: FC<FighterCardItemProps> = memo(
               />
             </Grid>
           </ListItem>
-          <RouterLink to={`/fighter/${fighterView.id}`}>
-            <Box
-              sx={{
-                backgroundColor: "#343a40",
-                position: "absolute",
-                right: "-15px",
-                bottom: "-15px",
-                borderRadius: "50%",
-                border: "2px solid #747474",
-              }}>
-              <Fab size="medium" aria-label="add">
-                <EditIcon />
-              </Fab>
-            </Box>
-          </RouterLink>
+          {availableForEdit ? (
+            <RouterLink to={`/fighter/${fighterView.id}`}>
+              <Box
+                sx={{
+                  backgroundColor: "#343a40",
+                  position: "absolute",
+                  right: "-15px",
+                  bottom: "-15px",
+                  borderRadius: "50%",
+                  border: "2px solid #747474",
+                }}>
+                <Fab size="medium" aria-label="add">
+                  <EditIcon />
+                </Fab>
+              </Box>
+            </RouterLink>
+          ) : (
+            <></>
+          )}
         </FighterCard>
       </ListItem>
     );
