@@ -4,6 +4,7 @@ import { addWeapon } from "./fighter/addWeapon";
 import { createFighter } from "./fighter/createFighter";
 import { deleteFighters } from "./fighter/deleteFighters";
 import { getFighterPageInfo } from "./fighter/getFighterPageInfo";
+import { removeEquipment } from "./fighter/removeEquipment";
 import { getFighterTypes } from "./fighterType/getFighterTypes";
 import { createTeam } from "./team/createTeam";
 import { deleteTeam } from "./team/deleteTeam";
@@ -36,4 +37,5 @@ export const Api = {
   getFighterPageInfo: getFighterPageInfo,
   addEquipment: addEquipment,
   addWeapon: addWeapon,
+  removeEquipment: removeEquipment,
 };

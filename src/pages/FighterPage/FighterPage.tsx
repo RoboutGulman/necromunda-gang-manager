@@ -24,6 +24,7 @@ import { FighterCard } from "../../components/FighterCard/FighterCard";
 import { Api } from "../../request/api/api";
 import { useNavigate, useParams } from "react-router-dom";
 import ContainerWithCircularProgress from "../../components/ContainerWithCircularProgress";
+import CloseIcon from "@mui/icons-material/Close";
 
 /*TODO:: 
 таблица адвансов
@@ -64,6 +65,10 @@ export default function FighterPage() {
   useEffect(() => {
     fetchFighterData();
   }, [fighterId]);
+
+  const deleteEquipment = (id: number) => {
+    Api.removeEquipment(+fighterId, id, 1).then((_) => fetchFighterData());
+  };
 
   return (
     <>
@@ -118,6 +123,9 @@ export default function FighterPage() {
                       {fighterPageInfo.fighter.equipment.map((item, index) => (
                         <ListItem key={index}>
                           <ListItemText primary={item.name} />
+                          <IconButton onClick={() => deleteEquipment(item.id)}>
+                            <CloseIcon />
+                          </IconButton>
                           <Chip
                             size="small"
                             sx={{

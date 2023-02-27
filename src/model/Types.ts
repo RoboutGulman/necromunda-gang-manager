@@ -75,7 +75,7 @@ export type Weapon = {
 };
 
 export type Equipment = {
-  id: number | null;
+  id: number;
   name: string;
   rarity: number | null;
   cost: number;
