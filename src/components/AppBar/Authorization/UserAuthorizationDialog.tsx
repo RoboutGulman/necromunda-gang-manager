@@ -100,8 +100,7 @@ export default function UserAuthorizationDialog({
 
     if (registerResult.success) {
       await getCurrentUser(userDispatch);
-      setLoading(false);
-      close();
+      await tryLogin();
     } else {
       setLoading(false);
       setInputError({
@@ -127,9 +126,7 @@ export default function UserAuthorizationDialog({
       return;
     }
 
-    tryRegister();
-
-    setLoading(false);
+    await tryRegister();
   };
 
   const mouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
