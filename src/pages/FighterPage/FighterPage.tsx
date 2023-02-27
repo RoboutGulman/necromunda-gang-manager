@@ -23,6 +23,7 @@ import { FighterCardHeader } from "../../components/FighterCard/FighterCardHeade
 import { FighterCard } from "../../components/FighterCard/FighterCard";
 import { Api } from "../../request/api/api";
 import { useNavigate, useParams } from "react-router-dom";
+import ContainerWithCircularProgress from "../../components/ContainerWithCircularProgress";
 
 /*TODO:: 
 таблица адвансов
@@ -46,7 +47,7 @@ export default function FighterPage() {
   const fighterId = useParams().id!;
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const fetchFighterData = () => {
     if (!fighterId || isNaN(+fighterId)) {
       navigate("/notFound");
       return;
@@ -58,6 +59,10 @@ export default function FighterPage() {
       }
       navigate("/notFound");
     });
+  };
+
+  useEffect(() => {
+    fetchFighterData();
   }, [fighterId]);
 
   return (
@@ -65,81 +70,102 @@ export default function FighterPage() {
       <Grid container spacing={4}>
         <Grid item xs={12} lg={3}>
           <Stack sx={{ alignItems: { xs: "center", lg: "flex-end" } }}>
-            {fighterPageInfo === undefined ? (
-              <></>
-            ) : (
-              <NavigationList navigationInfo={fighterPageInfo.navigationInfo} />
-            )}
+            <NavigationList navigationInfo={fighterPageInfo?.navigationInfo} />
           </Stack>
         </Grid>
         <Grid item xs={12} lg={9}>
           <Stack
             spacing={4}
             sx={{ alignItems: { xs: "center", lg: "flex-start" } }}>
-            <FighterCard>
-              {fighterPageInfo === undefined ? (
-                <></>
-              ) : (
+            {!fighterPageInfo ? (
+              <Box
+                sx={{
+                  width: "60%",
+                }}>
+                <ContainerWithCircularProgress height="200px" />
+              </Box>
+            ) : (
+              <FighterCard>
                 <FighterCardContent fighterInfo={fighterPageInfo.fighter} />
-              )}
-            </FighterCard>
+              </FighterCard>
+            )}
             <Grid container>
-              <StyledList
-                header="Equipment"
-                onClick={() => {
-                  setDialogOpen("market");
-                }}>
-                {fighterPageInfo?.fighter.weapons.map((item, index) => (
-                  <ListItem key={index}>
-                    <ListItemText primary={item.name} />
-                    <Chip
-                      size="small"
-                      sx={{ backgroundColor: "#6c757d", color: "white" }}
-                      label={item.cost}
-                    />
-                  </ListItem>
-                ))}
-                {fighterPageInfo?.fighter.equipment.map((item, index) => (
-                  <ListItem key={index}>
-                    <ListItemText primary={item.name} />
-                    <Chip
-                      size="small"
-                      sx={{ backgroundColor: "#6c757d", color: "white" }}
-                      label={item.cost}
-                    />
-                  </ListItem>
-                ))}
-              </StyledList>
-              <StyledList
-                header="Skills"
-                onClick={() => {
-                  setDialogOpen("skill");
-                }}>
-                {fighterPageInfo?.fighter.skills.map((item, index) => (
-                  <ListItem key={index}>
-                    <ListItemText primary={item.name} />
-                  </ListItem>
-                ))}
-              </StyledList>
-              <StyledList
-                header="Injuries"
-                onClick={() => {
-                  setDialogOpen("injury");
-                }}>
-                {fighterPageInfo?.fighter.injuries.map((item, index) => (
-                  <ListItem key={index}>
-                    <ListItemText primary={item.name} />
-                  </ListItem>
-                ))}
-              </StyledList>
+              {!fighterPageInfo ? (
+                <Box sx={{ width: "60%" }}>
+                  <ContainerWithCircularProgress height="200px" />
+                </Box>
+              ) : (
+                <>
+                  <StyledList
+                    header="Equipment"
+                    onClick={() => {
+                      setDialogOpen("market");
+                    }}>
+                    <>
+                      {fighterPageInfo.fighter.weapons.map((item, index) => (
+                        <ListItem key={index}>
+                          <ListItemText primary={item.name} />
+                          <Chip
+                            size="small"
+                            sx={{
+                              backgroundColor: "#6c757d",
+                              color: "white",
+                            }}
+                            label={item.cost}
+                          />
+                        </ListItem>
+                      ))}
+                      {fighterPageInfo.fighter.equipment.map((item, index) => (
+                        <ListItem key={index}>
+                          <ListItemText primary={item.name} />
+                          <Chip
+                            size="small"
+                            sx={{
+                              backgroundColor: "#6c757d",
+                              color: "white",
+                            }}
+                            label={item.cost}
+                          />
+                        </ListItem>
+                      ))}
+                    </>
+                  </StyledList>
+                  <StyledList
+                    header="Skills"
+                    onClick={() => {
+                      setDialogOpen("skill");
+                    }}>
+                    {fighterPageInfo.fighter.skills.map((item, index) => (
+                      <ListItem key={index}>
+                        <ListItemText primary={item.name} />
+                      </ListItem>
+                    ))}
+                  </StyledList>
+                  <StyledList
+                    header="Injuries"
+                    onClick={() => {
+                      setDialogOpen("injury");
+                    }}>
+                    {fighterPageInfo.fighter.injuries.map((item, index) => (
+                      <ListItem key={index}>
+                        <ListItemText primary={item.name} />
+                      </ListItem>
+                    ))}
+                  </StyledList>
+                </>
+              )}
             </Grid>
           </Stack>
         </Grid>
       </Grid>
-      <Dialogs
-        dialogType={whichDialogIsOpen}
-        onClose={() => setDialogOpen("none")}
-      />
+      {fighterPageInfo && (
+        <Dialogs
+          dialogType={whichDialogIsOpen}
+          onClose={() => setDialogOpen("none")}
+          fetchData={fetchFighterData}
+          fighter={fighterPageInfo?.fighter}
+        />
+      )}
     </>
   );
 }

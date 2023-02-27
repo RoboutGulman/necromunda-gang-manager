@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   CircularProgress,
@@ -8,6 +9,7 @@ import {
   DialogTitle,
   IconButton,
   Slider,
+  Snackbar,
   Stack,
   styled,
   TableBody,
@@ -32,12 +34,35 @@ import { Api } from "../../../request/api/api";
 
 export interface MarketDialogProps {
   open: boolean;
+  fighterId: number;
   onClose: () => void;
+  fetchData: () => void;
 }
 
-export default function MarketDialog({ onClose, open }: MarketDialogProps) {
-  const handleClose = () => {
+export default function MarketDialog({
+  onClose,
+  fighterId,
+  open,
+  fetchData,
+}: MarketDialogProps) {
+  const [snackbarOpen, setSnackbarOpen] = React.useState<
+    "none" | "success" | "error"
+  >("none");
+
+  const handleDialogClose = () => {
+    setSnackbarOpen("none");
     onClose();
+  };
+
+  const handleSnackbarClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSnackbarOpen("none");
   };
 
   const [loading, setLoading] = useState(false);
@@ -45,6 +70,36 @@ export default function MarketDialog({ onClose, open }: MarketDialogProps) {
   const [market, setMarket] = useState<Market | undefined>(undefined);
 
   const [rarity, setRarity] = useState<number>(12);
+
+  const addEquipment = (equipmentId: number, purchaseWithCredits: boolean) => {
+    setLoading(true);
+    Api.addEquipment(fighterId, equipmentId, purchaseWithCredits).then(
+      (result) => {
+        if (result) {
+          setLoading(false);
+          setSnackbarOpen("success");
+          fetchData();
+        } else {
+          setLoading(false);
+          setSnackbarOpen("error");
+        }
+      }
+    );
+  };
+
+  const addWeapon = (weaponId: number, purchaseWithCredits: boolean) => {
+    setLoading(true);
+    Api.addWeapon(fighterId, weaponId, purchaseWithCredits).then((result) => {
+      if (result) {
+        setLoading(false);
+        setSnackbarOpen("success");
+        fetchData();
+      } else {
+        setLoading(false);
+        setSnackbarOpen("error");
+      }
+    });
+  };
 
   const UpdateTradingPost = (factionId: number, currentRarity: number) => {
     setLoading(true);
@@ -58,13 +113,16 @@ export default function MarketDialog({ onClose, open }: MarketDialogProps) {
     UpdateTradingPost(3, rarity);
   }, []);
 
-  const handleChange = (_: Event, newValue: number | Array<number>) => {
+  const handleRaritySliderChange = (
+    _: Event,
+    newValue: number | Array<number>
+  ) => {
     if (typeof newValue === "number") {
       setRarity(newValue);
     }
   };
 
-  const handleCommitChange = (
+  const handleRaritySliderCommitChange = (
     _: React.SyntheticEvent | Event,
     newValue: number | Array<number>
   ) => {
@@ -75,7 +133,7 @@ export default function MarketDialog({ onClose, open }: MarketDialogProps) {
   };
 
   return (
-    <UserDialog handleClose={handleClose} open={open}>
+    <UserDialog handleClose={handleDialogClose} open={open}>
       <DialogTitle>
         <Stack direction="row" alignItems="center">
           <Typography>Market</Typography>
@@ -91,6 +149,28 @@ export default function MarketDialog({ onClose, open }: MarketDialogProps) {
         </Stack>
       </DialogTitle>
       <DialogContent sx={{ minHeight: "200px" }}>
+        <Snackbar
+          open={snackbarOpen == "success"}
+          autoHideDuration={6000}
+          onClose={handleSnackbarClose}>
+          <Alert
+            onClose={handleSnackbarClose}
+            severity="success"
+            sx={{ width: "100%" }}>
+            Item successfully added
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          open={snackbarOpen == "error"}
+          autoHideDuration={6000}
+          onClose={handleSnackbarClose}>
+          <Alert
+            onClose={handleSnackbarClose}
+            severity="error"
+            sx={{ width: "100%" }}>
+            Error.
+          </Alert>
+        </Snackbar>
         <Box sx={{ width: "100%", marginTop: 4 }}>
           <Slider
             aria-label="Rarity"
@@ -98,8 +178,8 @@ export default function MarketDialog({ onClose, open }: MarketDialogProps) {
             getAriaValueText={(value: number) => "" + value}
             step={1}
             value={rarity}
-            onChangeCommitted={handleCommitChange}
-            onChange={handleChange}
+            onChangeCommitted={handleRaritySliderCommitChange}
+            onChange={handleRaritySliderChange}
             marks
             min={1}
             max={12}
@@ -120,16 +200,24 @@ export default function MarketDialog({ onClose, open }: MarketDialogProps) {
               </TableHead>
             </MarketTable>
             {market.weapons.map((category, index) => (
-              <WeaponCategoryTable key={index} category={category} />
+              <WeaponCategoryTable
+                key={index}
+                category={category}
+                onClick={addWeapon}
+              />
             ))}
             {market.equipment.map((category, index) => (
-              <EquipmentCategoryTable key={index} category={category} />
+              <EquipmentCategoryTable
+                key={index}
+                category={category}
+                onClick={addEquipment}
+              />
             ))}
           </>
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Back</Button>
+        <Button onClick={handleDialogClose}>Back</Button>
         <Button>Save</Button>
       </DialogActions>
     </UserDialog>
@@ -168,10 +256,11 @@ interface WeaponCategoryTableProps {
     name: string;
     items: WeaponMarketItem[];
   };
+  onClick: (weaponId: number, purchaseWithCredits: boolean) => void;
 }
 
 //TODO:: сделать универсальный виджет и для оружия и для экипировки
-function WeaponCategoryTable({ category }: WeaponCategoryTableProps) {
+function WeaponCategoryTable({ category, onClick }: WeaponCategoryTableProps) {
   const [isOpen, setOpen] = useState<boolean>(false);
   return (
     <>
@@ -204,6 +293,7 @@ function WeaponCategoryTable({ category }: WeaponCategoryTableProps) {
                   <TableCell>
                     <Stack direction="row" spacing={2}>
                       <Button
+                        onClick={() => onClick(item.id, false)}
                         style={{ backgroundColor: "rgba(200, 200, 200, 0.8)" }}
                         size="small"
                         variant="contained"
@@ -214,6 +304,7 @@ function WeaponCategoryTable({ category }: WeaponCategoryTableProps) {
                         add
                       </Button>
                       <Button
+                        onClick={() => onClick(item.id, true)}
                         style={{ backgroundColor: "rgba(200, 200, 200, 0.8)" }}
                         size="small"
                         variant="contained"
@@ -240,9 +331,13 @@ interface EquipmentCategoryTableProps {
     name: string;
     items: EquipmentMarketItem[];
   };
+  onClick: (equipmentId: number, purchaseWithCredits: boolean) => void;
 }
 
-function EquipmentCategoryTable({ category }: EquipmentCategoryTableProps) {
+function EquipmentCategoryTable({
+  category,
+  onClick,
+}: EquipmentCategoryTableProps) {
   const [isOpen, setOpen] = useState<boolean>(false);
   return (
     <>
@@ -275,6 +370,7 @@ function EquipmentCategoryTable({ category }: EquipmentCategoryTableProps) {
                   <TableCell>
                     <Stack direction="row" spacing={2}>
                       <Button
+                        onClick={() => onClick(item.id, false)}
                         style={{ backgroundColor: "rgba(200, 200, 200, 0.8)" }}
                         size="small"
                         variant="contained"
@@ -285,6 +381,7 @@ function EquipmentCategoryTable({ category }: EquipmentCategoryTableProps) {
                         add
                       </Button>
                       <Button
+                        onClick={() => onClick(item.id, true)}
                         style={{ backgroundColor: "rgba(200, 200, 200, 0.8)" }}
                         size="small"
                         variant="contained"
