@@ -16,7 +16,7 @@ import { blue, green, red } from "@mui/material/colors";
 import ItemsList from "../../components/ItemsList";
 
 interface DetailedStatsTableProps {
-  baseCharacteristics: Characteristics;
+  //baseCharacteristics: Characteristics;
   totalCharacteristics: Characteristics;
   totalInjuriesCharacteristics: Characteristics;
   totalAdvancesCharacteristics: Characteristics;

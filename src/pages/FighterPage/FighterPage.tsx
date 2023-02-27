@@ -14,8 +14,6 @@ import NavigationList from "./NavigationList";
 import DetailedStatsTable from "./DetailedStatsTable";
 import EditIcon from "@mui/icons-material/Edit";
 
-import { plainToClass } from "class-transformer";
-import fighterPageInfoExampleJson from "../../model/FakeData/FighterPageInfoExample.json";
 import cardBackground from "../../backgrounds/card_background.jpg";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
 import { FighterPageInfo } from "../../model/Dto/FighterPageInfo";
@@ -23,6 +21,8 @@ import { Fighter } from "../../model/Dto/Fighter";
 import Dialogs, { FighterPageDialogType } from "./Dialogs/Dialogs";
 import { FighterCardHeader } from "../../components/FighterCard/FighterCardHeader";
 import { FighterCard } from "../../components/FighterCard/FighterCard";
+import { Api } from "../../request/api/api";
+import { useNavigate, useParams } from "react-router-dom";
 
 /*TODO:: 
 таблица адвансов
@@ -43,11 +43,22 @@ export default function FighterPage() {
   const [whichDialogIsOpen, setDialogOpen] =
     useState<FighterPageDialogType>("none");
 
+  const fighterId = useParams().id!;
+  const navigate = useNavigate();
+
   useEffect(() => {
-    setFighterPageInfo(
-      plainToClass(FighterPageInfo, fighterPageInfoExampleJson)
-    );
-  }, []);
+    if (!fighterId || isNaN(+fighterId)) {
+      navigate("/notFound");
+      return;
+    }
+    Api.getFighterPageInfo(+fighterId).then((result) => {
+      if (result.success) {
+        setFighterPageInfo(result.fighterPageInfo!);
+        return;
+      }
+      navigate("/notFound");
+    });
+  }, [fighterId]);
 
   return (
     <>
@@ -147,7 +158,7 @@ function FighterCardContent({ fighterInfo }: FighterCardContentProps) {
       />
       <ListItem>
         <DetailedStatsTable
-          baseCharacteristics={fighterInfo.baseCharacteristics}
+          //baseCharacteristics={fighterInfo.baseCharacteristics}
           totalCharacteristics={fighterInfo.totalCharacteristics}
           totalInjuriesCharacteristics={
             fighterInfo.totalInjuriesCharacteristics
@@ -156,7 +167,7 @@ function FighterCardContent({ fighterInfo }: FighterCardContentProps) {
             fighterInfo.totalAdvancesCharacteristics
           }
           userModificators={fighterInfo.userCharacteristicsModificators}
-          userCostModificator={fighterInfo.userCostModificator}
+          userCostModificator={fighterInfo.userCostModifier}
           exp={fighterInfo.xp}
           lvl={fighterInfo.lvl}
         />

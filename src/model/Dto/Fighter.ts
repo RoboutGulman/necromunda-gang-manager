@@ -11,10 +11,16 @@ import {
 
 export class Fighter {
   id!: number;
+  isDead!: boolean;
   name!: string;
   rang!: string;
   description!: string;
-  baseCharacteristics!: Characteristics;
+  totalCost!: number;
+  userCostModifier!: number;
+  xp!: number;
+  lvl!: number;
+  status!: Status | null;
+  //baseCharacteristics!: Characteristics;
   totalCharacteristics!: Characteristics;
   totalInjuriesCharacteristics!: Characteristics;
   totalAdvancesCharacteristics!: Characteristics;
@@ -24,10 +30,5 @@ export class Fighter {
   weapons!: Weapon[];
   equipment!: Equipment[];
   skills!: Skill[];
-  specialRules!: SpecialRule[];
-  status!: Status | null;
-  xp!: number;
-  lvl!: number;
-  totalCost!: number;
-  userCostModificator!: number;
+  //specialRules!: SpecialRule[];
 }

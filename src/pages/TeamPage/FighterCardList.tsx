@@ -206,7 +206,7 @@ const FighterCardItem: FC<FighterCardItemProps> = memo(
               />
             </Grid>
           </ListItem>
-          <RouterLink to="/fighter/1">
+          <RouterLink to={`/fighter/${fighterView.id}`}>
             <Box
               sx={{
                 backgroundColor: "#343a40",
