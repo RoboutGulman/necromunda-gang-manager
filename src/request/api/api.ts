@@ -3,13 +3,14 @@ import { addEquipment } from "./fighter/addEquipment";
 import { addWeapon } from "./fighter/addWeapon";
 import { createFighter } from "./fighter/createFighter";
 import { deleteFighters } from "./fighter/deleteFighters";
-import { getFighterPageInfo } from "./fighter/getFighterPageInfo";
+import { getFighter } from "./fighter/getFighter";
 import { removeEquipment } from "./fighter/removeEquipment";
 import { removeWeapon } from "./fighter/removeWeapon";
 import { getFighterTypes } from "./fighterType/getFighterTypes";
 import { createTeam } from "./team/createTeam";
 import { deleteTeam } from "./team/deleteTeam";
 import { editTeam } from "./team/editTeam";
+import { getNavigationInfo } from "./team/getNavigationInfo";
 import { getRecentTeams as getRecentTeams } from "./team/getRecentTeams";
 import { getTeam } from "./team/getTeam";
 import { getTradingPost } from "./tradingPost/getTradingPost";
@@ -35,9 +36,10 @@ export const Api = {
   deleteFighters: deleteFighters,
   editTeam: editTeam,
   getTradingPost: getTradingPost,
-  getFighterPageInfo: getFighterPageInfo,
+  getFighter: getFighter,
   addEquipment: addEquipment,
   addWeapon: addWeapon,
   removeEquipment: removeEquipment,
   removeWeapon: removeWeapon,
+  getNavigationInfo: getNavigationInfo,
 };

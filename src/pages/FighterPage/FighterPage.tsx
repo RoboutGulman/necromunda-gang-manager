@@ -16,7 +16,6 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import cardBackground from "../../backgrounds/card_background.jpg";
 import cardNameBackground from "../../backgrounds/card_name_background.png";
-import { FighterPageInfo } from "../../model/Dto/FighterPageInfo";
 import { Fighter } from "../../model/Dto/Fighter";
 import Dialogs, { FighterPageDialogType } from "./Dialogs/Dialogs";
 import { FighterCardHeader } from "../../components/FighterCard/FighterCardHeader";
@@ -38,9 +37,7 @@ import CloseIcon from "@mui/icons-material/Close";
 */
 
 export default function FighterPage() {
-  const [fighterPageInfo, setFighterPageInfo] = useState<
-    FighterPageInfo | undefined
-  >();
+  const [fighter, setFighter] = useState<Fighter | undefined>();
 
   const [whichDialogIsOpen, setDialogOpen] =
     useState<FighterPageDialogType>("none");
@@ -53,9 +50,9 @@ export default function FighterPage() {
       navigate("/notFound");
       return;
     }
-    Api.getFighterPageInfo(+fighterId).then((result) => {
+    Api.getFighter(+fighterId).then((result) => {
       if (result.success) {
-        setFighterPageInfo(result.fighterPageInfo!);
+        setFighter(result.fighter!);
         return;
       }
       navigate("/notFound");
@@ -79,14 +76,14 @@ export default function FighterPage() {
       <Grid container spacing={4}>
         <Grid item xs={12} lg={3}>
           <Stack sx={{ alignItems: { xs: "center", lg: "flex-end" } }}>
-            <NavigationList navigationInfo={fighterPageInfo?.navigationInfo} />
+            <NavigationList teamId={fighter?.teamId} />
           </Stack>
         </Grid>
         <Grid item xs={12} lg={9}>
           <Stack
             spacing={4}
             sx={{ alignItems: { xs: "center", lg: "flex-start" } }}>
-            {!fighterPageInfo ? (
+            {!fighter ? (
               <Box
                 sx={{
                   width: "60%",
@@ -95,11 +92,11 @@ export default function FighterPage() {
               </Box>
             ) : (
               <FighterCard>
-                <FighterCardContent fighterInfo={fighterPageInfo.fighter} />
+                <FighterCardContent fighterInfo={fighter} />
               </FighterCard>
             )}
             <Grid container>
-              {!fighterPageInfo ? (
+              {!fighter ? (
                 <Box sx={{ width: "60%" }}>
                   <ContainerWithCircularProgress height="200px" />
                 </Box>
@@ -110,7 +107,7 @@ export default function FighterPage() {
                     onClick={() => {
                       setDialogOpen("market");
                     }}>
-                    {fighterPageInfo.fighter.weapons.map((item, index) => (
+                    {fighter.weapons.map((item, index) => (
                       <ListItem key={index}>
                         <ListItemText primary={item.name} />
                         <IconButton
@@ -127,7 +124,7 @@ export default function FighterPage() {
                         />
                       </ListItem>
                     ))}
-                    {fighterPageInfo.fighter.equipment.map((item, index) => (
+                    {fighter.equipment.map((item, index) => (
                       <ListItem key={index}>
                         <ListItemText primary={item.name} />
                         <IconButton onClick={() => deleteEquipment(item.id)}>
@@ -149,7 +146,7 @@ export default function FighterPage() {
                     onClick={() => {
                       setDialogOpen("skill");
                     }}>
-                    {fighterPageInfo.fighter.skills.map((item, index) => (
+                    {fighter.skills.map((item, index) => (
                       <ListItem key={index}>
                         <ListItemText primary={item.name} />
                       </ListItem>
@@ -160,7 +157,7 @@ export default function FighterPage() {
                     onClick={() => {
                       setDialogOpen("injury");
                     }}>
-                    {fighterPageInfo.fighter.injuries.map((item, index) => (
+                    {fighter.injuries.map((item, index) => (
                       <ListItem key={index}>
                         <ListItemText primary={item.name} />
                       </ListItem>
@@ -172,12 +169,12 @@ export default function FighterPage() {
           </Stack>
         </Grid>
       </Grid>
-      {fighterPageInfo && (
+      {fighter && (
         <Dialogs
           dialogType={whichDialogIsOpen}
           onClose={() => setDialogOpen("none")}
           fetchData={fetchFighterData}
-          fighter={fighterPageInfo?.fighter}
+          fighter={fighter}
         />
       )}
     </>

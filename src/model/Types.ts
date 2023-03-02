@@ -32,6 +32,8 @@ export type TeamPreview = {
 export type WeaponUpgrade = {
   id: number;
   name: string;
+  description: string;
+  cost: number;
 };
 
 export type MyTeamPreview = {

@@ -1,15 +1,10 @@
 import { Fighter } from "./Fighter";
 
-export class FighterPageInfo {
-  navigationInfo!: NavigationInfo;
-  fighter!: Fighter;
-}
-
-export type NavigationInfo = {
-  teamId: number;
-  teamName: string;
-  otherFighters: {
+export class NavigationInfo {
+  teamId!: number;
+  teamName!: string;
+  fighters!: {
     id: number;
     name: string;
   }[];
-};
+}

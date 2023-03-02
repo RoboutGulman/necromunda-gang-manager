@@ -12,14 +12,25 @@ import { Link } from "react-router-dom";
 import { NavigationInfo } from "../../model/Dto/FighterPageInfo";
 import ItemsList from "../../components/ItemsList";
 import ContainerWithCircularProgress from "../../components/ContainerWithCircularProgress";
+import { useEffect, useState } from "react";
+import { Api } from "../../request/api/api";
 
 interface NavigationListProps {
-  navigationInfo: NavigationInfo | undefined;
+  teamId: number | undefined;
 }
 
-export default function NavigationList({
-  navigationInfo,
-}: NavigationListProps) {
+export default function NavigationList({ teamId }: NavigationListProps) {
+  const [navigationInfo, setNavigationInfo] = useState<
+    NavigationInfo | undefined
+  >(undefined);
+
+  useEffect(() => {
+    teamId &&
+      Api.getNavigationInfo(teamId).then((result) =>
+        setNavigationInfo(result.navigationInfo)
+      );
+  }, [teamId]);
+
   return (
     <>
       {!navigationInfo ? (
@@ -51,7 +62,7 @@ export default function NavigationList({
               </ListItemButton>
             </ListItem>
             <ItemsList
-              items={navigationInfo.otherFighters}
+              items={navigationInfo.fighters}
               renderItem={(item, index) => (
                 <div key={index}>
                   <Divider />

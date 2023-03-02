@@ -12,6 +12,7 @@ import {
 
 export class Fighter {
   id!: number;
+  teamId!: number;
   isDead!: boolean;
   name!: string;
   rang!: string;
@@ -37,6 +38,7 @@ export class Fighter {
 export type FighterWeapon = {
   id: number;
   fighterWeaponId: number;
+  description: string;
   name: string;
   cost: number;
   upgrades: WeaponUpgrade[];
