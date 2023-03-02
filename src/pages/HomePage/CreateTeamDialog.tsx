@@ -43,7 +43,7 @@ export default function CreateTeamDialog({
 }: CreateTeamDialogProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const currentUserId = useUserState().user?.id;
+  const currentUserId = useUserState().result.user?.id;
   const [teamInfo, setTeamInfo] = React.useState<State>({
     name: "",
     factionId: "1",

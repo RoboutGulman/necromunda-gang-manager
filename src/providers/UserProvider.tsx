@@ -3,11 +3,11 @@ import { AuthorizeResult } from "../request/api/user/getCurrentUser";
 import { Api } from "../request/api/api";
 
 type Action =
-  | { type: "register" }
   | { type: "logout" }
+  | { type: "startDataLoading" }
   | { type: "setUser"; data: AuthorizeResult };
 type Dispatch = (action: Action) => void;
-type State = AuthorizeResult;
+type State = { isDataLoading: boolean; result: AuthorizeResult };
 type UserProviderProps = { children: React.ReactNode };
 
 const UserStateContext = React.createContext<State | undefined>(undefined);
@@ -16,6 +16,7 @@ const UserDispatchContext = React.createContext<Dispatch | undefined>(
 );
 
 async function getCurrentUser(dispatch: Dispatch) {
+  dispatch({ type: "startDataLoading" });
   Api.user.getCurrentUser().then((data) => {
     dispatch({ type: "setUser", data: data });
   });
@@ -23,12 +24,21 @@ async function getCurrentUser(dispatch: Dispatch) {
 
 function userControlReducer(state: State, action: Action): State {
   switch (action.type) {
+    case "startDataLoading": {
+      return {
+        isDataLoading: true,
+        result: { authorized: false },
+      };
+    }
     case "logout": {
       Api.user.logout();
-      return { authorized: false };
+      return { isDataLoading: false, result: { authorized: false } };
     }
     case "setUser": {
-      return { authorized: action.data.authorized, user: action.data.user };
+      return {
+        isDataLoading: false,
+        result: { authorized: action.data.authorized, user: action.data.user },
+      };
     }
     default: {
       throw new Error(`Unhandled action type: ${action}`);
@@ -38,7 +48,8 @@ function userControlReducer(state: State, action: Action): State {
 
 function UserProvider({ children }: UserProviderProps) {
   const [state, dispatch] = React.useReducer(userControlReducer, {
-    authorized: false,
+    isDataLoading: false,
+    result: { authorized: false },
   });
   return (
     <UserStateContext.Provider value={state}>

@@ -15,7 +15,7 @@ import { useUserDispatch, useUserState } from "../../providers/UserProvider";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 function UserControls() {
-  const user = useUserState();
+  const user = useUserState().result;
   const [anchorEl, setAnchorEl] = React.useState<any | null>(null);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;

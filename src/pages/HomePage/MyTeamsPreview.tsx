@@ -60,20 +60,21 @@ export default function MyTeamsPreview() {
     team: { id: number; name: string } | undefined;
   }>({ isOpen: false, team: undefined });
 
-  const user = useUserState();
+  const userInfo = useUserState().result;
   const setLoginDialogOpen = useAuthDialogsDispatch();
-  const currentUserData = useUserState().user;
   const [userTeams, setUserTeams] = useState<GetUserTeamsResult | undefined>(
     undefined
   );
 
   const fetchUserTeams = () =>
-    currentUserData &&
-    Api.user.getUserTeams(currentUserData.id).then((teams) => setUserTeams(teams));
+    userInfo.user &&
+    Api.user
+      .getUserTeams(userInfo.user.id)
+      .then((teams) => setUserTeams(teams));
 
   useEffect(() => {
     fetchUserTeams();
-  }, [currentUserData]);
+  }, [userInfo]);
 
   return (
     <Container>
@@ -86,7 +87,7 @@ export default function MyTeamsPreview() {
         {t("myGangs", { ns: ["home"] })}
       </Typography>
 
-      {user.authorized ? (
+      {userInfo.authorized ? (
         <Box
           sx={{
             display: "flex",

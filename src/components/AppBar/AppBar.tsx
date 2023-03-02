@@ -13,7 +13,7 @@ import Authorization from "./Authorization/Authorization";
 import { memo } from "react";
 
 export const AppBar = memo(() => {
-  const user = useUserState();
+  const user = useUserState().result;
 
   return (
     <Box

@@ -35,7 +35,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
   const mobileOpen = useDrawerState();
   const setMobileOpen = useDrawerDispatch();
   const navigate = useNavigate();
-  const currentUser = useUserState().user;
+  const currentUser = useUserState().result.user;
 
   const [teamView, setTeamView] = useState<TeamView>();
   const teamInfo: TeamInfo | undefined = teamView && getTeamInfo(teamView);
