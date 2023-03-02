@@ -44,7 +44,7 @@ export const FighterCardHeader: FC<FighterCardHeaderProps> = memo(
               sx={{ ml: "10px", textTransform: "capitalize" }}>
               {rang}
             </Typography>
-            {isSelected !== undefined && onClick !== undefined && (
+            {isSelected !== undefined && onClick !== undefined ? (
               <Checkbox
                 sx={{ color: "rgba(240, 244, 228, 0.7)" }}
                 color="secondary"
@@ -52,9 +52,13 @@ export const FighterCardHeader: FC<FighterCardHeaderProps> = memo(
                 onChange={onClick}
                 inputProps={{ "aria-label": "select" }}
               />
+            ) : (
+              <></>
             )}
-            {totalCost !== undefined && (
+            {totalCost !== undefined ? (
               <CreditsCostContainer cost={totalCost} />
+            ) : (
+              <></>
             )}
           </Box>
         </Paper>

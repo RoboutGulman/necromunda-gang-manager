@@ -137,7 +137,7 @@ export default function MarketDialog({
       <DialogTitle>
         <Stack direction="row" alignItems="center">
           <Typography>Market</Typography>
-          {loading && (
+          {loading ? (
             <CircularProgress
               size={24}
               sx={{
@@ -145,6 +145,8 @@ export default function MarketDialog({
                 marginLeft: "12px",
               }}
             />
+          ) : (
+            <></>
           )}
         </Stack>
       </DialogTitle>

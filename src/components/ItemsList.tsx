@@ -8,8 +8,11 @@ interface ListProps<T> {
 export default function ItemsList<T>({ items, renderItem }: ListProps<T>) {
   return (
     <>
-      {items !== undefined &&
-        items?.map((item: T, index: number) => renderItem(item, index))}
+      {items !== undefined ? (
+        items?.map((item: T, index: number) => renderItem(item, index))
+      ) : (
+        <></>
+      )}
     </>
   );
 }

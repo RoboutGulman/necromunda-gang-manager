@@ -67,8 +67,8 @@ export default function FighterCardList({
 
   return (
     <List>
-      {!teamView && <ContainerWithCircularProgress height="400px" />}
-      {teamView && teamView.fighters.length === 0 && (
+      {!teamView ? <ContainerWithCircularProgress height="400px" /> : <></>}
+      {teamView && teamView.fighters.length === 0 ? (
         <Container>
           <Box maxWidth={400} sx={{ margin: "auto" }}>
             <Typography
@@ -93,17 +93,20 @@ export default function FighterCardList({
             )}
           </Box>
         </Container>
+      ) : (
+        <></>
       )}
-      {selectedFightersIds.length && (
+      {selectedFightersIds.length ? (
         <FighterCountButton
           content={`${selectedFightersIds.length} fighter${
             selectedFightersIds.length > 1 ? "s" : ""
           } selected. Sum cost is ${selectedFightersCost}. Click to unselect all.`}
           onClick={() => selectedFightersReducer({ type: "delete all" })}
         />
+      ) : (
+        <></>
       )}
-      {fightersSelectionInfo.length &&
-        teamView &&
+      {fightersSelectionInfo.length && teamView ? (
         teamView.fighters
           .filter((fighter) => selectedFightersIds.includes(fighter.id))
           .map((fighterView) => (
@@ -113,17 +116,21 @@ export default function FighterCardList({
               isSelected={true}
               availableForEdit={teamView.availableForEdit}
             />
-          ))}
+          ))
+      ) : (
+        <></>
+      )}
       {teamView &&
-        selectedFightersIds.length &&
-        selectedFightersIds.length < teamView.fighters.length && (
-          <FighterCountButton
-            content="Unselected fighters. Click to unselect all."
-            onClick={() => selectedFightersReducer({ type: "delete all" })}
-          />
-        )}
-      {fightersSelectionInfo.length &&
-        teamView &&
+      selectedFightersIds.length &&
+      selectedFightersIds.length < teamView.fighters.length ? (
+        <FighterCountButton
+          content="Unselected fighters. Click to unselect all."
+          onClick={() => selectedFightersReducer({ type: "delete all" })}
+        />
+      ) : (
+        <></>
+      )}
+      {fightersSelectionInfo.length && teamView ? (
         teamView.fighters
           .filter((fighter) => !selectedFightersIds.includes(fighter.id))
           .map((fighterView) => (
@@ -133,7 +140,10 @@ export default function FighterCardList({
               isSelected={false}
               availableForEdit={teamView.availableForEdit}
             />
-          ))}
+          ))
+      ) : (
+        <></>
+      )}
     </List>
   );
 }

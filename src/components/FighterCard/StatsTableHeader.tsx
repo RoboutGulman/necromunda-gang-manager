@@ -33,7 +33,7 @@ function StatsTableHeader({ children }: StatsTableHeaderProps) {
             </StyledCell>
           )}
         />
-        {children && <StyledCell>{children}</StyledCell>}
+        {children ? <StyledCell>{children}</StyledCell> : <></>}
       </TableRow>
     </TableHead>
   );

@@ -179,15 +179,19 @@ export default function CreateTeamDialog({
                 id="filled-basic"
               />
             </FormControl>
-            {inputError === "server" && (
+            {inputError === "server" ? (
               <Alert severity="error">
                 {t("createGangDialog.serverError", { ns: ["home"] })}
               </Alert>
+            ) : (
+              <></>
             )}
-            {inputError === "other" && (
+            {inputError === "other" ? (
               <Alert severity="error">
                 {t("createGangDialog.unhandledError", { ns: ["home"] })}
               </Alert>
+            ) : (
+              <></>
             )}
           </Stack>
         )}

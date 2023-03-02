@@ -138,7 +138,7 @@ export default function UserAuthorizationDialog({
       <DialogTitle>
         <Stack direction="row" alignItems="center">
           <Typography>{`${variant} your account`}</Typography>
-          {loading && (
+          {loading ? (
             <CircularProgress
               size={24}
               sx={{
@@ -146,6 +146,8 @@ export default function UserAuthorizationDialog({
                 marginLeft: "12px",
               }}
             />
+          ) : (
+            <></>
           )}
         </Stack>
       </DialogTitle>
