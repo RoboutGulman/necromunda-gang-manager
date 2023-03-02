@@ -156,7 +156,7 @@ export const TeamMenu: FC<TeamMenuProps> = memo(
           ) : (
             <List sx={{ paddingBottom: "0" }}>
               <ListItem disablePadding>
-                <ListItemButton>
+                <ListItemButton onClick={() => setDialogOpen("add-fighter")}>
                   <ListItemIcon>
                     <AddIcon />
                   </ListItemIcon>
