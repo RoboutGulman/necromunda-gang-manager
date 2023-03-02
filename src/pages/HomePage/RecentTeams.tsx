@@ -24,7 +24,7 @@ export default function RecentTeams() {
   const [recentTeams, setRecentTeams] = useState<RecentTeamsDto>();
 
   useEffect(() => {
-    Api.getRecentTeams().then((result) => setRecentTeams(result));
+    Api.team.getRecentTeams().then((result) => setRecentTeams(result));
   }, []);
 
   return (

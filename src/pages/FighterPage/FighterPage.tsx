@@ -50,7 +50,7 @@ export default function FighterPage() {
       navigate("/notFound");
       return;
     }
-    Api.getFighter(+fighterId).then((result) => {
+    Api.fighter.getFighter(+fighterId).then((result) => {
       if (result.success) {
         setFighter(result.fighter!);
         return;
@@ -64,11 +64,11 @@ export default function FighterPage() {
   }, [fighterId]);
 
   const deleteEquipment = (id: number) => {
-    Api.removeEquipment(+fighterId, id, 1).then((_) => fetchFighterData());
+    Api.fighter.removeEquipment(+fighterId, id, 1).then((_) => fetchFighterData());
   };
 
   const deleteWeapon = (id: number) => {
-    Api.removeWeapon(+fighterId, id, 1).then((_) => fetchFighterData());
+    Api.fighter.removeWeapon(+fighterId, id, 1).then((_) => fetchFighterData());
   };
 
   return (

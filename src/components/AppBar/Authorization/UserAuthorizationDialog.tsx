@@ -74,7 +74,7 @@ export default function UserAuthorizationDialog({
   };
 
   const tryLogin = async () => {
-    let loginResult = await Api.login({
+    let loginResult = await Api.user.login({
       username: userInfo.nickname,
       password: userInfo.password,
     });
@@ -93,7 +93,7 @@ export default function UserAuthorizationDialog({
   };
 
   const tryRegister = async () => {
-    let registerResult = await Api.register({
+    let registerResult = await Api.user.register({
       username: userInfo.nickname,
       password: userInfo.password,
     });

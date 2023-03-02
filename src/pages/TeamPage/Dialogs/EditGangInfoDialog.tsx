@@ -51,7 +51,7 @@ export default function EditTeamInfoDialog({
   const handleAdd = async () => {
     if (fighterInfoIsCorrect()) {
       setLoading(true);
-      const result = await Api.editTeam({
+      const result = await Api.team.editTeam({
         teamId: teamId,
         request: { ...teamInfo },
       });

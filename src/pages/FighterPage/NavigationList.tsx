@@ -26,7 +26,7 @@ export default function NavigationList({ teamId }: NavigationListProps) {
 
   useEffect(() => {
     teamId &&
-      Api.getNavigationInfo(teamId).then((result) =>
+      Api.team.getNavigationInfo(teamId).then((result) =>
         setNavigationInfo(result.navigationInfo)
       );
   }, [teamId]);

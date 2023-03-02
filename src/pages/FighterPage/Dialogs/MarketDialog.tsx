@@ -73,7 +73,7 @@ export default function MarketDialog({
 
   const addEquipment = (equipmentId: number, purchaseWithCredits: boolean) => {
     setLoading(true);
-    Api.addEquipment(fighterId, equipmentId, purchaseWithCredits).then(
+    Api.fighter.addEquipment(fighterId, equipmentId, purchaseWithCredits).then(
       (result) => {
         if (result) {
           setLoading(false);
@@ -89,7 +89,7 @@ export default function MarketDialog({
 
   const addWeapon = (weaponId: number, purchaseWithCredits: boolean) => {
     setLoading(true);
-    Api.addWeapon(fighterId, weaponId, purchaseWithCredits).then((result) => {
+    Api.fighter.addWeapon(fighterId, weaponId, purchaseWithCredits).then((result) => {
       if (result) {
         setLoading(false);
         setSnackbarOpen("success");
@@ -103,7 +103,7 @@ export default function MarketDialog({
 
   const UpdateTradingPost = (factionId: number, currentRarity: number) => {
     setLoading(true);
-    Api.getTradingPost(factionId, currentRarity).then((result) => {
+    Api.tradingPost.getTradingPost(factionId, currentRarity).then((result) => {
       setMarket(result.market);
       setLoading(false);
     });

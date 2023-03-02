@@ -21,25 +21,37 @@ import { logout } from "./user/logout";
 import { register } from "./user/register";
 
 export const Api = {
-  getCurrentUser: getCurrentUser,
-  login: login,
-  logout: logout,
-  register: register,
-  getAllFactions: getAllFactions,
-  getUserTeams: getUserTeams,
-  createTeam: createTeam,
-  getRecentTeams: getRecentTeams,
-  deleteTeam: deleteTeam,
-  getTeam: getTeam,
-  getFighterTypes: getFighterTypes,
-  createFighter: createFighter,
-  deleteFighters: deleteFighters,
-  editTeam: editTeam,
-  getTradingPost: getTradingPost,
-  getFighter: getFighter,
-  addEquipment: addEquipment,
-  addWeapon: addWeapon,
-  removeEquipment: removeEquipment,
-  removeWeapon: removeWeapon,
-  getNavigationInfo: getNavigationInfo,
+  user: {
+    getCurrentUser: getCurrentUser,
+    login: login,
+    logout: logout,
+    register: register,
+    getUserTeams: getUserTeams,
+  },
+  factions: {
+    getAllFactions: getAllFactions,
+  },
+  team: {
+    createTeam: createTeam,
+    getRecentTeams: getRecentTeams,
+    deleteTeam: deleteTeam,
+    getTeam: getTeam,
+    getNavigationInfo: getNavigationInfo,
+    editTeam: editTeam,
+  },
+  fighterType: {
+    getFighterTypes: getFighterTypes,
+  },
+  fighter: {
+    createFighter: createFighter,
+    deleteFighters: deleteFighters,
+    getFighter: getFighter,
+    addEquipment: addEquipment,
+    addWeapon: addWeapon,
+    removeEquipment: removeEquipment,
+    removeWeapon: removeWeapon,
+  },
+  tradingPost: {
+    getTradingPost: getTradingPost,
+  },
 };

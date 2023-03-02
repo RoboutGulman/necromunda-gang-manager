@@ -53,7 +53,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
       navigate("/notFound");
       return;
     }
-    Api.getTeam(+teamId).then((result) => {
+    Api.team.getTeam(+teamId).then((result) => {
       if (result.success) {
         setTeamView(result.teamView!);
         return;

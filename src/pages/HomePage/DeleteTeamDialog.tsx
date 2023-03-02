@@ -30,7 +30,7 @@ export default function DeleteTeamDialog({
 
   const deleteTeam = async () => {
     if (team) {
-      const result = await Api.deleteTeam(team.id);
+      const result = await Api.team.deleteTeam(team.id);
       if (result) {
         onClose();
         fetchUserTeams();

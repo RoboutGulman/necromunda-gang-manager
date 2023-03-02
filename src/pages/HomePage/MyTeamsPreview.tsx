@@ -69,7 +69,7 @@ export default function MyTeamsPreview() {
 
   const fetchUserTeams = () =>
     currentUserData &&
-    Api.getUserTeams(currentUserData.id).then((teams) => setUserTeams(teams));
+    Api.user.getUserTeams(currentUserData.id).then((teams) => setUserTeams(teams));
 
   useEffect(() => {
     fetchUserTeams();

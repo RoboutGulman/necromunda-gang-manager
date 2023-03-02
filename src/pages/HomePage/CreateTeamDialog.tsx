@@ -60,7 +60,7 @@ export default function CreateTeamDialog({
   >(undefined);
 
   useEffect(() => {
-    Api.getAllFactions().then((result) => {
+    Api.factions.getAllFactions().then((result) => {
       setFactions(result);
       setTeamInfo({ ...teamInfo, factionId: result[0].id.toString() });
     });
@@ -88,7 +88,7 @@ export default function CreateTeamDialog({
     if (teamInfoIsCorrect()) {
       setLoading(true);
 
-      let createTeamResult = await Api.createTeam({
+      let createTeamResult = await Api.team.createTeam({
         name: teamInfo.name,
         startingCredits: +teamInfo.startCredits,
         factionId: +teamInfo.factionId,

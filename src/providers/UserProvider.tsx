@@ -16,7 +16,7 @@ const UserDispatchContext = React.createContext<Dispatch | undefined>(
 );
 
 async function getCurrentUser(dispatch: Dispatch) {
-  Api.getCurrentUser().then((data) => {
+  Api.user.getCurrentUser().then((data) => {
     dispatch({ type: "setUser", data: data });
   });
 }
@@ -24,7 +24,7 @@ async function getCurrentUser(dispatch: Dispatch) {
 function userControlReducer(state: State, action: Action): State {
   switch (action.type) {
     case "logout": {
-      Api.logout();
+      Api.user.logout();
       return { authorized: false };
     }
     case "setUser": {

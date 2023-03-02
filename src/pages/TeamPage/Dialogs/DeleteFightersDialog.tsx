@@ -28,7 +28,7 @@ export default function DeleteFightersDialog({
 
   const deleteFighter = async () => {
     if (selectedFightersIds.length) {
-      const result = await Api.deleteFighters(selectedFightersIds);
+      const result = await Api.fighter.deleteFighters(selectedFightersIds);
       if (result) {
         onClose();
         fetchTeam();

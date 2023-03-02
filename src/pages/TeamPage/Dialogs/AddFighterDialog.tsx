@@ -70,10 +70,10 @@ export default function AddFighterDialog({
     setLoading(true);
 
     if (!fighterInfo.showOnlyFactionFighterTypes) {
-      Api.getFighterTypes().then((result) => changeDialogInfo(result));
+      Api.fighterType.getFighterTypes().then((result) => changeDialogInfo(result));
       return;
     }
-    Api.getFighterTypes(factionId).then((result) => changeDialogInfo(result));
+    Api.fighterType.getFighterTypes(factionId).then((result) => changeDialogInfo(result));
   }, [factionId, fighterInfo.showOnlyFactionFighterTypes]);
 
   const fighterInfoIsCorrect = () => {
@@ -88,7 +88,7 @@ export default function AddFighterDialog({
   const handleAdd = async () => {
     if (fighterInfoIsCorrect()) {
       setLoading(true);
-      const result = await Api.createFighter({
+      const result = await Api.fighter.createFighter({
         teamId: teamId,
         name: fighterInfo.name,
         fighterTypeId: +fighterInfo.fighterTypeId,
