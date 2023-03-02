@@ -13,6 +13,7 @@ import { editTeam } from "./team/editTeam";
 import { getNavigationInfo } from "./team/getNavigationInfo";
 import { getRecentTeams as getRecentTeams } from "./team/getRecentTeams";
 import { getTeam } from "./team/getTeam";
+import { getTeamCash } from "./team/getTeamCash";
 import { getTradingPost } from "./tradingPost/getTradingPost";
 import { getCurrentUser } from "./user/getCurrentUser";
 import { getUserTeams } from "./user/getUserTeams";
@@ -38,6 +39,7 @@ export const Api = {
     getTeam: getTeam,
     getNavigationInfo: getNavigationInfo,
     editTeam: editTeam,
+    getTeamCash: getTeamCash,
   },
   fighterType: {
     getFighterTypes: getFighterTypes,

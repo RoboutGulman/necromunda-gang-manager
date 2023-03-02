@@ -2,6 +2,7 @@ import {
   Alert,
   Box,
   Button,
+  Chip,
   CircularProgress,
   Collapse,
   DialogActions,
@@ -37,6 +38,7 @@ export interface MarketDialogProps {
   fighterId: number;
   onClose: () => void;
   fetchData: () => void;
+  teamId: number;
 }
 
 export default function MarketDialog({
@@ -44,6 +46,7 @@ export default function MarketDialog({
   fighterId,
   open,
   fetchData,
+  teamId,
 }: MarketDialogProps) {
   const [snackbarOpen, setSnackbarOpen] = React.useState<
     "none" | "success" | "error"
@@ -71,34 +74,44 @@ export default function MarketDialog({
 
   const [rarity, setRarity] = useState<number>(12);
 
+  const [cash, setCash] = useState<number | undefined>(undefined);
+
   const addEquipment = (equipmentId: number, purchaseWithCredits: boolean) => {
     setLoading(true);
-    Api.fighter.addEquipment(fighterId, equipmentId, purchaseWithCredits).then(
-      (result) => {
+    Api.fighter
+      .addEquipment(fighterId, equipmentId, purchaseWithCredits)
+      .then((result) => {
         if (result) {
           setLoading(false);
           setSnackbarOpen("success");
           fetchData();
+          if (purchaseWithCredits) {
+            UpdateTeamCash(teamId);
+          }
         } else {
           setLoading(false);
           setSnackbarOpen("error");
         }
-      }
-    );
+      });
   };
 
   const addWeapon = (weaponId: number, purchaseWithCredits: boolean) => {
     setLoading(true);
-    Api.fighter.addWeapon(fighterId, weaponId, purchaseWithCredits).then((result) => {
-      if (result) {
-        setLoading(false);
-        setSnackbarOpen("success");
-        fetchData();
-      } else {
-        setLoading(false);
-        setSnackbarOpen("error");
-      }
-    });
+    Api.fighter
+      .addWeapon(fighterId, weaponId, purchaseWithCredits)
+      .then((result) => {
+        if (result) {
+          setLoading(false);
+          setSnackbarOpen("success");
+          fetchData();
+          if (purchaseWithCredits) {
+            UpdateTeamCash(teamId);
+          }
+        } else {
+          setLoading(false);
+          setSnackbarOpen("error");
+        }
+      });
   };
 
   const UpdateTradingPost = (factionId: number, currentRarity: number) => {
@@ -109,8 +122,17 @@ export default function MarketDialog({
     });
   };
 
+  const UpdateTeamCash = (teamId: number) => {
+    setLoading(true);
+    Api.team.getTeamCash(teamId).then((result) => {
+      setCash(result.cash);
+      setLoading(false);
+    });
+  };
+
   useEffect(() => {
     UpdateTradingPost(3, rarity);
+    UpdateTeamCash(teamId);
   }, []);
 
   const handleRaritySliderChange = (
@@ -135,7 +157,10 @@ export default function MarketDialog({
   return (
     <UserDialog handleClose={handleDialogClose} open={open}>
       <DialogTitle>
-        <Stack direction="row" alignItems="center">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between">
           <Typography>Market</Typography>
           {loading ? (
             <CircularProgress
@@ -148,6 +173,7 @@ export default function MarketDialog({
           ) : (
             <></>
           )}
+          <Chip label={`${cash} credits`} />
         </Stack>
       </DialogTitle>
       <DialogContent sx={{ minHeight: "200px" }}>

@@ -29,6 +29,7 @@ export default function Dialogs({
         factionId={teamInfo.faction.id}
         open={dialogType === "add-fighter"}
         onClose={onClose}
+        cash={teamInfo.cash}
       />
       <EditTeamInfoDialog
         initState={{

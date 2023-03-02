@@ -29,6 +29,7 @@ export default function Dialogs({
         onClose={onClose}
         fighterId={fighter.id}
         fetchData={fetchData}
+        teamId={fighter.teamId}
       />
     </>
   );

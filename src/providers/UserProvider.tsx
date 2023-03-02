@@ -4,7 +4,6 @@ import { Api } from "../request/api/api";
 
 type Action =
   | { type: "logout" }
-  | { type: "startDataLoading" }
   | { type: "setUser"; data: AuthorizeResult };
 type Dispatch = (action: Action) => void;
 type State = { isDataLoading: boolean; result: AuthorizeResult };
@@ -16,7 +15,6 @@ const UserDispatchContext = React.createContext<Dispatch | undefined>(
 );
 
 async function getCurrentUser(dispatch: Dispatch) {
-  dispatch({ type: "startDataLoading" });
   Api.user.getCurrentUser().then((data) => {
     dispatch({ type: "setUser", data: data });
   });
@@ -24,12 +22,6 @@ async function getCurrentUser(dispatch: Dispatch) {
 
 function userControlReducer(state: State, action: Action): State {
   switch (action.type) {
-    case "startDataLoading": {
-      return {
-        isDataLoading: true,
-        result: { authorized: false },
-      };
-    }
     case "logout": {
       Api.user.logout();
       return { isDataLoading: false, result: { authorized: false } };
@@ -48,7 +40,7 @@ function userControlReducer(state: State, action: Action): State {
 
 function UserProvider({ children }: UserProviderProps) {
   const [state, dispatch] = React.useReducer(userControlReducer, {
-    isDataLoading: false,
+    isDataLoading: true,
     result: { authorized: false },
   });
   return (

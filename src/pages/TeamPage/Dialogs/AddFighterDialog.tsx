@@ -1,5 +1,6 @@
 import {
   Button,
+  Chip,
   CircularProgress,
   DialogActions,
   DialogContent,
@@ -34,6 +35,7 @@ export interface AddFighterDialogProps {
   open: boolean;
   fetchData: () => void;
   onClose: () => void;
+  cash: number;
 }
 
 export default function AddFighterDialog({
@@ -42,6 +44,7 @@ export default function AddFighterDialog({
   onClose,
   fetchData,
   open,
+  cash,
 }: AddFighterDialogProps) {
   const [fighterInfo, setFighterInfo] = React.useState<State>({
     name: "",
@@ -70,10 +73,14 @@ export default function AddFighterDialog({
     setLoading(true);
 
     if (!fighterInfo.showOnlyFactionFighterTypes) {
-      Api.fighterType.getFighterTypes().then((result) => changeDialogInfo(result));
+      Api.fighterType
+        .getFighterTypes()
+        .then((result) => changeDialogInfo(result));
       return;
     }
-    Api.fighterType.getFighterTypes(factionId).then((result) => changeDialogInfo(result));
+    Api.fighterType
+      .getFighterTypes(factionId)
+      .then((result) => changeDialogInfo(result));
   }, [factionId, fighterInfo.showOnlyFactionFighterTypes]);
 
   const fighterInfoIsCorrect = () => {
@@ -115,7 +122,10 @@ export default function AddFighterDialog({
   return (
     <UserDialog handleClose={onClose} open={open}>
       <DialogTitle>
-        <Stack direction="row" alignItems="center">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between">
           <Typography>Add new fighter to your gang</Typography>
           {loading ? (
             <CircularProgress
@@ -128,6 +138,7 @@ export default function AddFighterDialog({
           ) : (
             <></>
           )}
+          <Chip label={`${cash} credits`} />
         </Stack>
       </DialogTitle>
       <DialogContent sx={{ minHeight: "200px" }}>
