@@ -68,7 +68,7 @@ export default function EditTeamInfoDialog({
       <DialogTitle>
         <Stack direction="row" alignItems="center">
           <Typography>Add new fighter to your gang</Typography>
-          {loading && (
+          {loading ? (
             <CircularProgress
               size={24}
               sx={{
@@ -76,6 +76,8 @@ export default function EditTeamInfoDialog({
                 marginLeft: "12px",
               }}
             />
+          ) : (
+            <></>
           )}
         </Stack>
       </DialogTitle>

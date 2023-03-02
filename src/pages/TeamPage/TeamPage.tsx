@@ -141,7 +141,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
             )}
           </Drawer>
         </Box>
-        {teamInfo !== undefined && (
+        {teamInfo ? (
           <Dialogs
             teamId={+teamId}
             fetchData={fetchTeamData}
@@ -149,6 +149,8 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
             dialogType={whichDialogIsOpen}
             onClose={() => setDialogOpen("none")}
           />
+        ) : (
+          <></>
         )}
       </Box>
     </>

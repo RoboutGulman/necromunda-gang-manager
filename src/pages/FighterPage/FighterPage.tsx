@@ -169,13 +169,15 @@ export default function FighterPage() {
           </Stack>
         </Grid>
       </Grid>
-      {fighter && (
+      {fighter ? (
         <Dialogs
           dialogType={whichDialogIsOpen}
           onClose={() => setDialogOpen("none")}
           fetchData={fetchFighterData}
           fighter={fighter}
         />
+      ) : (
+        <></>
       )}
     </>
   );

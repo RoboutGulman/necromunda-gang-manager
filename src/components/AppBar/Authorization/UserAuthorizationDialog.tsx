@@ -203,8 +203,10 @@ export default function UserAuthorizationDialog({
               </Link>
             </Stack>
           </FormControl>
-          {inputError.isError && (
+          {inputError.isError ? (
             <Alert severity="error">{inputError.errorMessage}</Alert>
+          ) : (
+            <></>
           )}
         </Stack>
       </DialogContent>

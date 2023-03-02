@@ -119,7 +119,7 @@ export default function CreateTeamDialog({
       <DialogTitle>
         <Stack direction="row" alignItems="center">
           <Typography>{t("createRoster", { ns: ["home"] })}</Typography>
-          {loading && (
+          {loading ? (
             <CircularProgress
               size={24}
               sx={{
@@ -127,6 +127,8 @@ export default function CreateTeamDialog({
                 marginLeft: "12px",
               }}
             />
+          ) : (
+            <></>
           )}
         </Stack>
       </DialogTitle>

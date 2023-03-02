@@ -55,10 +55,12 @@ export const TeamMenu: FC<TeamMenuProps> = memo(
           id={`menu-tabpanel-${index}`}
           aria-labelledby={`menu-tab-${index}`}
           {...other}>
-          {value === index && (
+          {value === index ? (
             <Box sx={{ p: 3 }}>
               <Typography component={"span"}>{children}</Typography>
             </Box>
+          ) : (
+            <></>
           )}
         </div>
       );
