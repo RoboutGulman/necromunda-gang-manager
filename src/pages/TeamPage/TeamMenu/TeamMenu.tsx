@@ -24,6 +24,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CasinoIcon from "@mui/icons-material/Casino";
 import { FullSizeMenuTeamInfo } from "./FullSizeMenuTeamInfo";
 import { MobileSizeMenuTeamInfo } from "./MobileSizeMenuTeamInfo";
+import { red } from "@mui/material/colors";
 
 interface TeamMenuProps {
   teamInfo: TeamInfo;
@@ -174,7 +175,7 @@ export const TeamMenu: FC<TeamMenuProps> = memo(
               </ListItem>
               <ListItem
                 disablePadding
-                sx={{ color: "white", backgroundColor: "red" }}>
+                sx={{ color: "white", backgroundColor: red[700] }}>
                 <ListItemButton
                   onClick={() => setDialogOpen("delete-selected-fighters")}>
                   <ListItemIcon sx={{ color: "white" }}>
