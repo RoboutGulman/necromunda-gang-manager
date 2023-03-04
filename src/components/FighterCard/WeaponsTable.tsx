@@ -18,53 +18,59 @@ interface WeaponsTableProps {
 
 export const WeaponsTable: FC<WeaponsTableProps> = memo(({ weapons }) => {
   return (
-    <TableContainer>
-      <StyledTable size="small">
-        <colgroup>
-          <col style={{ width: "30%" }} />
-          <col style={{ width: "5%" }} />
-          <col style={{ width: "5%" }} />
-          <col style={{ width: "5%" }} />
-          <col style={{ width: "5%" }} />
-          <col style={{ width: "5%" }} />
-          <col style={{ width: "5%" }} />
-          <col style={{ width: "5%" }} />
-          <col style={{ width: "5%" }} />
-          <col style={{ width: "30%" }} />
-        </colgroup>
-        <TableHead>
-          <TableRow>
-            <CellWithNoBorder colSpan={1} />
-            <CellWithNoBorder align="center" colSpan={2}>
-              Range
-            </CellWithNoBorder>
-            <CellWithNoBorder align="center" colSpan={2}>
-              Acc
-            </CellWithNoBorder>
-          </TableRow>
-          <TableRow>
-            <CellWithRightBorder>Weapon</CellWithRightBorder>
-            <CellWithNoBorder align="center">S</CellWithNoBorder>
-            <CellWithRightBorder align="center">L</CellWithRightBorder>
-            <CellWithNoBorder align="center">S</CellWithNoBorder>
-            <CellWithRightBorder align="center">L</CellWithRightBorder>
-            <CellWithRightBorder align="center">Str</CellWithRightBorder>
-            <CellWithRightBorder align="center">Ap</CellWithRightBorder>
-            <CellWithRightBorder align="center">D</CellWithRightBorder>
-            <CellWithRightBorder align="center">Am</CellWithRightBorder>
-            <CellWithNoBorder>Traits</CellWithNoBorder>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <ItemsList
-            items={weapons}
-            renderItem={(item: Weapon, index: number) => (
-              <WeaponInfo key={index} weapon={item} index={index} />
-            )}
-          />
-        </TableBody>
-      </StyledTable>
-    </TableContainer>
+    <>
+      {weapons.length ? (
+        <TableContainer>
+          <StyledTable size="small">
+            <colgroup>
+              <col style={{ width: "30%" }} />
+              <col style={{ width: "5%" }} />
+              <col style={{ width: "5%" }} />
+              <col style={{ width: "5%" }} />
+              <col style={{ width: "5%" }} />
+              <col style={{ width: "5%" }} />
+              <col style={{ width: "5%" }} />
+              <col style={{ width: "5%" }} />
+              <col style={{ width: "5%" }} />
+              <col style={{ width: "30%" }} />
+            </colgroup>
+            <TableHead>
+              <TableRow>
+                <CellWithNoBorder colSpan={1} />
+                <CellWithNoBorder align="center" colSpan={2}>
+                  Range
+                </CellWithNoBorder>
+                <CellWithNoBorder align="center" colSpan={2}>
+                  Acc
+                </CellWithNoBorder>
+              </TableRow>
+              <TableRow>
+                <CellWithRightBorder>Weapon</CellWithRightBorder>
+                <CellWithNoBorder align="center">S</CellWithNoBorder>
+                <CellWithRightBorder align="center">L</CellWithRightBorder>
+                <CellWithNoBorder align="center">S</CellWithNoBorder>
+                <CellWithRightBorder align="center">L</CellWithRightBorder>
+                <CellWithRightBorder align="center">Str</CellWithRightBorder>
+                <CellWithRightBorder align="center">Ap</CellWithRightBorder>
+                <CellWithRightBorder align="center">D</CellWithRightBorder>
+                <CellWithRightBorder align="center">Am</CellWithRightBorder>
+                <CellWithNoBorder>Traits</CellWithNoBorder>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <ItemsList
+                items={weapons}
+                renderItem={(item: Weapon, index: number) => (
+                  <WeaponInfo key={index} weapon={item} index={index} />
+                )}
+              />
+            </TableBody>
+          </StyledTable>
+        </TableContainer>
+      ) : (
+        <></>
+      )}
+    </>
   );
 });
 
@@ -79,7 +85,7 @@ function WeaponInfo({ weapon, index }: WeaponInfoProps) {
       <WeaponRow
         weaponProfiles={weapon.profiles}
         index={index}
-        name={weapon.profiles.length === 1 ? undefined : weapon.name}
+        name={weapon.name}
       />
       <UpgradesRow upgrades={weapon.upgrades} index={index} />
     </>
@@ -121,13 +127,13 @@ function UpgradesRow({ upgrades, index }: UpgradesRowProps) {
 interface WeaponRowProps {
   weaponProfiles: WeaponProfile[];
   index: number;
-  name?: string;
+  name: string;
 }
 
 function WeaponRow({ weaponProfiles, index, name }: WeaponRowProps) {
   return (
     <>
-      {name === undefined ? (
+      {weaponProfiles.length < 2 ? (
         <></>
       ) : (
         <Stroke
@@ -142,7 +148,7 @@ function WeaponRow({ weaponProfiles, index, name }: WeaponRowProps) {
           <Stroke
             key={keyIndex}
             items={[
-              item.name ?? "",
+              weaponProfiles.length === 1 ? name : item.name ?? "",
               item.sr ?? "-",
               item.lr ?? "-",
               item.sm ?? "-",
@@ -154,7 +160,7 @@ function WeaponRow({ weaponProfiles, index, name }: WeaponRowProps) {
               item.traits.map((trait) => trait.name).join(","),
             ]}
             index={index}
-            isHeader={name === undefined ? true : false}
+            isHeader={weaponProfiles.length === 1 ? true : false}
           />
         )}
       />
