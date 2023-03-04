@@ -116,6 +116,7 @@ export default function SelectRandomFightersDialog({
             checked={info.onlySelectedFighters}
             onChange={onCheckboxClick}
             text="Select only from selected fighters"
+            loading={false}
           />
         </Stack>
       </DialogContent>

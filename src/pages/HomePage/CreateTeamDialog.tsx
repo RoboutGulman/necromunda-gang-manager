@@ -3,7 +3,6 @@ import {
   Button,
   DialogActions,
   DialogContent,
-  DialogTitle,
   Stack,
   TextField,
   FormControl,
@@ -13,7 +12,6 @@ import {
   MenuItem,
   SelectChangeEvent,
   CircularProgress,
-  Typography,
   Alert,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -22,9 +20,9 @@ import { GetAllFactionsResult } from "../../request/api/faction/getAllFactions";
 import { useEffect } from "react";
 import { Api } from "../../request/api/api";
 import { useUserState } from "../../providers/UserProvider";
-import { blue } from "@mui/material/colors";
 import { useFieldChange } from "../../userHooks/useFieldChange";
 import { useTranslation } from "react-i18next";
+import DialogHeader from "../../components/DialogHeader";
 
 interface State {
   name: string;
@@ -116,22 +114,10 @@ export default function CreateTeamDialog({
 
   return (
     <UserDialog open={open} handleClose={onClose}>
-      <DialogTitle>
-        <Stack direction="row" alignItems="center">
-          <Typography>{t("createRoster", { ns: ["home"] })}</Typography>
-          {loading ? (
-            <CircularProgress
-              size={24}
-              sx={{
-                color: blue[500],
-                marginLeft: "12px",
-              }}
-            />
-          ) : (
-            <></>
-          )}
-        </Stack>
-      </DialogTitle>
+      <DialogHeader
+        loading={loading}
+        title={t("createRoster", { ns: ["home"] })}
+      />
       <DialogContent>
         {!factions ? (
           <CircularProgress />

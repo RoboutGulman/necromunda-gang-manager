@@ -2,12 +2,9 @@ import {
   Alert,
   Box,
   Button,
-  Chip,
-  CircularProgress,
   Collapse,
   DialogActions,
   DialogContent,
-  DialogTitle,
   IconButton,
   Slider,
   Snackbar,
@@ -17,7 +14,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import UserDialog from "../../../components/UserDialog";
@@ -32,6 +28,7 @@ import { blue } from "@mui/material/colors";
 import ItemsList from "../../../components/ItemsList";
 import { StyledTable } from "../../../components/FighterCard/StyledTable";
 import { Api } from "../../../request/api/api";
+import DialogHeader from "../../../components/DialogHeader";
 
 export interface MarketDialogProps {
   open: boolean;
@@ -156,26 +153,7 @@ export default function MarketDialog({
 
   return (
     <UserDialog handleClose={handleDialogClose} open={open}>
-      <DialogTitle>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between">
-          <Typography>Market</Typography>
-          {loading ? (
-            <CircularProgress
-              size={24}
-              sx={{
-                color: blue[500],
-                marginLeft: "12px",
-              }}
-            />
-          ) : (
-            <></>
-          )}
-          <Chip label={`${cash} credits`} />
-        </Stack>
-      </DialogTitle>
+      <DialogHeader loading={loading} title="Market" cash={cash} />
       <DialogContent sx={{ minHeight: "200px" }}>
         <Snackbar
           open={snackbarOpen == "success"}

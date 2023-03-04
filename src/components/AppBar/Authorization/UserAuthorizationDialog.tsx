@@ -2,10 +2,8 @@ import * as React from "react";
 import {
   Alert,
   Button,
-  CircularProgress,
   DialogActions,
   DialogContent,
-  DialogTitle,
   FilledInput,
   FormControl,
   IconButton,
@@ -14,7 +12,6 @@ import {
   Link,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -30,6 +27,7 @@ import {
   useAuthDialogsState,
 } from "../../../providers/AuthDialogsProvider";
 import { useFieldChange } from "../../../userHooks/useFieldChange";
+import DialogHeader from "../../DialogHeader";
 
 interface State {
   nickname: string;
@@ -135,22 +133,7 @@ export default function UserAuthorizationDialog({
 
   return (
     <UserDialog open={open} handleClose={close}>
-      <DialogTitle>
-        <Stack direction="row" alignItems="center">
-          <Typography>{`${variant} your account`}</Typography>
-          {loading ? (
-            <CircularProgress
-              size={24}
-              sx={{
-                color: blue[500],
-                marginLeft: "12px",
-              }}
-            />
-          ) : (
-            <></>
-          )}
-        </Stack>
-      </DialogTitle>
+      <DialogHeader loading={loading} title={`${variant} your account`} />
       <DialogContent>
         <Stack spacing={2}>
           <TextField

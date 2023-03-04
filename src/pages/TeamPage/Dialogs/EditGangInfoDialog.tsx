@@ -1,19 +1,16 @@
 import {
   Button,
-  CircularProgress,
   DialogActions,
   DialogContent,
-  DialogTitle,
   FilledInput,
   FormControl,
   InputLabel,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
-import { blue } from "@mui/material/colors";
 import React from "react";
 import CheckboxWithText from "../../../components/CheckboxWithText";
+import DialogHeader from "../../../components/DialogHeader";
 import UserDialog from "../../../components/UserDialog";
 import { Api } from "../../../request/api/api";
 import { EditTeamRequest } from "../../../request/api/team/editTeam";
@@ -65,22 +62,7 @@ export default function EditTeamInfoDialog({
 
   return (
     <UserDialog handleClose={onClose} open={open}>
-      <DialogTitle>
-        <Stack direction="row" alignItems="center">
-          <Typography>Add new fighter to your gang</Typography>
-          {loading ? (
-            <CircularProgress
-              size={24}
-              sx={{
-                color: blue[500],
-                marginLeft: "12px",
-              }}
-            />
-          ) : (
-            <></>
-          )}
-        </Stack>
-      </DialogTitle>
+      <DialogHeader loading={loading} title="Add new fighter to your gang" />
       <DialogContent sx={{ minHeight: "200px" }}>
         <Stack spacing={2}>
           <TextField

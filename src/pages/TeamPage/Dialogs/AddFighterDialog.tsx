@@ -1,10 +1,7 @@
 import {
   Button,
-  Chip,
-  CircularProgress,
   DialogActions,
   DialogContent,
-  DialogTitle,
   FormControl,
   InputLabel,
   MenuItem,
@@ -12,11 +9,10 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
-import { blue } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 import CheckboxWithText from "../../../components/CheckboxWithText";
+import DialogHeader from "../../../components/DialogHeader";
 import UserDialog from "../../../components/UserDialog";
 import { FighterType } from "../../../model/Dto/FighterType";
 import { Api } from "../../../request/api/api";
@@ -121,26 +117,11 @@ export default function AddFighterDialog({
 
   return (
     <UserDialog handleClose={onClose} open={open}>
-      <DialogTitle>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between">
-          <Typography>Add new fighter to your gang</Typography>
-          {loading ? (
-            <CircularProgress
-              size={24}
-              sx={{
-                color: blue[500],
-                marginLeft: "12px",
-              }}
-            />
-          ) : (
-            <></>
-          )}
-          <Chip label={`${cash} credits`} />
-        </Stack>
-      </DialogTitle>
+      <DialogHeader
+        loading={loading}
+        title="Add new fighter to your gang"
+        cash={cash}
+      />
       <DialogContent sx={{ minHeight: "200px" }}>
         <Stack spacing={2}>
           <TextField
