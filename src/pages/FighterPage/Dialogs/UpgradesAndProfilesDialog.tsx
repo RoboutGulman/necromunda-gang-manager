@@ -176,6 +176,7 @@ const WeaponProfilesTable: FC<WeaponProfilesTableProps> = memo(
                       items={GetStrokeFromProfile(profile)}
                       onClick={() => onItemClick(profile.id)}
                       variant={variant}
+                      isDefault={profile.isDefault}
                     />
                   )}
                 />
@@ -209,9 +210,10 @@ interface StrokeProps {
   items: string[];
   variant: "mounted" | "available";
   onClick: () => void;
+  isDefault: boolean;
 }
 
-function Stroke({ items, onClick, variant }: StrokeProps) {
+function Stroke({ items, onClick, variant, isDefault }: StrokeProps) {
   return (
     <TableRow>
       <CellWithRightBorder component="th" scope="row">
@@ -227,9 +229,13 @@ function Stroke({ items, onClick, variant }: StrokeProps) {
       <CellWithRightBorder align="center">{items[8]}</CellWithRightBorder>
       <CellWithNoBorder>{items[9]}</CellWithNoBorder>
       <CellWithNoBorder>
-        <IconButton onClick={onClick}>
-          {variant === "available" ? <AddIcon /> : <DeleteIcon />}
-        </IconButton>
+        {isDefault ? (
+          <></>
+        ) : (
+          <IconButton onClick={onClick}>
+            {variant === "available" ? <AddIcon /> : <DeleteIcon />}
+          </IconButton>
+        )}
       </CellWithNoBorder>
     </TableRow>
   );
