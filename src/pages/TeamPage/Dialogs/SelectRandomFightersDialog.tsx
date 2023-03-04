@@ -9,8 +9,8 @@ import {
   FilledInput,
 } from "@mui/material";
 import React from "react";
-import CheckboxWithText from "../../../components/CheckboxWithText";
-import UserDialog from "../../../components/UserDialog";
+import CheckboxWithText from "../../../components/Dialog/CheckboxWithText";
+import UserDialog from "../../../components/Dialog/UserDialog";
 import {
   useSelectedFightersState,
   useSelectedFightersDispatch,

@@ -9,9 +9,9 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
-import CheckboxWithText from "../../../components/CheckboxWithText";
-import DialogHeader from "../../../components/DialogHeader";
-import UserDialog from "../../../components/UserDialog";
+import CheckboxWithText from "../../../components/Dialog/CheckboxWithText";
+import DialogHeader from "../../../components/Dialog/DialogHeader";
+import UserDialog from "../../../components/Dialog/UserDialog";
 import { Api } from "../../../request/api/api";
 import { EditTeamRequest } from "../../../request/api/team/editTeam";
 import { useFieldChange } from "../../../userHooks/useFieldChange";

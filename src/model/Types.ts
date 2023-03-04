@@ -54,6 +54,11 @@ export type Advance = {
 };
 
 export type WeaponProfile = {
+  id: number;
+  weaponId: number;
+  isDefault: boolean;
+  cost: number;
+  rarity: number;
   name: string | null;
   sr: string | null;
   lr: string | null;

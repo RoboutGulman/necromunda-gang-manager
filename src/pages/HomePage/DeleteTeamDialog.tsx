@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import UserDialog from "../../components/UserDialog";
+import UserDialog from "../../components/Dialog/UserDialog";
 import { Api } from "../../request/api/api";
 
 interface DeleteTeamDialogProps {

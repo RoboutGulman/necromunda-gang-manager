@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import UserDialog from "../../UserDialog";
+import UserDialog from "../../Dialog/UserDialog";
 import {
   getCurrentUser,
   useUserDispatch,
@@ -27,7 +27,7 @@ import {
   useAuthDialogsState,
 } from "../../../providers/AuthDialogsProvider";
 import { useFieldChange } from "../../../userHooks/useFieldChange";
-import DialogHeader from "../../DialogHeader";
+import DialogHeader from "../../Dialog/DialogHeader";
 
 interface State {
   nickname: string;

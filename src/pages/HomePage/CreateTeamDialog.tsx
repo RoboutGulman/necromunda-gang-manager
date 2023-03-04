@@ -15,14 +15,14 @@ import {
   Alert,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import UserDialog from "../../components/UserDialog";
+import UserDialog from "../../components/Dialog/UserDialog";
 import { GetAllFactionsResult } from "../../request/api/faction/getAllFactions";
 import { useEffect } from "react";
 import { Api } from "../../request/api/api";
 import { useUserState } from "../../providers/UserProvider";
 import { useFieldChange } from "../../userHooks/useFieldChange";
 import { useTranslation } from "react-i18next";
-import DialogHeader from "../../components/DialogHeader";
+import DialogHeader from "../../components/Dialog/DialogHeader";
 
 interface State {
   name: string;

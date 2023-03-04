@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import UserDialog from "../../../components/UserDialog";
+import UserDialog from "../../../components/Dialog/UserDialog";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {
@@ -28,7 +28,7 @@ import { blue } from "@mui/material/colors";
 import ItemsList from "../../../components/ItemsList";
 import { StyledTable } from "../../../components/FighterCard/StyledTable";
 import { Api } from "../../../request/api/api";
-import DialogHeader from "../../../components/DialogHeader";
+import DialogHeader from "../../../components/Dialog/DialogHeader";
 
 export interface MarketDialogProps {
   open: boolean;

@@ -24,6 +24,7 @@ import { Api } from "../../request/api/api";
 import { useNavigate, useParams } from "react-router-dom";
 import ContainerWithCircularProgress from "../../components/ContainerWithCircularProgress";
 import CloseIcon from "@mui/icons-material/Close";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 /*TODO:: 
 таблица адвансов
@@ -41,6 +42,10 @@ export default function FighterPage() {
 
   const [whichDialogIsOpen, setDialogOpen] =
     useState<FighterPageDialogType>("none");
+
+  const [currentFighterWeaponId, setCurrentFighterWeaponId] = useState<
+    number | undefined
+  >(undefined);
 
   const fighterId = useParams().id!;
   const navigate = useNavigate();
@@ -64,7 +69,9 @@ export default function FighterPage() {
   }, [fighterId]);
 
   const deleteEquipment = (id: number) => {
-    Api.fighter.removeEquipment(+fighterId, id, 1).then((_) => fetchFighterData());
+    Api.fighter
+      .removeEquipment(+fighterId, id, 1)
+      .then((_) => fetchFighterData());
   };
 
   const deleteWeapon = (id: number) => {
@@ -110,6 +117,13 @@ export default function FighterPage() {
                     {fighter.weapons.map((item, index) => (
                       <ListItem key={index}>
                         <ListItemText primary={item.name} />
+                        <IconButton
+                          onClick={() => {
+                            setCurrentFighterWeaponId(item.fighterWeaponId);
+                            setDialogOpen("upgrades-and-profiles");
+                          }}>
+                          <SettingsIcon />
+                        </IconButton>
                         <IconButton
                           onClick={() => deleteWeapon(item.fighterWeaponId)}>
                           <CloseIcon />
@@ -175,6 +189,7 @@ export default function FighterPage() {
           onClose={() => setDialogOpen("none")}
           fetchData={fetchFighterData}
           fighter={fighter}
+          currentFighterWeaponId={currentFighterWeaponId}
         />
       ) : (
         <></>

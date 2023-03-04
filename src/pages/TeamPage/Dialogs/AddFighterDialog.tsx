@@ -11,9 +11,9 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import CheckboxWithText from "../../../components/CheckboxWithText";
-import DialogHeader from "../../../components/DialogHeader";
-import UserDialog from "../../../components/UserDialog";
+import CheckboxWithText from "../../../components/Dialog/CheckboxWithText";
+import DialogHeader from "../../../components/Dialog/DialogHeader";
+import UserDialog from "../../../components/Dialog/UserDialog";
 import { FighterType } from "../../../model/Dto/FighterType";
 import { Api } from "../../../request/api/api";
 import { useFieldChange } from "../../../userHooks/useFieldChange";

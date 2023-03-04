@@ -1,4 +1,5 @@
 import { getAllFactions } from "./faction/getAllFactions";
+import { getUpgradesAndProfiles } from "./fighter-weapon/getUpgradesAndProfiles";
 import { addEquipment } from "./fighter/addEquipment";
 import { addWeapon } from "./fighter/addWeapon";
 import { createFighter } from "./fighter/createFighter";
@@ -55,5 +56,8 @@ export const Api = {
   },
   tradingPost: {
     getTradingPost: getTradingPost,
+  },
+  fighterWeapon: {
+    getUpgradesAndProfiles: getUpgradesAndProfiles,
   },
 };
