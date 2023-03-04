@@ -1,5 +1,5 @@
 import { plainToClass } from "class-transformer";
-import { NavigationInfo } from "../../../model/Dto/FighterPageInfo";
+import { NavigationInfo } from "../../../model/Dto/FighterPageNavigationInfo";
 import { ApiRequest, RequestMethod } from "../../request";
 
 type GetNavigationInfoResponse = {

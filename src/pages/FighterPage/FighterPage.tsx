@@ -111,23 +111,32 @@ export default function FighterPage() {
                 <>
                   <StyledList
                     header="Equipment"
+                    availibleForEdit={fighter.availableForEdit}
                     onClick={() => {
                       setDialogOpen("market");
                     }}>
                     {fighter.weapons.map((item, index) => (
                       <ListItem key={index}>
                         <ListItemText primary={item.name} />
-                        <IconButton
-                          onClick={() => {
-                            setCurrentFighterWeaponId(item.fighterWeaponId);
-                            setDialogOpen("upgrades-and-profiles");
-                          }}>
-                          <SettingsIcon />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => deleteWeapon(item.fighterWeaponId)}>
-                          <CloseIcon />
-                        </IconButton>
+                        {fighter.availableForEdit ? (
+                          <>
+                            <IconButton
+                              onClick={() => {
+                                setCurrentFighterWeaponId(item.fighterWeaponId);
+                                setDialogOpen("upgrades-and-profiles");
+                              }}>
+                              <SettingsIcon />
+                            </IconButton>
+                            <IconButton
+                              onClick={() =>
+                                deleteWeapon(item.fighterWeaponId)
+                              }>
+                              <CloseIcon />
+                            </IconButton>
+                          </>
+                        ) : (
+                          <></>
+                        )}
                         <Chip
                           size="small"
                           sx={{
@@ -157,6 +166,7 @@ export default function FighterPage() {
                   </StyledList>
                   <StyledList
                     header="Skills"
+                    availibleForEdit={fighter.availableForEdit}
                     onClick={() => {
                       setDialogOpen("skill");
                     }}>
@@ -168,6 +178,7 @@ export default function FighterPage() {
                   </StyledList>
                   <StyledList
                     header="Injuries"
+                    availibleForEdit={fighter.availableForEdit}
                     onClick={() => {
                       setDialogOpen("injury");
                     }}>
@@ -233,10 +244,16 @@ function FighterCardContent({ fighterInfo }: FighterCardContentProps) {
 interface StyledListProps<T> {
   header: string;
   onClick: () => void;
+  availibleForEdit: boolean;
   children: React.ReactNode;
 }
 
-function StyledList<T>({ header, onClick, children }: StyledListProps<T>) {
+function StyledList<T>({
+  header,
+  onClick,
+  availibleForEdit,
+  children,
+}: StyledListProps<T>) {
   return (
     <Grid item xs={6} lg={3}>
       <Stack alignItems="center" sx={{ padding: "3px" }}>
@@ -266,16 +283,20 @@ function StyledList<T>({ header, onClick, children }: StyledListProps<T>) {
                   backgroundSize: "120% 120%",
                 }}>
                 {header}
-                <IconButton
-                  onClick={onClick}
-                  sx={{
-                    position: "absolute",
-                    top: "3px",
-                    right: "3px",
-                    color: "white",
-                  }}>
-                  <EditIcon />
-                </IconButton>
+                {availibleForEdit ? (
+                  <IconButton
+                    onClick={onClick}
+                    sx={{
+                      position: "absolute",
+                      top: "3px",
+                      right: "3px",
+                      color: "white",
+                    }}>
+                    <EditIcon />
+                  </IconButton>
+                ) : (
+                  <></>
+                )}
               </ListSubheader>
             }>
             {React.Children.count(children) > 0 ? (

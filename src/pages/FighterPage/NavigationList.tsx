@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
-import { NavigationInfo } from "../../model/Dto/FighterPageInfo";
+import { NavigationInfo } from "../../model/Dto/FighterPageNavigationInfo";
 import ItemsList from "../../components/ItemsList";
 import ContainerWithCircularProgress from "../../components/ContainerWithCircularProgress";
 import { useEffect, useState } from "react";

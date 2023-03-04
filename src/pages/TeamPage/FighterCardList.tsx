@@ -26,6 +26,7 @@ import { FighterCardHeader } from "../../components/FighterCard/FighterCardHeade
 import { FighterCard } from "../../components/FighterCard/FighterCard";
 import cardBackground from "../../backgrounds/card_background.jpg";
 import AddIcon from "@mui/icons-material/Add";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import ContainerWithCircularProgress from "../../components/ContainerWithCircularProgress";
 
 interface Props {
@@ -223,25 +224,21 @@ const FighterCardItem: FC<FighterCardItemProps> = memo(
               />
             </Grid>
           </ListItem>
-          {availableForEdit ? (
-            <RouterLink to={`/fighter/${fighterView.id}`}>
-              <Box
-                sx={{
-                  backgroundColor: "#343a40",
-                  position: "absolute",
-                  right: "-15px",
-                  bottom: "-15px",
-                  borderRadius: "50%",
-                  border: "2px solid #747474",
-                }}>
-                <Fab size="medium" aria-label="add">
-                  <EditIcon />
-                </Fab>
-              </Box>
-            </RouterLink>
-          ) : (
-            <></>
-          )}
+          <RouterLink to={`/fighter/${fighterView.id}`}>
+            <Box
+              sx={{
+                backgroundColor: "#343a40",
+                position: "absolute",
+                right: "-15px",
+                bottom: "-15px",
+                borderRadius: "50%",
+                border: "2px solid #747474",
+              }}>
+              <Fab size="medium" aria-label="add">
+                {availableForEdit ? <EditIcon /> : <VisibilityIcon />}
+              </Fab>
+            </Box>
+          </RouterLink>
         </FighterCard>
       </ListItem>
     );

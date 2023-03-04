@@ -4,9 +4,7 @@ import {
   Equipment,
   Injury,
   Skill,
-  SpecialRule,
   Status,
-  Weapon,
   WeaponUpgrade,
 } from "../Types";
 
@@ -14,6 +12,7 @@ export class Fighter {
   id!: number;
   teamId!: number;
   isDead!: boolean;
+  availableForEdit!: boolean;
   name!: string;
   rang!: string;
   description!: string;

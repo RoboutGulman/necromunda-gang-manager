@@ -88,7 +88,9 @@ export default function UpgradesAndProfilesDialog({
           <>
             {upgradesAndProfiles.profiles.mounted.length ? (
               <>
-                <Typography>Mounted profiles</Typography>
+                <Typography align="center" variant="h4">
+                  Mounted profiles
+                </Typography>
                 <WeaponProfilesTable
                   profiles={upgradesAndProfiles.profiles.mounted}
                   variant="mounted"
@@ -100,7 +102,9 @@ export default function UpgradesAndProfilesDialog({
             )}
             {upgradesAndProfiles.profiles.available.length ? (
               <>
-                <Typography>Availible profiles</Typography>
+                <Typography align="center" variant="h4">
+                  Availible profiles
+                </Typography>
                 <WeaponProfilesTable
                   profiles={upgradesAndProfiles.profiles.available}
                   variant="available"
