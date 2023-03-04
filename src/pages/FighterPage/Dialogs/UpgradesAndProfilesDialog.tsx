@@ -10,6 +10,7 @@ import {
   tableCellClasses,
   styled,
   Typography,
+  IconButton,
 } from "@mui/material";
 import React, { FC, memo, useEffect, useState } from "react";
 import ContainerWithCircularProgress from "../../../components/ContainerWithCircularProgress";
@@ -20,6 +21,9 @@ import UserDialog from "../../../components/Dialog/UserDialog";
 import { UpgradesAndProfilesInfo } from "../../../model/Dto/UpgradesAndProfilesInfo";
 import { WeaponProfile } from "../../../model/Types";
 import { Api } from "../../../request/api/api";
+
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface UpgradesAndProfilesDialogProps {
   open: boolean;
@@ -50,6 +54,24 @@ export default function UpgradesAndProfilesDialog({
     }
   };
 
+  const addProfile = (id: number) => {
+    if (fighterWeaponId) {
+      setLoading(true);
+      Api.fighterWeapon
+        .addProfile(fighterWeaponId, id, false)
+        .then((_) => fetchData());
+    }
+  };
+
+  const removeProfile = (id: number) => {
+    if (fighterWeaponId) {
+      setLoading(true);
+      Api.fighterWeapon
+        .removeProfile(fighterWeaponId, id)
+        .then((_) => fetchData());
+    }
+  };
+
   useEffect(() => {
     if (open) {
       fetchData();
@@ -64,19 +86,35 @@ export default function UpgradesAndProfilesDialog({
           <ContainerWithCircularProgress height="400px" />
         ) : (
           <>
-            <Typography>Mounted profiles</Typography>
-            <WeaponProfilesTable
-              profiles={upgradesAndProfiles.profiles.mounted}
-            />
-            <Typography>Availible profiles</Typography>
-            <WeaponProfilesTable
-              profiles={upgradesAndProfiles.profiles.available}
-            />
+            {upgradesAndProfiles.profiles.mounted.length ? (
+              <>
+                <Typography>Mounted profiles</Typography>
+                <WeaponProfilesTable
+                  profiles={upgradesAndProfiles.profiles.mounted}
+                  variant="mounted"
+                  onItemClick={removeProfile}
+                />
+              </>
+            ) : (
+              <></>
+            )}
+            {upgradesAndProfiles.profiles.available.length ? (
+              <>
+                <Typography>Availible profiles</Typography>
+                <WeaponProfilesTable
+                  profiles={upgradesAndProfiles.profiles.available}
+                  variant="available"
+                  onItemClick={addProfile}
+                />
+              </>
+            ) : (
+              <></>
+            )}
           </>
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}></Button>
+        <Button onClick={onClose}>Back</Button>
       </DialogActions>
     </UserDialog>
   );
@@ -84,10 +122,12 @@ export default function UpgradesAndProfilesDialog({
 
 interface WeaponProfilesTableProps {
   profiles: WeaponProfile[];
+  variant: "mounted" | "available";
+  onItemClick: (id: number) => void;
 }
 
 const WeaponProfilesTable: FC<WeaponProfilesTableProps> = memo(
-  ({ profiles }) => {
+  ({ profiles, onItemClick, variant }) => {
     return (
       <>
         {profiles.length ? (
@@ -132,7 +172,11 @@ const WeaponProfilesTable: FC<WeaponProfilesTableProps> = memo(
                 <ItemsList
                   items={profiles}
                   renderItem={(profile: WeaponProfile, index: number) => (
-                    <Stroke items={GetStrokeFromProfile(profile)} />
+                    <Stroke
+                      items={GetStrokeFromProfile(profile)}
+                      onClick={() => onItemClick(profile.id)}
+                      variant={variant}
+                    />
                   )}
                 />
               </TableBody>
@@ -163,9 +207,11 @@ const GetStrokeFromProfile = (profile: WeaponProfile): string[] => {
 
 interface StrokeProps {
   items: string[];
+  variant: "mounted" | "available";
+  onClick: () => void;
 }
 
-function Stroke({ items }: StrokeProps) {
+function Stroke({ items, onClick, variant }: StrokeProps) {
   return (
     <TableRow>
       <CellWithRightBorder component="th" scope="row">
@@ -180,6 +226,11 @@ function Stroke({ items }: StrokeProps) {
       <CellWithRightBorder align="center">{items[7]}</CellWithRightBorder>
       <CellWithRightBorder align="center">{items[8]}</CellWithRightBorder>
       <CellWithNoBorder>{items[9]}</CellWithNoBorder>
+      <CellWithNoBorder>
+        <IconButton onClick={onClick}>
+          {variant === "available" ? <AddIcon /> : <DeleteIcon />}
+        </IconButton>
+      </CellWithNoBorder>
     </TableRow>
   );
 }

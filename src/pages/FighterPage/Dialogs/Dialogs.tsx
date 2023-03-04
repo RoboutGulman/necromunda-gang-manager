@@ -37,7 +37,10 @@ export default function Dialogs({
       />
       <UpgradesAndProfilesDialog
         open={dialogType === "upgrades-and-profiles"}
-        onClose={onClose}
+        onClose={() => {
+          onClose();
+          fetchData();
+        }}
         fighterWeaponId={currentFighterWeaponId}
       />
     </>

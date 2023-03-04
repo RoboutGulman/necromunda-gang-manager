@@ -1,5 +1,7 @@
 import { getAllFactions } from "./faction/getAllFactions";
+import { addProfile } from "./fighter-weapon/addProfile";
 import { getUpgradesAndProfiles } from "./fighter-weapon/getUpgradesAndProfiles";
+import { removeProfile } from "./fighter-weapon/removeProfile";
 import { addEquipment } from "./fighter/addEquipment";
 import { addWeapon } from "./fighter/addWeapon";
 import { createFighter } from "./fighter/createFighter";
@@ -59,5 +61,7 @@ export const Api = {
   },
   fighterWeapon: {
     getUpgradesAndProfiles: getUpgradesAndProfiles,
+    addProfile: addProfile,
+    removeProfile: removeProfile,
   },
 };
