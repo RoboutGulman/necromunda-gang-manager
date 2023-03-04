@@ -59,7 +59,7 @@ export type WeaponProfile = {
   lr: string | null;
   sm: string | null;
   lm: string | null;
-  s: string | null;
+  str: string | null;
   ap: string | null;
   d: string | null;
   am: string | null;

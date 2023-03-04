@@ -153,7 +153,7 @@ function WeaponRow({ weaponProfiles, index, name }: WeaponRowProps) {
               item.lr ?? "-",
               item.sm ?? "-",
               item.lm ?? "-",
-              item.s ?? "-",
+              item.str ?? "-",
               item.ap ?? "-",
               item.d ?? "-",
               item.am ?? "-",
