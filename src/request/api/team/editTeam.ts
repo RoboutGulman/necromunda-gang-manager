@@ -6,11 +6,11 @@ export type EditTeamArguments = {
 };
 
 export type EditTeamRequest = {
-  name: string;
-  cash: number;
-  reputation: number;
-  description: string;
-  isOutlaw: boolean;
+  name?: string;
+  cash?: number;
+  reputation?: number;
+  description?: string;
+  isOutlaw?: boolean;
 };
 
 export async function editTeam({

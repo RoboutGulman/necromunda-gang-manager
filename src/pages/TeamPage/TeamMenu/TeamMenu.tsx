@@ -25,15 +25,17 @@ import CasinoIcon from "@mui/icons-material/Casino";
 import { FullSizeMenuTeamInfo } from "./FullSizeMenuTeamInfo";
 import { MobileSizeMenuTeamInfo } from "./MobileSizeMenuTeamInfo";
 import { red } from "@mui/material/colors";
+import Description from "./Description";
 
 interface TeamMenuProps {
   teamInfo: TeamInfo;
+  teamId: number;
   setDialogOpen: React.Dispatch<React.SetStateAction<TeamPageDialogType>>;
   availibleForEdit: boolean;
 }
 
 export const TeamMenu: FC<TeamMenuProps> = memo(
-  ({ teamInfo, setDialogOpen, availibleForEdit }) => {
+  ({ teamInfo, teamId, setDialogOpen, availibleForEdit }) => {
     const [activeTab, setActiveTab] = React.useState(0);
 
     const handleChange = (_: React.SyntheticEvent, newValue: number) => {
@@ -132,22 +134,11 @@ export const TeamMenu: FC<TeamMenuProps> = memo(
           </Box>
         </TabPanel>
         <TabPanel value={activeTab} index={1}>
-          <TextField
-            sx={{ width: "100%" }}
-            id="standard-multiline-static"
-            label="Notes"
-            multiline
-            rows={4}
-            value={teamInfo?.description}
-            variant="filled"
+          <Description
+            startValue={teamInfo?.description ?? ""}
+            availibleForEdit={availibleForEdit}
+            teamId={teamId}
           />
-          {availibleForEdit ? (
-            <Stack spacing={2} direction="row" justifyContent="flex-end">
-              <Button>Save</Button>
-            </Stack>
-          ) : (
-            <></>
-          )}
         </TabPanel>
         <TabPanel value={activeTab} index={2}>
           {!availibleForEdit ? (

@@ -36,6 +36,12 @@ export function TeamInfoTable({ info }: TeamInfoTableProps) {
             <TableCell>Games Number</TableCell>
             <TableCell>{info?.gamesPlayed}</TableCell>
           </StyledTableRow>
+          <StyledTableRow>
+            <TableCell>Status</TableCell>
+            <TableCell>
+              {info?.isOutlaw === true ? "Law Abiding" : "Outlaw"}
+            </TableCell>
+          </StyledTableRow>
         </TableBody>
       </StyledTable>
     </TableContainer>

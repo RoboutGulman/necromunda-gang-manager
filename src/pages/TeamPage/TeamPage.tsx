@@ -109,6 +109,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
                   teamInfo={teamInfo}
                   setDialogOpen={setDialogOpen}
                   availibleForEdit={teamView.availableForEdit}
+                  teamId={+teamId}
                 />
               </Paper>
             )}
@@ -137,6 +138,7 @@ export const TeamPage: FC<TeamPageProps> = memo(({ window }) => {
                 teamInfo={teamInfo}
                 setDialogOpen={setDialogOpen}
                 availibleForEdit={teamView.availableForEdit}
+                teamId={+teamId}
               />
             )}
           </Drawer>
