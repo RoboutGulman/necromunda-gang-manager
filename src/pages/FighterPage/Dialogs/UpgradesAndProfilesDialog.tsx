@@ -29,18 +29,29 @@ interface UpgradesAndProfilesDialogProps {
   open: boolean;
   onClose: () => void;
   fighterWeaponId?: number;
+  teamId: number;
 }
 
 export default function UpgradesAndProfilesDialog({
   open,
   onClose,
   fighterWeaponId,
+  teamId,
 }: UpgradesAndProfilesDialogProps) {
   const [loading, setLoading] = React.useState(false);
 
   const [upgradesAndProfiles, setUpgradesAndProfiles] = useState<
     UpgradesAndProfilesInfo | undefined
   >(undefined);
+  const [cash, setCash] = useState<number | undefined>(undefined);
+
+  const UpdateTeamCash = (teamId: number) => {
+    setLoading(true);
+    Api.team.getTeamCash(teamId).then((result) => {
+      setCash(result.cash);
+      setLoading(false);
+    });
+  };
 
   const fetchData = () => {
     if (fighterWeaponId) {
@@ -57,9 +68,10 @@ export default function UpgradesAndProfilesDialog({
   const addProfile = (id: number) => {
     if (fighterWeaponId) {
       setLoading(true);
-      Api.fighterWeapon
-        .addProfile(fighterWeaponId, id, false)
-        .then((_) => fetchData());
+      Api.fighterWeapon.addProfile(fighterWeaponId, id, false).then((_) => {
+        fetchData();
+        UpdateTeamCash(teamId);
+      });
     }
   };
 
@@ -75,6 +87,7 @@ export default function UpgradesAndProfilesDialog({
   useEffect(() => {
     if (open) {
       fetchData();
+      UpdateTeamCash(teamId);
     }
   }, [open, fighterWeaponId]);
 

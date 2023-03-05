@@ -41,4 +41,5 @@ export type FighterWeapon = {
   name: string;
   cost: number;
   upgrades: WeaponUpgrade[];
+  totalCost: number;
 };

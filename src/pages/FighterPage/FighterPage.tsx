@@ -143,7 +143,7 @@ export default function FighterPage() {
                             backgroundColor: "#6c757d",
                             color: "white",
                           }}
-                          label={item.cost}
+                          label={item.totalCost}
                         />
                       </ListItem>
                     ))}

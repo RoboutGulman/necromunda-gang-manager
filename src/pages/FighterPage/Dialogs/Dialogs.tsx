@@ -42,6 +42,7 @@ export default function Dialogs({
           fetchData();
         }}
         fighterWeaponId={currentFighterWeaponId}
+        teamId={fighter.teamId}
       />
     </>
   );

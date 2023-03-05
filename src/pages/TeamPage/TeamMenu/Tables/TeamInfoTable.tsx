@@ -39,7 +39,7 @@ export function TeamInfoTable({ info }: TeamInfoTableProps) {
           <StyledTableRow>
             <TableCell>Status</TableCell>
             <TableCell>
-              {info?.isOutlaw === true ? "Law Abiding" : "Outlaw"}
+              {info?.isOutlaw === true ? "Outlaw" : "Law Abiding"}
             </TableCell>
           </StyledTableRow>
         </TableBody>

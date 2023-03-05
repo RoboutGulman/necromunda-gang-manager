@@ -13,12 +13,19 @@ import CheckboxWithText from "../../../components/Dialog/CheckboxWithText";
 import DialogHeader from "../../../components/Dialog/DialogHeader";
 import UserDialog from "../../../components/Dialog/UserDialog";
 import { Api } from "../../../request/api/api";
-import { EditTeamRequest } from "../../../request/api/team/editTeam";
 import { useFieldChange } from "../../../userHooks/useFieldChange";
+
+interface State {
+  name: string;
+  cash: number;
+  reputation: number;
+  description: string;
+  isOutlaw: boolean;
+}
 
 export interface EditTeamInfoDialogProps {
   teamId: number;
-  initState: EditTeamRequest;
+  initState: State;
   fetchData: () => void;
   open: boolean;
   onClose: () => void;
@@ -31,7 +38,7 @@ export default function EditTeamInfoDialog({
   onClose,
   open,
 }: EditTeamInfoDialogProps) {
-  const [teamInfo, setTeamInfo] = React.useState<EditTeamRequest>(initState);
+  const [teamInfo, setTeamInfo] = React.useState<State>(initState);
   const handleChange = useFieldChange(teamInfo, setTeamInfo);
   const [inputError, setInputError] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
