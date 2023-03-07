@@ -150,9 +150,13 @@ export default function FighterPage() {
                     {fighter.equipment.map((item, index) => (
                       <ListItem key={index}>
                         <ListItemText primary={item.name} />
-                        <IconButton onClick={() => deleteEquipment(item.id)}>
-                          <CloseIcon />
-                        </IconButton>
+                        {fighter.availableForEdit ? (
+                          <IconButton onClick={() => deleteEquipment(item.id)}>
+                            <CloseIcon />
+                          </IconButton>
+                        ) : (
+                          <></>
+                        )}
                         <Chip
                           size="small"
                           sx={{

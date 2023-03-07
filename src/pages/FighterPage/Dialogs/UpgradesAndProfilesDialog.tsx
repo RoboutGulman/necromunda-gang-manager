@@ -31,6 +31,7 @@ interface UpgradesAndProfilesDialogProps {
   fighterWeaponId?: number;
   teamId: number;
 }
+//TODO: купить\добавить профиль\апгрейд. Вернуть деньги при возврате
 
 export default function UpgradesAndProfilesDialog({
   open,
@@ -68,7 +69,7 @@ export default function UpgradesAndProfilesDialog({
   const addProfile = (id: number) => {
     if (fighterWeaponId) {
       setLoading(true);
-      Api.fighterWeapon.addProfile(fighterWeaponId, id, false).then((_) => {
+      Api.fighterWeapon.addProfile(fighterWeaponId, id, true).then((_) => {
         fetchData();
         UpdateTeamCash(teamId);
       });
@@ -79,7 +80,7 @@ export default function UpgradesAndProfilesDialog({
     if (fighterWeaponId) {
       setLoading(true);
       Api.fighterWeapon
-        .removeProfile(fighterWeaponId, id)
+        .removeProfile(fighterWeaponId, id, 1)
         .then((_) => fetchData());
     }
   };
@@ -93,7 +94,11 @@ export default function UpgradesAndProfilesDialog({
 
   return (
     <UserDialog open={open} handleClose={onClose}>
-      <DialogHeader loading={loading} title="Profiles and upgrades" />
+      <DialogHeader
+        loading={loading}
+        title="Profiles and upgrades"
+        cash={cash}
+      />
       <DialogContent>
         {!upgradesAndProfiles ? (
           <ContainerWithCircularProgress height="400px" />
@@ -160,7 +165,8 @@ const WeaponProfilesTable: FC<WeaponProfilesTableProps> = memo(
                 <col style={{ width: "5%" }} />
                 <col style={{ width: "5%" }} />
                 <col style={{ width: "5%" }} />
-                <col style={{ width: "30%" }} />
+                <col style={{ width: "25%" }} />
+                <col style={{ width: "5%" }} />
               </colgroup>
               <TableHead>
                 <TableRow>
@@ -182,7 +188,8 @@ const WeaponProfilesTable: FC<WeaponProfilesTableProps> = memo(
                   <CellWithRightBorder align="center">Ap</CellWithRightBorder>
                   <CellWithRightBorder align="center">D</CellWithRightBorder>
                   <CellWithRightBorder align="center">Am</CellWithRightBorder>
-                  <CellWithNoBorder>Traits</CellWithNoBorder>
+                  <CellWithRightBorder>Traits</CellWithRightBorder>
+                  <CellWithRightBorder>Cost</CellWithRightBorder>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -220,6 +227,7 @@ const GetStrokeFromProfile = (profile: WeaponProfile): string[] => {
     profile.d ?? "-",
     profile.am ?? "-",
     profile.traits.map((trait) => trait.name).join(","),
+    profile.cost + "",
   ];
 };
 
@@ -244,15 +252,21 @@ function Stroke({ items, onClick, variant, isDefault }: StrokeProps) {
       <CellWithRightBorder align="center">{items[6]}</CellWithRightBorder>
       <CellWithRightBorder align="center">{items[7]}</CellWithRightBorder>
       <CellWithRightBorder align="center">{items[8]}</CellWithRightBorder>
-      <CellWithNoBorder>{items[9]}</CellWithNoBorder>
+      <CellWithRightBorder>{items[9]}</CellWithRightBorder>
+      <CellWithRightBorder>{items[10]}</CellWithRightBorder>
       <CellWithNoBorder>
-        {isDefault ? (
-          <></>
-        ) : (
-          <IconButton onClick={onClick}>
-            {variant === "available" ? <AddIcon /> : <DeleteIcon />}
-          </IconButton>
-        )}
+        <IconButton
+          onClick={onClick}
+          disabled={isDefault}
+          aria-label={
+            isDefault
+              ? "default profile"
+              : variant === "available"
+              ? "add"
+              : "delete"
+          }>
+          {variant === "available" ? <AddIcon /> : <DeleteIcon />}
+        </IconButton>
       </CellWithNoBorder>
     </TableRow>
   );
