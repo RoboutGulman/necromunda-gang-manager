@@ -15,6 +15,7 @@ export async function addProfile(
   apiRequest.setJsonBody({
     fighterWeaponId: fighterWeaponId,
     profileId: profileId,
+    purchaseWithCredits: purchaseWithCredits,
   });
 
   const response: any = await apiRequest.send();

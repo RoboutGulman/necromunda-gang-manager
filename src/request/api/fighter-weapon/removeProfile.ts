@@ -4,7 +4,8 @@ const URL = "/api/fighter-weapon/remove-profile";
 
 export async function removeProfile(
   fighterWeaponId: number,
-  profileId: number
+  profileId: number,
+  refundMode: number
 ): Promise<boolean> {
   const apiRequest = new ApiRequest();
   apiRequest.setMethod(RequestMethod.DELETE);
@@ -13,6 +14,7 @@ export async function removeProfile(
   apiRequest.setJsonBody({
     fighterWeaponId: fighterWeaponId,
     profileId: profileId,
+    refundMode: refundMode,
   });
 
   return (await apiRequest.send()).status === 200;
