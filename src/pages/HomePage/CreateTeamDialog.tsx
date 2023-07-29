@@ -116,7 +116,7 @@ export default function CreateTeamDialog({
     <UserDialog open={open} handleClose={onClose}>
       <DialogHeader
         loading={loading}
-        title={t("createRoster", { ns: ["home"] })}
+        title={t("home:createRoster")}
       />
       <DialogContent>
         {!factions ? (
@@ -128,12 +128,12 @@ export default function CreateTeamDialog({
               value={teamInfo.name}
               onChange={handleChange("name")}
               id="filled-basic"
-              label={t("createGangDialog.name", { ns: ["home"] })}
+              label={t("home:createGangDialog.name")}
               variant="filled"
             />
             <FormControl variant="filled" sx={{ mt: 2, minWidth: 120 }}>
               <InputLabel>
-                {t("createGangDialog.faction", { ns: ["home"] })}
+                {t("home:createGangDialog.faction")}
               </InputLabel>
               <Select
                 autoFocus
@@ -157,7 +157,7 @@ export default function CreateTeamDialog({
               }}
               variant="filled">
               <InputLabel htmlFor="filled-adornment-password">
-                {t("createGangDialog.startCredits", { ns: ["home"] })}
+                {t("home:createGangDialog.startCredits")}
               </InputLabel>
               <FilledInput
                 value={teamInfo.startCredits}
@@ -169,14 +169,14 @@ export default function CreateTeamDialog({
             </FormControl>
             {inputError === "server" ? (
               <Alert severity="error">
-                {t("createGangDialog.serverError", { ns: ["home"] })}
+                {t("home:createGangDialog.serverError")}
               </Alert>
             ) : (
               <></>
             )}
             {inputError === "other" ? (
               <Alert severity="error">
-                {t("createGangDialog.unhandledError", { ns: ["home"] })}
+                {t("home:createGangDialog.unhandledError")}
               </Alert>
             ) : (
               <></>
@@ -186,10 +186,10 @@ export default function CreateTeamDialog({
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>
-          {t("createGangDialog.back", { ns: ["home"] })}
+          {t("home:createGangDialog.back")}
         </Button>
         <Button onClick={handleCreate}>
-          {t("createGangDialog.create", { ns: ["home"] })}
+          {t("home:createGangDialog.create")}
         </Button>
       </DialogActions>
     </UserDialog>

@@ -7,7 +7,6 @@ import {
   Link,
   List,
   ListItem,
-  Stack,
   Typography,
 } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -35,16 +34,15 @@ export default function RecentTeams() {
         variant="h5"
         color="secondary"
         gutterBottom>
-        {t("recentGangsTitle", { ns: ["home"] })}
+        {t("home:recentGangsTitle")}
       </Typography>
       {!recentTeams ? (
         <ContainerWithCircularProgress height="400px" />
       ) : (
         <>
           <Typography align="center" variant="body1" color="white" gutterBottom>
-            {t("recentGangsCounting", {
-              number: `${recentTeams?.totalTeamsNumber}`,
-              ns: ["home"],
+            {t("home:recentGangsCounting", {
+              number: `${recentTeams?.totalTeamsNumber}`
             })}
           </Typography>
           <Box
@@ -134,9 +132,8 @@ function gangPrewiew(index: number, item: RecentTeam) {
           />
           <GridItemWithTypography
             xs={3}
-            content={t("rating", {
-              number: `${item.rating}`,
-              ns: ["home"],
+            content={t("home:rating", {
+              number: `${item.rating}`
             })}
             color="white"
           />

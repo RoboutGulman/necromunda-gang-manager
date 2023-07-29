@@ -84,7 +84,7 @@ export default function MyTeamsPreview() {
         variant="h5"
         color="secondary"
         gutterBottom>
-        {t("myGangs", { ns: ["home"] })}
+        {t("home:myGangs")}
       </Typography>
 
       {userInfo.authorized ? (
@@ -99,7 +99,7 @@ export default function MyTeamsPreview() {
             sx={{ mb: "5px" }}
             variant="text"
             color="secondary">
-            {t("createRoster", { ns: ["home"] })}
+            {t("home:createRoster")}
           </Button>
           {!userTeams ? (
             <ContainerWithCircularProgress height="300px" />
@@ -166,7 +166,7 @@ export default function MyTeamsPreview() {
       ) : (
         <Box sx={{ margin: "auto", mb: "10px" }}>
           <Typography align="center" variant="body1" color="white" gutterBottom>
-            {t("loginOrRegister", { ns: ["home"] })}
+            {t("home:loginOrRegister")}
           </Typography>
           <Stack>
             <Button
@@ -174,7 +174,7 @@ export default function MyTeamsPreview() {
               color="secondary"
               onClick={() => setLoginDialogOpen({ type: "open-login" })}
               startIcon={<LockIcon />}>
-              {t("loginOrRegisterButton", { ns: ["home"] })}
+              {t("home:loginOrRegisterButton")}
             </Button>
           </Stack>
         </Box>

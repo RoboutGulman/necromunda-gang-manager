@@ -40,21 +40,20 @@ export default function DeleteTeamDialog({
 
   return (
     <UserDialog open={open} handleClose={onClose}>
-      <DialogTitle>{t("deleteGangDialog.title", { ns: ["home"] })}</DialogTitle>
+      <DialogTitle>{t("home:deleteGangDialog.title")}</DialogTitle>
       <DialogContent>
         <Typography>
-          {t("deleteGangDialog.content", {
-            name: team?.name ?? "",
-            ns: ["home"],
+          {t("home:deleteGangDialog.content", {
+            name: team?.name ?? ""
           })}
         </Typography>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>
-          {t("deleteGangDialog.back", { ns: ["home"] })}
+          {t("home:deleteGangDialog.back")}
         </Button>
         <Button onClick={deleteTeam}>
-          {t("deleteGangDialog.delete", { ns: ["home"] })}
+          {t("home:deleteGangDialog.delete")}
         </Button>
       </DialogActions>
     </UserDialog>

@@ -2,16 +2,20 @@ import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 
 //Import all translation files
-import translationEnglish from "./locales/en/translations.json";
-import translationRussian from "./locales/ru/translations.json";
+import homeEnglish from "./locales/en/home.json";
+import homeRussian from "./locales/ru/home.json";
+import fighterEnglish from "./locales/en/fighter.json";
+import fighterRussian from "./locales/ru/fighter.json";
 
 //---Using different namespaces
 const resources = {
     en: {
-        home: translationEnglish,
+        home: homeEnglish,
+        fighter: fighterEnglish
     },
     ru: {
-        home: translationRussian,
+        home: homeRussian,
+        fighter: fighterRussian
     },
 }
 
