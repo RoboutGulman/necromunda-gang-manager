@@ -1,3 +1,7 @@
 {
-    "myGangs": "MY GANGS"
+    "marketDialog": {
+        "tradingPost": "Trading post",
+        "factionArmoury": "Faction Armoury",
+        "fighter": "Fighter armoury"
+    }
 }

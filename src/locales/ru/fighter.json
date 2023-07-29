@@ -1,3 +1,7 @@
 {
-    "myGangs": "MY GANGS"
+    "marketDialog": {
+        "tradingPost": "Торговый пост",
+        "factionArmoury": "Оружейная фракции",
+        "fighter": "Боец"
+    }
 }

@@ -2,10 +2,18 @@ import {
   Alert,
   Box,
   Button,
+  Chip,
+  CircularProgress,
   Collapse,
   DialogActions,
   DialogContent,
+  DialogTitle,
+  FormControl,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   Slider,
   Snackbar,
   Stack,
@@ -14,6 +22,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import UserDialog from "../../../components/Dialog/UserDialog";
@@ -29,6 +38,9 @@ import ItemsList from "../../../components/ItemsList";
 import { StyledTable } from "../../../components/FighterCard/StyledTable";
 import { Api } from "../../../request/api/api";
 import DialogHeader from "../../../components/Dialog/DialogHeader";
+import { title } from "process";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 export interface MarketDialogProps {
   open: boolean;
@@ -49,6 +61,8 @@ export default function MarketDialog({
     "none" | "success" | "error"
   >("none");
 
+  const { t } = useTranslation();
+
   const handleDialogClose = () => {
     setSnackbarOpen("none");
     onClose();
@@ -64,6 +78,31 @@ export default function MarketDialog({
 
     setSnackbarOpen("none");
   };
+
+  enum MarketType {
+    tradingPost,
+    factionArmoury,
+    fighter,
+  }
+
+  const getMarketTypeTranslated = (marketType: MarketType) =>
+    ({
+      [MarketType.tradingPost]: t("fighter:marketDialog.tradingPost"),
+      [MarketType.factionArmoury]: t("fighter:marketDialog.factionArmoury"),
+      [MarketType.fighter]: t("fighter:marketDialog.fighter"),
+    }[marketType]);
+
+  const getMarketType = (marketType: string): MarketType => {
+    if (marketType == t("fighter:marketDialog.tradingPost"))
+      return MarketType.tradingPost;
+    if (marketType == t("fighter:marketDialog.factionArmoury"))
+      return MarketType.factionArmoury;
+    return MarketType.fighter;
+  };
+
+  const [marketType, setMarketType] = useState<MarketType>(
+    MarketType.tradingPost
+  );
 
   const [loading, setLoading] = useState(false);
 
@@ -153,7 +192,50 @@ export default function MarketDialog({
 
   return (
     <UserDialog handleClose={handleDialogClose} open={open}>
-      <DialogHeader loading={loading} title="Market" cash={cash} />
+      <DialogTitle>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between">
+          <FormControl variant="filled" sx={{ mt: 2, minWidth: 120 }}>
+            <InputLabel>market type</InputLabel>
+            <Select
+              autoFocus
+              value={getMarketTypeTranslated(marketType)}
+              onChange={
+                (event: SelectChangeEvent) =>
+                  setMarketType(getMarketType(event.target.value))
+              }
+              label="Faction"
+              inputProps={{
+                name: "faction",
+                id: "faction",
+              }}>
+              {
+                Object.values(MarketType)
+                  .filter((v) => !isNaN(Number(v)))
+                  .map((value) => (
+                    <MenuItem value={getMarketTypeTranslated(value as number)}>
+                      {getMarketTypeTranslated(value as number)}
+                    </MenuItem>
+                  ))
+              }
+            </Select>
+          </FormControl>
+          {loading === true ? (
+            <CircularProgress
+              size={24}
+              sx={{
+                color: blue[500],
+                marginLeft: "12px",
+              }}
+            />
+          ) : (
+            <></>
+          )}
+          {cash !== undefined ? <Chip label={`${cash} credits`} /> : <></>}
+        </Stack>
+      </DialogTitle>
       <DialogContent sx={{ minHeight: "200px" }}>
         <Snackbar
           open={snackbarOpen == "success"}
@@ -178,17 +260,18 @@ export default function MarketDialog({
           </Alert>
         </Snackbar>
         <Box sx={{ width: "100%", marginTop: 4 }}>
+          <Typography gutterBottom>Rarity</Typography>
           <Slider
             aria-label="Rarity"
-            valueLabelDisplay="auto"
             getAriaValueText={(value: number) => "" + value}
-            step={1}
             value={rarity}
             onChangeCommitted={handleRaritySliderCommitChange}
             onChange={handleRaritySliderChange}
             marks
-            min={1}
-            max={12}
+            step={1}
+            min={2}
+            max={15}
+            valueLabelDisplay="on"
           />
         </Box>
         {market === undefined ? (
