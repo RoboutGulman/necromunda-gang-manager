@@ -28,19 +28,13 @@ import React, { useEffect, useState } from "react";
 import UserDialog from "../../../components/Dialog/UserDialog";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import {
-  EquipmentMarketItem,
-  Market,
-  WeaponMarketItem,
-} from "../../../model/Dto/MarketDto";
+import { Market } from "../../../model/Dto/MarketDto";
 import { blue } from "@mui/material/colors";
 import ItemsList from "../../../components/ItemsList";
 import { StyledTable } from "../../../components/FighterCard/StyledTable";
 import { Api } from "../../../request/api/api";
-import DialogHeader from "../../../components/Dialog/DialogHeader";
-import { title } from "process";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
+import { MarketItem } from "../../../model/MarketItem";
 
 export interface MarketDialogProps {
   open: boolean;
@@ -202,24 +196,23 @@ export default function MarketDialog({
             <Select
               autoFocus
               value={getMarketTypeTranslated(marketType)}
-              onChange={
-                (event: SelectChangeEvent) =>
-                  setMarketType(getMarketType(event.target.value))
+              onChange={(event: SelectChangeEvent) =>
+                setMarketType(getMarketType(event.target.value))
               }
               label="Faction"
               inputProps={{
                 name: "faction",
                 id: "faction",
               }}>
-              {
-                Object.values(MarketType)
-                  .filter((v) => !isNaN(Number(v)))
-                  .map((value) => (
-                    <MenuItem value={getMarketTypeTranslated(value as number)}>
-                      {getMarketTypeTranslated(value as number)}
-                    </MenuItem>
-                  ))
-              }
+              {Object.values(MarketType)
+                .filter((v) => !isNaN(Number(v)))
+                .map((value) => (
+                  <MenuItem
+                    key={value as number}
+                    value={getMarketTypeTranslated(value as number)}>
+                    {getMarketTypeTranslated(value as number)}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
           {loading === true ? (
@@ -289,16 +282,22 @@ export default function MarketDialog({
               </TableHead>
             </MarketTable>
             {market.weapons.map((category, index) => (
-              <WeaponCategoryTable
+              <CategoryTable
                 key={index}
-                category={category}
+                name={category.name}
+                items={category.items.map((weapon) =>
+                  MarketItem.fromWeapon(weapon)
+                )}
                 onClick={addWeapon}
               />
             ))}
             {market.equipment.map((category, index) => (
-              <EquipmentCategoryTable
-                key={index}
-                category={category}
+              <CategoryTable
+                key={index + market.weapons.length}
+                name={category.name}
+                items={category.items.map((equipment) =>
+                  MarketItem.fromEquipment(equipment)
+                )}
                 onClick={addEquipment}
               />
             ))}
@@ -339,16 +338,13 @@ function MarketTable({ children }: MarketTableProps) {
   );
 }
 
-interface WeaponCategoryTableProps {
-  category: {
-    name: string;
-    items: WeaponMarketItem[];
-  };
+interface CategoryTableProps {
+  name: string;
+  items: MarketItem[];
   onClick: (weaponId: number, purchaseWithCredits: boolean) => void;
 }
 
-//TODO:: сделать универсальный виджет и для оружия и для экипировки
-function WeaponCategoryTable({ category, onClick }: WeaponCategoryTableProps) {
+function CategoryTable({ name, items, onClick }: CategoryTableProps) {
   const [isOpen, setOpen] = useState<boolean>(false);
   return (
     <>
@@ -357,7 +353,7 @@ function WeaponCategoryTable({ category, onClick }: WeaponCategoryTableProps) {
           <TableRow
             onClick={() => setOpen(!isOpen)}
             sx={{ backgroundColor: blue[200], cursor: "pointer" }}>
-            <TableCell colSpan={3}>{category.name}</TableCell>
+            <TableCell colSpan={3}>{name}</TableCell>
             <TableCell>
               <IconButton aria-label="expand" size="small">
                 {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -370,84 +366,7 @@ function WeaponCategoryTable({ category, onClick }: WeaponCategoryTableProps) {
         <MarketTable>
           <TableBody>
             <ItemsList
-              items={category.items}
-              renderItem={(item, index) => (
-                <StyledTableRow key={index}>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell align="center">{item.cost}</TableCell>
-                  <TableCell align="center">
-                    {item.rarity ?? "common"}
-                  </TableCell>
-                  <TableCell>
-                    <Stack direction="row" spacing={2}>
-                      <Button
-                        onClick={() => onClick(item.id, false)}
-                        style={{ backgroundColor: "rgba(200, 200, 200, 0.8)" }}
-                        size="small"
-                        variant="contained"
-                        sx={{
-                          textTransform: "none",
-                          color: "rgba(0, 0, 0, 0.87)",
-                        }}>
-                        add
-                      </Button>
-                      <Button
-                        onClick={() => onClick(item.id, true)}
-                        style={{ backgroundColor: "rgba(200, 200, 200, 0.8)" }}
-                        size="small"
-                        variant="contained"
-                        sx={{
-                          textTransform: "none",
-                          color: "rgba(0, 0, 0, 0.87)",
-                        }}>
-                        buy
-                      </Button>
-                    </Stack>
-                  </TableCell>
-                </StyledTableRow>
-              )}
-            />
-          </TableBody>
-        </MarketTable>
-      </Collapse>
-    </>
-  );
-}
-
-interface EquipmentCategoryTableProps {
-  category: {
-    name: string;
-    items: EquipmentMarketItem[];
-  };
-  onClick: (equipmentId: number, purchaseWithCredits: boolean) => void;
-}
-
-function EquipmentCategoryTable({
-  category,
-  onClick,
-}: EquipmentCategoryTableProps) {
-  const [isOpen, setOpen] = useState<boolean>(false);
-  return (
-    <>
-      <MarketTable>
-        <TableBody>
-          <TableRow
-            onClick={() => setOpen(!isOpen)}
-            sx={{ backgroundColor: blue[200], cursor: "pointer" }}>
-            <TableCell colSpan={3}>{category.name}</TableCell>
-            <TableCell>
-              <IconButton aria-label="expand" size="small">
-                {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-              </IconButton>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </MarketTable>
-      <Collapse in={isOpen} timeout="auto" unmountOnExit>
-        <MarketTable>
-          <TableBody>
-            <ItemsList
-              items={category.items}
+              items={items}
               renderItem={(item, index) => (
                 <StyledTableRow key={index}>
                   <TableCell>{item.name}</TableCell>
